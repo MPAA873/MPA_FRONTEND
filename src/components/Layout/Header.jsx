@@ -18,17 +18,29 @@ const Header = () => {
     skip: !isLoggedIn,
   });
 
-  const navLinks = [
-    { name: "Home", href: "/#hero" },
-    { name: "About", href: "/#about" },
-    { name: "Articles", href: "/#articles" },
-    { name: "Submit", href: "/#submit" },
-    { name: "Editorial", href: "/#editorial-board" },
-    { name: "Guidelines", href: "/#guidelines" },
-    { name: "AI Policy", href: "/#ai-policy" },
-    { name: "Issue", href: "/#issue" },
-    { name: "Contact", href: "/#contact" },
-  ];
+  // const navLinks = [
+  //   { name: "Home", href: "/#hero" },
+  //   { name: "About", href: "/#about" },
+  //   { name: "Articles", href: "/#articles" },
+  //   { name: "Submit", href: "/#submit" },
+  //   { name: "Editorial", href: "/#editorial-board" },
+  //   { name: "Guidelines", href: "/#guidelines" },
+  //   { name: "AI Policy", href: "/#ai-policy" },
+  //   { name: "Issue", href: "/#issue" },
+  //   { name: "Contact", href: "/#contact" },
+  // ];
+
+const navLinks = [
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  { name: "Articles", href: "/articles" },
+  { name: "Submit", href: "/submit" },
+  { name: "Editorial", href: "/editorial-board" },
+  { name: "Guidelines", href: "/guidelines" },
+  { name: "AI Policy", href: "/ai-policy" },
+  { name: "Issue", href: "/issue" },
+  { name: "Contact", href: "/contact" },
+];
 
   useEffect(() => {
     const token = localStorage.getItem("token");
