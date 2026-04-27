@@ -65,7 +65,7 @@ const Hero = () => {
               Open Access Research
             </div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-6">
               <span className="text-[#713F12] block">Advancing Scientific</span>
               <span className="text-[#22C55E] block">Excellence</span>
             </h1>
