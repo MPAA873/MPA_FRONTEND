@@ -4,20 +4,10 @@ export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,
-    prepareHeaders: (headers, { endpoint }) => {
-      if (endpoint === "submitManuscript") {
-        if (typeof window !== "undefined") {
-          const token = localStorage.getItem("token");
-          if (token) {
-            headers.set("authorization", `Bearer ${token}`);
-          }
-        }
-        return headers;
-      }
-      headers.set("Content-Type", "application/json");
-
+    prepareHeaders: (headers) => {
       if (typeof window !== "undefined") {
         const token = localStorage.getItem("token");
+
         if (token) {
           headers.set("authorization", `Bearer ${token}`);
         }
@@ -147,6 +137,6 @@ export const {
   useGetLatestPublishedArticleQuery,
   useGetPublishedYearsQuery,
   useGetLatestPublishedQuery,
-  useGetManuscriptDetailsQuery ,
+  useGetManuscriptDetailsQuery,
 
 } = apiSlice;

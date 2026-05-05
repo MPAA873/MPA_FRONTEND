@@ -3,14 +3,28 @@ import React, { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Upload, FileCheck, X, CheckCircle, AlertCircle, Info, Loader2, } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
-import { useGetManuscriptByIdQuery, useSubmitRevisionMutation } from "@/store/apiSlice"; // Update path if needed
+import { useGetManuscriptByIdQuery, useSubmitRevisionMutation } from "@/store/apiSlice";
+import { useEffect } from "react";
 
 const ReviseManuscript = () => {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const urlToken = new URLSearchParams(window.location.search).get("token");
+
+    if (urlToken) {
+      localStorage.setItem("token", urlToken);
+    }
+
+    setReady(true);
+  }, []);
   const params = useParams();
   const router = useRouter();
   const { id } = params;
 
-  const { data: fetchRes, isLoading: isFetching } = useGetManuscriptByIdQuery(id);
+  const { data: fetchRes, isLoading: isFetching } = useGetManuscriptByIdQuery(id, {
+    skip: !ready,
+  });
   const [submitRevision, { isLoading: isSubmitting }] = useSubmitRevisionMutation();
 
   const manuscript = fetchRes?.manuscript;
