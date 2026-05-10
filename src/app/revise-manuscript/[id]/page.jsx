@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { Upload, FileCheck, X, CheckCircle, AlertCircle, Info, Loader2, } from "lucide-react";
+import { Upload, FileCheck, X, CheckCircle, AlertCircle, Info, Loader2, Download } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import { useGetManuscriptByIdQuery, useSubmitRevisionMutation } from "@/store/apiSlice";
 import { useEffect } from "react";
@@ -18,6 +18,7 @@ const ReviseManuscript = () => {
 
     setReady(true);
   }, []);
+
   const params = useParams();
   const router = useRouter();
   const { id } = params;
@@ -28,6 +29,9 @@ const ReviseManuscript = () => {
   const [submitRevision, { isLoading: isSubmitting }] = useSubmitRevisionMutation();
 
   const manuscript = fetchRes?.manuscript;
+
+  // Logic to check if we are in the Final Proofreading stage
+  const isProofing = manuscript?.status === "Final Script Sent";
 
   const [files, setFiles] = useState({
     manuscriptFile: null,
@@ -52,7 +56,7 @@ const ReviseManuscript = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const submissionToast = toast.loading("Submitting your revisions...");
+    const submissionToast = toast.loading(isProofing ? "Submitting final script..." : "Submitting your revisions...");
 
     try {
       const data = new FormData();
@@ -66,10 +70,10 @@ const ReviseManuscript = () => {
 
       await submitRevision({ id, data }).unwrap();
 
-      toast.success("Revisions Submitted Successfully!", { id: submissionToast });
-      setTimeout(() => router.push("/#submit"), 2000); // Redirect back
+      toast.success(isProofing ? "Final Script Approved Successfully!" : "Revisions Submitted Successfully!", { id: submissionToast });
+      setTimeout(() => router.push("/#submit"), 2000); 
     } catch (err) {
-      toast.error(err?.data?.message || "Failed to submit revision.", { id: submissionToast });
+      toast.error(err?.data?.message || "Failed to submit.", { id: submissionToast });
     }
   };
 
@@ -82,26 +86,42 @@ const ReviseManuscript = () => {
       <Toaster position="top-center" />
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-extrabold text-[#713F12] mb-6">
-          Revise Your <span className="text-[#10B981]">Manuscript</span>
+          {isProofing ? "Final Script " : "Revise Your "}<span className="text-[#10B981]">{isProofing ? "Proofreading" : "Manuscript"}</span>
         </h1>
 
-        {/* Admin Feedback Section */}
-        <div className="bg-orange-50 border-l-4 border-orange-500 p-6 rounded-r-2xl mb-8 shadow-sm">
-          <h3 className="text-orange-800 font-bold text-lg flex items-center gap-2 mb-2">
-            <AlertCircle /> Editorial Feedback (Please Fix the following)
+        {/* Dynamic Feedback Section: Blue for Proofing, Orange for Revision */}
+        <div className={`${isProofing ? 'bg-blue-50 border-blue-500' : 'bg-orange-50 border-orange-500'} border-l-4 p-6 rounded-r-2xl mb-8 shadow-sm`}>
+          <h3 className={`${isProofing ? 'text-blue-800' : 'text-orange-800'} font-bold text-lg flex items-center gap-2 mb-2`}>
+            {isProofing ? <><FileCheck size={20} /> Final Proof Review Required</> : <><AlertCircle /> Editorial Feedback (Please Fix the following)</>}
           </h3>
-          <p className="text-orange-700 whitespace-pre-wrap leading-relaxed text-sm">
-            {manuscript?.revisionFeedback || "No specific feedback provided by admin."}
+          <p className={`${isProofing ? 'text-blue-700' : 'text-orange-700'} whitespace-pre-wrap leading-relaxed text-sm`}>
+            {isProofing 
+              ? "The editor has prepared your final manuscript in the journal template. Please download the file below, review it for any errors, and re-upload the final confirmed version here." 
+              : (manuscript?.revisionFeedback || "No specific feedback provided by admin.")}
           </p>
+          
+          {/* Action Button for Proofreading stage */}
+          {isProofing && manuscript?.feedbackFile && (
+            <div className="mt-4">
+              <a 
+                href={manuscript.feedbackFile} 
+                target="_blank" 
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-blue-700 transition-all shadow-md"
+              >
+                <Download size={18} /> Download Templated Manuscript
+              </a>
+            </div>
+          )}
         </div>
 
         <div className="bg-white p-6 md:p-10 rounded-[2.5rem] shadow-xl border border-emerald-50">
           <div className="mb-6 p-4 bg-emerald-50 text-emerald-800 rounded-xl flex items-start gap-3 text-sm">
             <Info className="flex-shrink-0 mt-0.5" size={18} />
             <p>
-              Your text data (Title, Abstract, etc.) is safe.
-              <strong> You only need to upload the specific files that the editor requested to be changed.</strong>
-              If a file doesn't need changes, leave its box empty.
+              {isProofing 
+                ? "Please upload the final templated manuscript here. If you have corrections, edit the file and upload. If everything is correct, re-upload the same file to confirm."
+                : "Your text data (Title, Abstract, etc.) is safe. You only need to upload the specific files that the editor requested to be changed."}
             </p>
           </div>
 
@@ -121,7 +141,7 @@ const ReviseManuscript = () => {
                     <>
                       <input type="file" className="absolute inset-0 opacity-0 cursor-pointer z-10" onChange={(e) => handleFileChange(e, item.id)} />
                       <div className="bg-white p-3 rounded-full shadow-sm mb-3"><Upload size={20} className="text-[#10B981]" /></div>
-                      <p className="text-[#713F12] text-sm font-semibold">Upload New {item.label}</p>
+                      <p className="text-[#713F12] text-sm font-semibold">Upload {isProofing ? "Final" : "New"} {item.label}</p>
                       {item.exist && <span className="text-[10px] text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full mt-2">File already exists</span>}
                     </>
                   ) : (
@@ -138,7 +158,11 @@ const ReviseManuscript = () => {
             </div>
 
             <button type="submit" disabled={isSubmitting} className={`w-full py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-3 shadow-lg ${isSubmitting ? "bg-emerald-300 cursor-not-allowed text-white" : "bg-[#10B981] text-white hover:bg-[#059669]"}`}>
-              {isSubmitting ? <><Loader2 className="animate-spin" /> Submitting Revisions...</> : <><CheckCircle size={20} /> Submit Revisions</>}
+              {isSubmitting ? (
+                <><Loader2 className="animate-spin" /> {isProofing ? "Submitting Final Approval..." : "Submitting Revisions..."}</>
+              ) : (
+                <><CheckCircle size={20} /> {isProofing ? "Confirm & Submit Final Script" : "Submit Revisions"}</>
+              )}
             </button>
           </form>
         </div>
