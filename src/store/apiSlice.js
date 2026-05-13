@@ -118,11 +118,29 @@ export const apiSlice = createApi({
     getManuscriptDetails: builder.query({
       query: (id) => `/manuscripts/${id}`,
     }),
+
+    forgotPassword: builder.mutation({
+      query: (data) => ({
+        url: "/users/forgot-password",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    resetPassword: builder.mutation({
+      query: ({ token, password }) => ({
+        url: `/users/reset-password/${token}`,
+        method: "PUT",
+        body: { password },
+      }),
+    }),
   }),
 });
 
 export const {
   useLoginMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
   useRegisterMutation,
   useSubmitManuscriptMutation,
   useVerifyEmailQuery,

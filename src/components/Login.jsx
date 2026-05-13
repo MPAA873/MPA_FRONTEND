@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useLoginMutation } from "../store/apiSlice";
 import { useRouter } from "next/navigation";
-import {  Mail, Lock, ArrowRight, Loader2 } from "lucide-react";
+import { Mail, Lock, ArrowRight, Loader2 } from "lucide-react";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -68,7 +68,12 @@ const Login = () => {
           </div>
 
           <div className="flex justify-end">
-            <button type="button" className="text-sm font-semibold text-[#10B981] hover:underline">Forgot Password?</button>
+            <Link
+              href="/forgot-password"
+              className="text-sm font-semibold text-[#10B981] hover:underline"
+            >
+              Forgot Password?
+            </Link>
           </div>
 
           {/* Login Button */}
