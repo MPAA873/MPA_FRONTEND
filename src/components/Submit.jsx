@@ -412,7 +412,12 @@ const Submit = () => {
             <div className="bg-white p-8 rounded-[2rem] border border-emerald-100 shadow-sm">
               <h4 className="text-[#713F12] text-xl font-bold mb-2">Need Help?</h4>
               <p className="text-[#854D0E]/70 text-sm mb-5 leading-relaxed">Facing issues during submission? Our technical team is here to help.</p>
-              <a href="mailto:support@mparesearch.com" className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-50 text-[#10B981] font-bold text-sm rounded-xl hover:bg-[#10B981] hover:text-white transition-all">Contact Support →</a>
+              <a
+                href="mailto:info@mparesearch.com"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-50 text-[#10B981] font-bold text-sm rounded-xl hover:bg-[#10B981] hover:text-white transition-all"
+              >
+                Contact Support →
+              </a>
             </div>
           </div>
         </div>

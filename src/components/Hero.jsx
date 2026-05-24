@@ -15,7 +15,7 @@ import { useGetLatestPublishedQuery } from "../store/apiSlice";
 
 const Hero = () => {
   const router = useRouter();
-  
+
   // State to trigger the auto-sliding animation loop
   const [slideKey, setSlideKey] = useState(0);
 
@@ -34,7 +34,7 @@ const Hero = () => {
     if (latestArticle) {
       const interval = setInterval(() => {
         setSlideKey((prev) => prev + 1);
-      },10000);  // 7 seconds interval
+      }, 10000);  // 7 seconds interval
       return () => clearInterval(interval);
     }
   }, [latestArticle]);
@@ -57,7 +57,7 @@ const Hero = () => {
     <section className="w-full bg-[#FDF6ED] overflow-hidden scroll-mt-35" id="hero">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16 lg:py-24">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          
+
           {/* --- LEFT SECTION (UI & LOGIC PRESERVED) --- */}
           <div className="flex flex-col order-2 lg:order-1 text-center lg:text-left items-center lg:items-start">
             <div className="inline-flex items-center gap-2 bg-[#DCFCE7] text-[#166534] px-4 py-1.5 rounded-full text-sm font-semibold mb-6 shadow-sm border border-[#BBF7D0]">
@@ -79,8 +79,7 @@ const Hero = () => {
               <button
                 onClick={() =>
                   checkAuthAndRun(() => {
-                    const section = document.getElementById("submit");
-                    if (section) section.scrollIntoView({ behavior: "smooth" });
+                    router.push("/submit");
                   })
                 }
                 className="bg-[#22C55E] text-white px-8 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-[#16a34a] transition-all transform hover:-translate-y-1 shadow-lg"
@@ -99,13 +98,13 @@ const Hero = () => {
 
           {/* --- RIGHT SECTION (ANNOUNCEMENTS SLIDER) --- */}
           <div className="relative order-1 lg:order-2 w-full max-w-[650px] mx-auto">
-            
+
             {/* Background Glow for visual appeal */}
             <div className="absolute -inset-6 bg-green-200/20 blur-3xl rounded-full -z-10 animate-pulse"></div>
 
             {/* Main Carousel Card (Style matched to your image) */}
             <div className="bg-white rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] border border-gray-100 overflow-hidden flex flex-col min-h-[350px]">
-              
+
               {/* Header: Exact style from "Editor's Choice" image */}
               <div className="px-8 pt-8 pb-3">
                 <h2 className="text-2xl font-semibold text-[#713F12]   tracking-tight">Announcements</h2>
@@ -114,7 +113,7 @@ const Hero = () => {
 
               {/* Slider Content Area */}
               <div className="relative flex-grow flex items-center px-4 sm:px-14 py-8">
-                
+
                 {/* Navigation Arrows (Visual only to match your image) */}
                 <button className="absolute left-3 z-10 text-gray-300 hover:text-green-500 transition-colors hidden sm:block">
                   <ChevronLeft size={44} strokeWidth={1} />
@@ -132,7 +131,7 @@ const Hero = () => {
                   <AnimatePresence mode="wait">
                     {/* The motion.div uses slideKey to re-trigger the animation loop */}
                     <motion.div
-                      key={slideKey} 
+                      key={slideKey}
                       initial={{ opacity: 0, x: 50 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -50 }}
@@ -145,7 +144,7 @@ const Hero = () => {
                         <h3 className="text-xl sm:text-2xl font-bold text-[#333] leading-[1.3] mb-6 line-clamp-3">
                           {latestArticle.title}
                         </h3>
-                        
+
                         <p className="text-[#666] text-sm sm:text-[15px] font-medium leading-relaxed italic">
                           {formatAuthors(latestArticle.authors)}
                         </p>
