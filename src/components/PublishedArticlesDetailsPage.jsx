@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import {  useGetManuscriptByIdQuery } from '@/store/apiSlice';
-import { 
-   FileText, Download, Calendar, Users, 
+import { useGetManuscriptByIdQuery } from '@/store/apiSlice';
+import {
+  FileText, Download, Calendar, Users,
   ChevronLeft, BookOpen, Printer, Link as LinkIcon, Check,
   Facebook, Linkedin, MessageCircle, X, Share2,
   Building2, Mail, Tag, ShieldCheck, Info, Clock, AlertCircle,
@@ -18,9 +18,9 @@ const XLogo = () => (
 const ArticleDetails = () => {
   const { id } = useParams();
   const router = useRouter();
-   const { data, isLoading, error } = useGetManuscriptByIdQuery(id);
- 
-  
+  const { data, isLoading, error } = useGetManuscriptByIdQuery(id);
+
+
   const [copied, setCopied] = useState(false);
   const [isShareOpen, setIsShareOpen] = useState(false);
 
@@ -67,7 +67,7 @@ const ArticleDetails = () => {
 
   return (
     <div className="min-h-screen bg-[#FDFBF7] pb-20 print:bg-white relative">
-      
+
       {/* --- SHARE MODAL --- */}
       {isShareOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
@@ -112,32 +112,32 @@ const ArticleDetails = () => {
             <ChevronLeft size={20} /> Dashboard
           </button>
           <div className="flex items-center gap-4">
-             <span className={`px-4 py-1 rounded-full text-[11px] font-black uppercase border ${article.status === 'Published' ? 'bg-emerald-50 border-emerald-100 text-emerald-600' : 'bg-amber-50 border-amber-100 text-amber-600'}`}>
-                {article.status}
-             </span>
-             <span className="text-gray-300 text-xs font-mono">{article.manuscriptId}</span>
+            <span className={`px-4 py-1 rounded-full text-[11px] font-black uppercase border ${article.status === 'Published' ? 'bg-emerald-50 border-emerald-100 text-emerald-600' : 'bg-amber-50 border-amber-100 text-amber-600'}`}>
+              {article.status}
+            </span>
+            <span className="text-gray-300 text-xs font-mono">{article.manuscriptId}</span>
           </div>
         </div>
       </div>
 
       <div className="max-w-6xl mx-auto px-6 pt-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          
+
           {/* LEFT: MAIN DATA */}
           <div className="lg:col-span-2 space-y-10 print:col-span-3">
             <header>
               <h1 className="text-3xl md:text-4xl font-black text-[#5D3A1A] leading-[1.15] mb-6">{article.title}</h1>
               <div className="flex flex-wrap gap-6 text-sm">
-                <div className="flex items-center gap-2 text-gray-400"><Calendar size={16}/> <b>Submitted:</b> {new Date(article.createdAt).toLocaleDateString()}</div>
-                <div className="flex items-center gap-2 text-gray-400"><Tag size={16}/> <b>Type:</b> <span className="uppercase">{article.manuscriptType}</span></div>
+                <div className="flex items-center gap-2 text-gray-400"><Calendar size={16} /> <b>Submitted:</b> {new Date(article.createdAt).toLocaleDateString()}</div>
+                <div className="flex items-center gap-2 text-gray-400"><Tag size={16} /> <b>Type:</b> <span className="uppercase">{article.manuscriptType}</span></div>
               </div>
             </header>
 
             {/* Abstract Section */}
             <section className="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm relative overflow-hidden">
-               <div className="absolute top-0 left-0 w-2 h-full bg-emerald-500" />
-               <h2 className="text-xl font-bold text-[#2D1B0B] mb-4">Abstract</h2>
-               <p className="text-gray-600 leading-relaxed text-lg whitespace-pre-line">{article.abstract}</p>
+              <div className="absolute top-0 left-0 w-2 h-full bg-emerald-500" />
+              <h2 className="text-xl font-bold text-[#2D1B0B] mb-4">Abstract</h2>
+              <p className="text-gray-600 leading-relaxed text-lg whitespace-pre-line">{article.abstract}</p>
             </section>
 
             {/* Keywords */}
@@ -169,52 +169,42 @@ const ArticleDetails = () => {
               </div>
             </section>
 
-            {/* Review/Revision Feedback (Only shows if content exists) */}
-            {(article.revisionFeedback || article.rejectionFeedback) && (
-              <section className="bg-amber-50 border border-amber-100 p-8 rounded-[32px]">
-                <h2 className="text-xl font-bold text-amber-800 mb-4 flex items-center gap-2"><AlertCircle size={22}/> Editorial Feedback</h2>
-                <div className="text-amber-900 leading-relaxed italic bg-white/50 p-6 rounded-2xl border border-amber-100">
-                  {article.revisionFeedback || article.rejectionFeedback}
-                </div>
-              </section>
-            )}
-
             {/* Detailed Timeline Table */}
             <section className="bg-white border border-gray-100 rounded-3xl overflow-hidden">
-                <div className="p-6 bg-gray-50 border-b border-gray-100 font-bold text-[#2D1B0B]">Submission Milestones</div>
-                <div className="p-6 grid grid-cols-2 md:grid-cols-3 gap-8">
-                    <div>
-                        <div className="text-[10px] uppercase font-black text-gray-400 mb-1 tracking-widest">Submission Date</div>
-                        <div className="font-bold text-gray-700">{new Date(article.createdAt).toLocaleDateString('en-GB')}</div>
-                    </div>
-                    <div>
-                        <div className="text-[10px] uppercase font-black text-gray-400 mb-1 tracking-widest">Decision Status</div>
-                        <div className="font-bold text-emerald-600">{article.status}</div>
-                    </div>
-                    <div>
-                        <div className="text-[10px] uppercase font-black text-gray-400 mb-1 tracking-widest">Is Revised</div>
-                        <div className="font-bold text-gray-700">{article.isRevised ? "Yes" : "No"}</div>
-                    </div>
+              <div className="p-6 bg-gray-50 border-b border-gray-100 font-bold text-[#2D1B0B]">Submission Milestones</div>
+              <div className="p-6 grid grid-cols-2 md:grid-cols-3 gap-8">
+                <div>
+                  <div className="text-[10px] uppercase font-black text-gray-400 mb-1 tracking-widest">Submission Date</div>
+                  <div className="font-bold text-gray-700">{new Date(article.createdAt).toLocaleDateString('en-GB')}</div>
                 </div>
+                <div>
+                  <div className="text-[10px] uppercase font-black text-gray-400 mb-1 tracking-widest">Decision Status</div>
+                  <div className="font-bold text-emerald-600">{article.status}</div>
+                </div>
+                <div>
+                  <div className="text-[10px] uppercase font-black text-gray-400 mb-1 tracking-widest">Is Revised</div>
+                  <div className="font-bold text-gray-700">{article.isRevised ? "Yes" : "No"}</div>
+                </div>
+              </div>
             </section>
           </div>
 
           {/* RIGHT: SIDEBAR / FILES / ACTIONS */}
           <div className="space-y-6 print:hidden">
-            
+
             {/* Share & Actions */}
             <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm space-y-4">
               <button onClick={() => setIsShareOpen(true)} className="w-full py-4 bg-emerald-50 text-emerald-700 rounded-2xl font-black border border-emerald-100 hover:bg-emerald-100 transition-all flex items-center justify-center gap-2">
-                <Share2 size={18}/> SHARE MANUSCRIPT
+                <Share2 size={18} /> SHARE MANUSCRIPT
               </button>
               <button onClick={handlePrint} className="w-full py-4 bg-[#5D3A1A] text-white rounded-2xl font-black hover:bg-black transition-all flex items-center justify-center gap-2 shadow-xl shadow-gray-200">
-                <Printer size={18}/> Print 
+                <Printer size={18} /> Print
               </button>
             </div>
 
             {/* Technical Metadata */}
             <div className="bg-white rounded-3xl p-6 border border-gray-100 space-y-4">
-              <h3 className="font-black text-xs text-gray-400 uppercase tracking-widest flex items-center gap-2"><Info size={14}/> Paper Metadata</h3>
+              <h3 className="font-black text-xs text-gray-400 uppercase tracking-widest flex items-center gap-2"><Info size={14} /> Paper Metadata</h3>
               <div className="space-y-3">
                 <div className="flex justify-between text-sm"> <span className="text-gray-400">ID</span> <span className="font-bold text-gray-700 font-mono">{article.manuscriptId}</span> </div>
                 <div className="flex justify-between text-sm"> <span className="text-gray-400">Discipline</span> <span className="font-bold text-gray-700">{article.discipline}</span> </div>
@@ -229,21 +219,31 @@ const ArticleDetails = () => {
               <h3 className="text-xl font-bold mb-6 flex items-center gap-2"><ShieldCheck size={22} /> Submitted Files</h3>
               <div className="space-y-3">
                 {Object.entries(article.files).map(([key, url]) => {
-                  if (!url) return null;
+                  // Hide review checklist file
+                  if (!url || key === "reviewChecklist") return null;
+
                   return (
-                    <a key={key} href={url} target="_blank" className="flex items-center justify-between p-4 bg-white/10 hover:bg-white/20 rounded-2xl transition-all group">
+                    <a
+                      key={key}
+                      href={url}
+                      target="_blank"
+                      className="flex items-center justify-between p-4 bg-white/10 hover:bg-white/20 rounded-2xl transition-all group"
+                    >
                       <div className="flex items-center gap-3">
                         <FileText size={18} />
-                        <span className="font-bold text-xs capitalize">{key.replace(/([A-Z])/g, ' $1')}</span>
+                        <span className="font-bold text-xs capitalize">
+                          {key.replace(/([A-Z])/g, ' $1')}
+                        </span>
                       </div>
-                      <Download size={14} className="group-hover:translate-y-0.5 transition-transform" />
+
+                      <Download
+                        size={14}
+                        className="group-hover:translate-y-0.5 transition-transform"
+                      />
                     </a>
-                  )
+                  );
                 })}
               </div>
-              {/* <div className="mt-8 pt-8 border-t border-white/20 text-[10px] opacity-70 leading-relaxed uppercase tracking-tighter">
-                  This manuscript is protected by the Pearl Organisation Publication guidelines. Accessing unauthorized files is prohibited.
-              </div> */}
             </div>
 
           </div>
