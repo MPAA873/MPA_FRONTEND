@@ -218,15 +218,64 @@ const ArticleDetails = () => {
             <div className="bg-emerald-600 rounded-[32px] p-8 text-white shadow-xl shadow-emerald-100">
               <h3 className="text-xl font-bold mb-6 flex items-center gap-2"><ShieldCheck size={22} /> Submitted Files</h3>
               <div className="space-y-3">
-                {Object.entries(article.files).map(([key, url]) => {
-                  // Hide review checklist file
-                  if (!url || key === "reviewChecklist") return null;
+                {Object.entries(article.files).map(([key, file]) => {
+
+                  // Hide review checklist
+                  if (key === "reviewChecklist") return null;
+
+                  // Handle array files like figures
+                  if (Array.isArray(file)) {
+
+                    if (file.length === 0) return null;
+
+                    return file.map((fig, index) => {
+                      const figureUrl =
+                        typeof fig === "string"
+                          ? fig
+                          : fig?.url;
+
+                      if (!figureUrl) return null;
+
+                      return (
+                        <a
+                          key={`${key}-${index}`}
+                          href={figureUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-between p-4 bg-white/10 hover:bg-white/20 rounded-2xl transition-all group"
+                        >
+                          <div className="flex items-center gap-3">
+                            <FileText size={18} />
+                            <span className="font-bold text-xs capitalize">
+                              {key.replace(/([A-Z])/g, ' $1')} {index + 1}
+                            </span>
+                          </div>
+
+                          <Download
+                            size={14}
+                            className="group-hover:translate-y-0.5 transition-transform"
+                          />
+                        </a>
+                      );
+                    });
+                  }
+
+                  // Handle normal files
+                  if (!file) return null;
+
+                  const fileUrl =
+                    typeof file === "string"
+                      ? file
+                      : file?.url;
+
+                  if (!fileUrl) return null;
 
                   return (
                     <a
                       key={key}
-                      href={url}
+                      href={fileUrl}
                       target="_blank"
+                      rel="noopener noreferrer"
                       className="flex items-center justify-between p-4 bg-white/10 hover:bg-white/20 rounded-2xl transition-all group"
                     >
                       <div className="flex items-center gap-3">
