@@ -1,261 +1,352 @@
 "use client";
-
 import React, { useState } from "react";
-import { BookOpen, AlertCircle, CheckCircle2, Award, X } from "lucide-react";
+import {
+  FileText,
+  Download,
+  CheckCircle2,
+  Layers,
+  ShieldCheck,
+  HelpCircle,
+  ExternalLink,
+  ChevronRight,
+  Info,
+  Image as ImageIcon,
+  MessageSquare,
+  Users
+} from "lucide-react";
+import { useRouter } from "next/navigation";
 
-/* =========================================
-   NEW: Modal Component for Full Text
-========================================= */
-const FullTextModal = ({ isOpen, onClose, title, content }) => {
-  if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-      <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl flex flex-col animate-in zoom-in-95 duration-300">
-        {/* Modal Header */}
-        <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-[#fdfcfb]">
-          <h2 className="text-2xl font-bold text-[#78350f]">{title}</h2>
-          <button 
-            onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-500"
-          >
-            <X size={24} />
-          </button>
-        </div>
-        
-        {/* Modal Body */}
-        <div className="p-8 overflow-y-auto text-gray-700 leading-relaxed text-[17px]">
-          {content}
-        </div>
 
-        {/* Modal Footer */}
-        <div className="p-4 border-t border-gray-100 flex justify-end bg-[#fdfcfb]">
-          <button 
-            onClick={onClose}
-            className="px-6 py-2 bg-emerald-500 text-white font-bold rounded-lg hover:bg-emerald-600 transition-colors"
-          >
-            Close
-          </button>
-        </div>
-      </div>
+// 1. Visual Card for Manuscript Anatomy
+const AnatomyBlock = ({ title, desc, color = "bg-emerald-50" }) => (
+  <div className={`${color} border-l-4 border-emerald-500 p-4 rounded-r-lg mb-2 transition-transform hover:translate-x-2 cursor-default`}>
+    <h4 className="font-bold text-[#78350f] text-sm uppercase tracking-wider">{title}</h4>
+    <p className="text-gray-600 text-xs mt-1 leading-relaxed">{desc}</p>
+  </div>
+);
+
+// 2. Section Header
+const SectionHeader = ({ title, subtitle, icon: Icon }) => (
+  <div className="flex items-center gap-4 mb-8">
+    <div className="bg-emerald-500 p-3 rounded-xl text-white shadow-lg shadow-emerald-200">
+      <Icon size={28} />
     </div>
-  );
-};
-
-/* =========================================
-   1️⃣ GuidelineCard - Updated with Read More
-========================================= */
-const GuidelineCard = ({ title, items, icon: Icon, hasBorder = false, onReadMore }) => (
-  <div
-    className={`bg-white p-8 rounded-xl transition-all duration-300 ease-in-out cursor-default
-    border-2 shadow-sm flex flex-col h-full
-    ${hasBorder ? "border-emerald-400" : "border-gray-100"}
-    hover:border-emerald-500 hover:shadow-xl hover:-translate-y-1`}
-  >
-    <div className="flex items-center gap-4 mb-6">
-      <div className="bg-emerald-500 p-2 rounded-md text-white">
-        <Icon size={28} strokeWidth={2.5} />
-      </div>
-      <h3 className="text-[26px] font-bold text-[#78350f]">{title}</h3>
+    <div>
+      <h2 className="text-3xl font-bold text-[#78350f]">{title}</h2>
+      <p className="text-emerald-700 font-medium">{subtitle}</p>
     </div>
-    <ul className="space-y-4 flex-grow">
-      {items.slice(0, 6).map((item, index) => (
-        <li key={index} className="flex items-start gap-3">
-          <span className="mt-1.5 shrink-0">
-            <div className="w-2.5 h-2.5 bg-emerald-500 rounded-full"></div>
-          </span>
-          <span className="text-gray-600 text-[16px] leading-snug font-medium line-clamp-2">{item}</span>
-        </li>
-      ))}
-    </ul>
-    
-    {onReadMore && (
-      <button 
-        onClick={onReadMore}
-        className="mt-6 text-emerald-600 font-bold flex items-center gap-2 hover:underline group w-fit"
-      >
-        Read Full Statement 
-        <span className="group-hover:translate-x-1 transition-transform">→</span>
-      </button>
-    )}
+  </div>
+);
+
+// 3. Info Item for the list
+const InfoItem = ({ label, value }) => (
+  <div className="flex flex-col sm:flex-row sm:items-center justify-between py-3 border-b border-emerald-50/50">
+    <span className="font-semibold text-gray-700">{label}</span>
+    <span className="text-emerald-600 font-medium">{value}</span>
   </div>
 );
 
 /* =========================================
-   (Components 2, 3, 4 remain same logic-wise)
+   Main Component
 ========================================= */
-const PeerReviewTimeline = ({ steps }) => (
-  <div className="bg-[#22c55e] rounded-2xl p-10 text-white shadow-lg">
-    <h2 className="text-4xl font-bold mb-12">Peer Review Process</h2>
-    <div className="space-y-10 max-w-5xl">
-      {steps.map((step, index) => (
-        <div key={index} className="flex items-start gap-6">
-          <div className="flex-shrink-0 w-12 h-12 rounded-full border-2 border-white/50 flex items-center justify-center font-bold text-xl">{index + 1}</div>
-          <div className="flex-grow">
-            <div className="flex items-center gap-3 mb-1">
-              <h3 className="text-2xl font-bold">{step.title}</h3>
-              {step.day && <span className="bg-white/20 text-[11px] px-3 py-1 rounded-full font-bold uppercase tracking-widest border border-white/10">{step.day}</span>}
-            </div>
-            <p className="text-emerald-50 text-[17px] leading-relaxed">{step.desc}</p>
+const AuthorGuidelines = () => {
+  const [activeTab, setActiveTab] = useState("structure");
+  const router = useRouter()
+  const handleDownload = () => {
+    const link = document.createElement("a");
+
+    link.href = "/docs/guidelines.docx";
+    link.download = "Manuscript-Template.docx";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  return (
+    <div className="bg-[#fdfcfb] min-h-screen font-sans">
+
+      {/* --- HERO SECTION --- */}
+      <div className=" py-20 px-6 border-b border-emerald-100">
+        <div className="max-w-7xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full text-sm font-bold mb-6">
+            <Info size={16} /> FOR AUTHORS & RESEARCHERS
+          </div>
+          <h1 className="text-5xl md:text-5xl font-extrabold text-[#78350f] mb-6 tracking-tight">
+            Submission <span className="text-[#22C55E]">Guidelines</span>
+          </h1>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
+            Ensure your research meets our high standards of excellence. Follow this comprehensive guide to prepare your manuscript for peer review and publication.
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-4">
+            <button
+              onClick={handleDownload}
+              className="flex items-center gap-3 bg-[#22C55E] text-white px-8 py-4 rounded-2xl font-bold transition-all shadow-xl shadow-emerald-200 "
+            >
+              <Download size={20} /> Download Word Template
+            </button>
+            <button onClick={() => router.push("/submit")} className="flex items-center gap-3 bg-white border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-50 px-8 py-4 rounded-2xl font-bold transition-all">
+              Online Submission System <ExternalLink size={18} />
+            </button>
           </div>
         </div>
-      ))}
-    </div>
-  </div>
-);
+      </div>
 
-const DocumentChecklist = ({ title, items }) => (
-  <div className="bg-[#fdfbf7] border-2 border-emerald-100 p-10 rounded-2xl shadow-sm">
-    <h3 className="text-[28px] font-bold text-[#78350f] mb-8">{title}</h3>
-    <ul className="space-y-5">
-      {items.map((item, index) => (
-        <li key={index} className="flex items-center gap-4 text-[#7c4d25] font-medium">
-          <CheckCircle2 className="text-emerald-500 w-6 h-6 shrink-0" />
-          <span className="text-[17px]">{item}</span>
-        </li>
-      ))}
-    </ul>
-  </div>
-);
-
-const QuickReference = ({ title, data }) => (
-  <div className="bg-[#fdf4f9] border-2 border-emerald-100 p-10 rounded-2xl shadow-sm">
-    <h3 className="text-[28px] font-bold text-[#78350f] mb-8">{title}</h3>
-    <div className="space-y-6">
-      {data.map((item, index) => (
-        <div key={index} className={`pb-4 ${index !== data.length - 1 ? 'border-b border-emerald-100' : ''}`}>
-          <p className="text-[#78350f] font-bold text-[16px] mb-1">{item.label}</p>
-          <p className="text-[#b45309] text-[17px]">{item.value}</p>
+      {/* --- QUICK STATS / OVERVIEW --- */}
+      <div className="max-w-7xl mx-auto px-6 -mt-10 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white p-6 rounded-2xl shadow-xl border border-emerald-50 flex items-center gap-5">
+            <div className="bg-amber-100 p-4 rounded-xl text-amber-700"><Layers size={32} /></div>
+            <div>
+              <p className="text-sm text-gray-500 font-bold uppercase tracking-widest">Format</p>
+              <p className="text-xl font-bold text-[#78350f]">APA / Numerical</p>
+            </div>
+          </div>
+          <div className="bg-white p-6 rounded-2xl shadow-xl border border-emerald-50 flex items-center gap-5">
+            <div className="bg-emerald-100 p-4 rounded-xl text-emerald-700"><Users size={32} /></div>
+            <div>
+              <p className="text-sm text-gray-500 font-bold uppercase tracking-widest">Review Type</p>
+              <p className="text-xl font-bold text-[#78350f]">Double-Blind Peer Review</p>
+            </div>
+          </div>
+          <div className="bg-white p-6 rounded-2xl shadow-xl border border-emerald-50 flex items-center gap-5">
+            <div className="bg-blue-100 p-4 rounded-xl text-blue-700"><CheckCircle2 size={32} /></div>
+            <div>
+              <p className="text-sm text-gray-500 font-bold uppercase tracking-widest">Decision Time</p>
+              <p className="text-xl font-bold text-[#78350f]">21 - 30 Days Avg.</p>
+            </div>
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
-);
-
-/* =========================================
-   5️⃣ Main Page Component
-========================================= */
-const GuidelinesPage = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const authorItems = [
-    "Manuscript length: 5,000-8,000 words",
-    "Format: Double-spaced, 12pt Times New Roman",
-    "Use 2.54cm margins on all sides",
-    "Section headings: Intro, Methods, Results, Discussion",
-  ];
-
-  // This is what shows on the CARD
-  const ethicsSummary = [
-    "Commitment to high ethical standards and high-quality research",
-    "Editors make decisions based solely on scientific quality",
-    "Reviewers provide fair, constructive, and timely evaluations",
-    "Authors must ensure original work free from plagiarism",
-    "Disclosure of potential conflicts of interest is mandatory",
-    "Protection of confidentiality for all submitted manuscripts"
-  ];
-
-  // This is the FULL TEXT for the Modal
-  const FullEthicsText = (
-    <div className="space-y-6">
-      <p className="font-bold text-lg text-[#78350f]">Publication Ethics and Malpractice Statement</p>
-      <p>The publication of scientific research is a responsible and systematic process that requires professionalism and integrity from publishers, editors, reviewers, and authors. MPA Journals is committed to maintaining high ethical standards.</p>
-      
-      <div className="space-y-2">
-        <h4 className="font-bold text-emerald-700 underline">Responsibilities of Editors</h4>
-        <p>Editors play a key role in making final decisions based solely on scientific quality, originality, and relevance. Manuscripts are evaluated without discrimination based on race, gender, nationality, or institutional affiliation.</p>
       </div>
 
-      <div className="space-y-2">
-        <h4 className="font-bold text-emerald-700 underline">Responsibilities of Reviewers</h4>
-        <p>Peer reviewers contribute significantly to quality. They must provide timely evaluations, focus on scientific validity, and keep all manuscript information confidential.</p>
+      <div className="max-w-7xl mx-auto px-6 pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+          {/* --- LEFT SIDE: MANUSCRIPT ANATOMY VISUAL --- */}
+          <div className="lg:col-span-4">
+            <div className="sticky top-28">
+              <div className="bg-white rounded-3xl p-8 shadow-2xl border border-emerald-100 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-full -mr-16 -mt-16 opacity-50"></div>
+
+                <h3 className="text-2xl font-bold text-[#78350f] mb-6 flex items-center gap-2">
+                  <FileText className="text-emerald-500" /> Manuscript Anatomy
+                </h3>
+
+                <div className="space-y-3 relative z-10">
+                  <AnatomyBlock title="Header" desc="Paper Type, Vol/Issue, Title, Author Details" color="bg-emerald-50/80" />
+                  <AnatomyBlock title="Abstract" desc="Single paragraph summary (~200 words)" />
+                  <AnatomyBlock title="Introduction" desc="Background, Aims, Literature Review" color="bg-emerald-50/50" />
+                  <AnatomyBlock title="Materials & Methods" desc="Reproducibility, Experimental Design" />
+                  <AnatomyBlock title="Results & Discussion" desc="Findings, Tables, Figures, Analysis" color="bg-emerald-50/50" />
+                  <AnatomyBlock title="Conclusion" desc="Summary, Implications, Future Work" />
+                  <AnatomyBlock title="Back Matter" desc="Author Contrib, Ethics, Funding, Refs" color="bg-[#fffbeb]" />
+                </div>
+
+                <div className="mt-8 p-4 bg-[#fdfcfb] rounded-xl border border-dashed border-emerald-300">
+                  <p className="text-xs text-gray-500 italic leading-relaxed text-center">
+                    "Ensure your document is double-spaced, 12pt Times New Roman with 2.54cm margins."
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* --- RIGHT SIDE: DETAILED GUIDELINES --- */}
+          <div className="lg:col-span-8">
+
+            {/* TABS NAVIGATION */}
+            <div className="flex flex-wrap gap-4 mb-10 border-b border-gray-200 pb-2">
+              {['structure', 'formatting', 'ethics', 'compliance'].map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`px-6 py-2 font-bold text-sm uppercase tracking-widest transition-all
+                    ${activeTab === tab ? 'text-emerald-600 border-b-2 border-emerald-600' : 'text-gray-400 hover:text-emerald-500'}`}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
+
+            {/* TAB CONTENT: STRUCTURE */}
+            {activeTab === 'structure' && (
+              <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <section>
+                  <SectionHeader title="1. Core Sections" subtitle="Detailed breakdown of content requirements" icon={Layers} />
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-emerald-50">
+                      <h4 className="font-bold text-[#78350f] mb-3">Introduction</h4>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        Establish background, highlight importance, and clearly outline the research aim. Reference significant studies using numerical sequence (e.g., [1], [2-4]).
+                      </p>
+                    </div>
+                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-emerald-50">
+                      <h4 className="font-bold text-[#78350f] mb-3">Materials & Methods</h4>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        Provide enough detail for reproducibility. Include data availability, ethical approvals, and standard methods with references.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="bg-[#22C55E] text-white p-8 rounded-3xl mb-8 relative overflow-hidden">
+                    <div className="absolute right-0 bottom-0 opacity-10"><MessageSquare size={120} /></div>
+                    <h4 className="text-xl font-bold mb-4 flex items-center gap-2">
+                      <ImageIcon className="text-white" /> Results & Discussion
+                    </h4>
+                    <p className="text-emerald-50 mb-4 leading-relaxed">
+                      Present findings clearly. The Discussion should analyze and interpret results in relation to existing research rather than just restating them.
+                    </p>
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                      <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div> Compare with literature</li>
+                      <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div> Acknowledge limitations</li>
+                      <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div> Suggest future work</li>
+                      <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div> Broader implications</li>
+                    </ul>
+                  </div>
+
+                  <div className="bg-[#fffbeb] p-8 rounded-3xl border border-amber-200">
+                    <h4 className="text-xl font-bold text-[#78350f] mb-4">Conclusion</h4>
+                    <p className="text-gray-700 leading-relaxed mb-4 italic">
+                      "A required section briefly summarizing main findings and outlining possible future directions."
+                    </p>
+                  </div>
+                </section>
+              </div>
+            )}
+
+            {/* TAB CONTENT: FORMATTING */}
+            {activeTab === 'formatting' && (
+              <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <section>
+                  <SectionHeader title="2. Formatting & Media" subtitle="Visual and technical specifications" icon={ImageIcon} />
+
+                  <div className="bg-white rounded-3xl p-8 shadow-sm border border-emerald-50 mb-8">
+                    <h4 className="text-lg font-bold text-[#78350f] mb-6 border-b pb-2">Quick Reference Guide</h4>
+                    <div className="space-y-1">
+                      <InfoItem label="Word Limit" value="5,000 – 8,000 words" />
+                      <InfoItem label="Keywords" value="3 – 10 relevant terms" />
+                      <InfoItem label="Font" value="12pt Times New Roman" />
+                      <InfoItem label="Spacing" value="Double-spaced throughout" />
+                      <InfoItem label="Margins" value="2.54cm (All sides)" />
+                    </div>
+                  </div>
+
+                  <div className="border-2 border-dashed border-emerald-200 p-8 rounded-3xl bg-white">
+                    <h4 className="font-bold text-[#78350f] mb-4">Figures & Tables Standards</h4>
+                    <p className="text-gray-600 text-sm mb-6">
+                      All visuals must be referenced in consecutive order (Figure 1, Table 1). Position them as close as possible to the initial citation.
+                    </p>
+                    <div className="flex flex-col md:flex-row gap-6">
+                      <div className="flex-1 bg-gray-50 border border-gray-200 aspect-video rounded-xl flex items-center justify-center relative">
+                        <span className="text-gray-400 text-xs font-mono uppercase tracking-tighter">[ Figure Placeholder ]</span>
+                        <div className="absolute bottom-2 w-full text-center text-[10px] text-gray-500 px-4">
+                          Figure 1. Example caption centered on a single line.
+                        </div>
+                      </div>
+                      <div className="flex-1 text-sm text-gray-600 leading-relaxed">
+                        <p className="font-bold text-emerald-700 mb-2 underline decoration-emerald-200 decoration-2">Supplementary Materials:</p>
+                        Data too detailed for main text should be included as Supp. Materials with an "S" prefix (e.g., Figure S1, Table S1).
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            )}
+
+            {/* TAB CONTENT: ETHICS */}
+            {activeTab === 'ethics' && (
+              <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <section>
+                  <SectionHeader title="3. Publication Ethics" subtitle="Commitment to integrity and transparency" icon={ShieldCheck} />
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="p-6 bg-white border border-emerald-100 rounded-2xl">
+                      <h4 className="font-bold text-emerald-800 mb-3 uppercase text-xs tracking-widest">Authors' Responsibility</h4>
+                      <ul className="space-y-3 text-sm text-gray-600">
+                        <li className="flex gap-2"><ChevronRight size={16} className="text-emerald-500 shrink-0" /> Ensure work is 100% original.</li>
+                        <li className="flex gap-2"><ChevronRight size={16} className="text-emerald-500 shrink-0" /> Not under consideration elsewhere.</li>
+                        <li className="flex gap-2"><ChevronRight size={16} className="text-emerald-500 shrink-0" /> Properly acknowledge all sources.</li>
+                        <li className="flex gap-2"><ChevronRight size={16} className="text-emerald-500 shrink-0" /> Disclose all conflicts of interest.</li>
+                      </ul>
+                    </div>
+                    <div className="p-6 bg-white border border-emerald-100 rounded-2xl">
+                      <h4 className="font-bold text-emerald-800 mb-3 uppercase text-xs tracking-widest">Editors' Promise</h4>
+                      <ul className="space-y-3 text-sm text-gray-600">
+                        <li className="flex gap-2"><ChevronRight size={16} className="text-emerald-500 shrink-0" /> Fair evaluation without discrimination.</li>
+                        <li className="flex gap-2"><ChevronRight size={16} className="text-emerald-500 shrink-0" /> Decisions based solely on scientific quality.</li>
+                        <li className="flex gap-2"><ChevronRight size={16} className="text-emerald-500 shrink-0" /> Full confidentiality protection.</li>
+                        <li className="flex gap-2"><ChevronRight size={16} className="text-emerald-500 shrink-0" /> Managed conflict procedures.</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="bg-red-50 border border-red-100 p-6 rounded-2xl">
+                    <h4 className="font-bold text-red-800 mb-2 flex items-center gap-2">
+                      Malpractice Disclaimer
+                    </h4>
+                    <p className="text-xs text-red-700 leading-relaxed">
+                      The publisher disclaims any responsibility for the accuracy or reliability of content. Neither the publisher nor editors assume legal liability for errors, omissions, or consequences from the use of information in this publication.
+                    </p>
+                  </div>
+                </section>
+              </div>
+            )}
+
+            {/* TAB CONTENT: COMPLIANCE */}
+            {activeTab === 'compliance' && (
+              <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <section>
+                  <SectionHeader title="4. Final Compliance" subtitle="Mandatory statements & declarations" icon={HelpCircle} />
+
+                  <div className="space-y-4">
+                    {[
+                      { title: "Ethics Statement", desc: "Provide approval details, committee name, and code (or state N/A)." },
+                      { title: "Informed Consent", desc: "State whether consent was obtained, waived, or not applicable." },
+                      { title: "Data Availability", desc: "Include repository names, DOIs, or 'Data available on request' statement." },
+                      { title: "Funding", desc: "Declare all financial support or state 'No external funding received'." },
+                      { title: "Acknowledgments", desc: "Non-author contributions (technical help, resources) with consent." }
+                    ].map((item, idx) => (
+                      <div key={idx} className="flex items-start gap-4 p-5 bg-white rounded-2xl border border-gray-100 hover:border-emerald-200 transition-colors">
+                        <div className="bg-emerald-50 text-emerald-600 p-2 rounded-lg font-bold text-xs">{idx + 1}</div>
+                        <div>
+                          <h5 className="font-bold text-[#78350f]">{item.title}</h5>
+                          <p className="text-sm text-gray-500">{item.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              </div>
+            )}
+
+          </div>
+        </div>
       </div>
 
-      <div className="space-y-2">
-        <h4 className="font-bold text-emerald-700 underline">Responsibilities of Authors</h4>
-        <p>Authors must ensure work is original. Manuscripts must not be under consideration elsewhere. All sources must be properly acknowledged and conflicts of interest disclosed.</p>
-      </div>
-
-      <div className="space-y-2">
-        <h4 className="font-bold text-emerald-700 underline">Responsibilities of the Publisher</h4>
-        <p>MPA Journals supports editors and maintains transparent practices including conflict management, confidentiality protection, and article corrections.</p>
-      </div>
-    </div>
-  );
-
-  const reviewItems = ["Initial screening (1-2 weeks)", "Peer review (14-21 days)", "Revision period (4 weeks)", "Average total: 8-12 weeks"];
-  const citationItems = ["APA 7th edition format", "(Author Year) style", "Alphabetical organization", "Include DOI when available"];
-  
-  const timelineSteps = [
-    { title: "Submission", day: "Day 1-2", desc: "Author submits complete manuscript with all required documents." },
-    { title: "Initial Screening", day: "Day 3-7", desc: "Editorial team checks scope, format, and originality." },
-    { title: "Reviewer Assignment", day: "Day 8-10", desc: "Suitable peer reviewers are identified and invited." },
-    { title: "Peer Review", day: "Day 11-30", desc: "Reviewers provide feedback on methodology and significance." },
-    { title: "Editorial Decision", day: "Day 31-35", desc: "Editor evaluates reviews: Accept, Revise, or Reject." },
-    { title: "Revision & Resubmission", day: "Day 36-63", desc: "Author revises based on feedback and resubmits." },
-    { title: "Final Review", day: "Day 64-75", desc: "Reviewers assess revisions and recommend final decision." },
-  ];
-
-  const checklistItems = ["Title page", "Abstract (250-300 words)", "Keywords (5-7 terms)", "Main manuscript", "References in APA format", "Author contributions statement"];
-
-  const quickRefData = [
-    { label: "Word Limit", value: "5,000-8,000 words" },
-    { label: "Review Timeline", value: "14-21 days" },
-    { label: "Citation Format", value: "APA 7th Edition" },
-    { label: "File Formats", value: "PDF, DOCX, RTF" }
-  ];
-
-  return (
-    <div className="bg-[#fdfcfb] min-h-screen py-20 px-6 font-sans scroll-mt-28" id="guidelines">
-      <div className="max-w-7xl mx-auto">
-        
-        {/* Header */}
-        <div className="text-center mb-20">
-          <h1 className="text-5xl md:text-6xl font-bold text-[#78350f] mb-6 tracking-tight">
-            Author Guidelines & Peer Review
-          </h1>
-          <p className="text-[#a16207] text-xl max-w-3xl mx-auto leading-relaxed">
-            Comprehensive guidelines to help authors prepare and submit high-quality research papers.
+      {/* --- FOOTER CTA --- */}
+      <div className="bg-[#22C55E] py-16 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl font-bold text-white mb-4">Ready to Submit Your Manuscript?</h2>
+          <p className="text-emerald-50 mb-10 text-lg opacity-90">
+            Ensure you have checked the document against our checklist before uploading.
           </p>
-        </div>
-
-        {/* 4 Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-20">
-          <GuidelineCard title="Author Guidelines" icon={BookOpen} items={authorItems} hasBorder={true} />
-          
-          {/* ETHICS CARD WITH READ MORE */}
-          <GuidelineCard 
-            title="Ethical Considerations" 
-            icon={AlertCircle} 
-            items={ethicsSummary} 
-            onReadMore={() => setIsModalOpen(true)}
-          />
-          
-          <GuidelineCard title="Review Process" icon={CheckCircle2} items={reviewItems} />
-          <GuidelineCard title="Citation Format" icon={Award} items={citationItems} hasBorder={true} />
-        </div>
-
-        {/* Timeline Section */}
-        <div className="mb-20">
-          <PeerReviewTimeline steps={timelineSteps} />
-        </div>
-
-        {/* Bottom Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <DocumentChecklist title="Document Checklist" items={checklistItems} />
-          <QuickReference title="Quick Reference" data={quickRefData} />
+          <div className="flex flex-wrap justify-center gap-6">
+            <button
+              onClick={() => router.push("/submit")}
+              className="bg-white text-emerald-700 px-10 py-4 rounded-2xl font-bold text-lg hover:bg-emerald-50 transition-all shadow-xl">
+              Proceed to Submission
+            </button>
+            <button onClick={() => router.push("/contact")} className="bg-emerald-600 text-white border border-emerald-500/50 px-10 py-4 rounded-2xl font-bold text-lg hover:bg-emerald-800 transition-all">
+              Contact Editorial Office
+            </button>
+          </div>
         </div>
       </div>
-
-      {/* Full Text Modal */}
-      <FullTextModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-        title="Publication Ethics and Malpractice Statement"
-        content={FullEthicsText}
-      />
     </div>
   );
 };
 
-export default GuidelinesPage;
+export default AuthorGuidelines;
