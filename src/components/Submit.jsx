@@ -70,16 +70,13 @@ const Submit = () => {
 
 
   useEffect(() => {
-    const hasSeenPopup = sessionStorage.getItem("guidelinePopupShown");
 
-    if (!hasSeenPopup) {
-      const timer = setTimeout(() => {
-        setShowGuidelinePopup(true);
-        sessionStorage.setItem("guidelinePopupShown", "true");
-      }, 800);
+    
+    const timer = setTimeout(() => {
+      setShowGuidelinePopup(true);
+    }, 100);
 
-      return () => clearTimeout(timer);
-    }
+    return () => clearTimeout(timer);
   }, []);
 
   const handleInputChange = (e) => {
