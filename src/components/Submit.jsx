@@ -17,6 +17,7 @@ import {
   Loader2,
   ShieldCheck,
   Search,
+  BookOpen,
 } from "lucide-react";
 import { useSubmitManuscriptMutation } from "../store/apiSlice";
 import { useRouter } from "next/navigation";
@@ -55,6 +56,7 @@ const Submit = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showGuidelinePopup, setShowGuidelinePopup] = useState(false);
 
   useEffect(() => {
     const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
@@ -64,6 +66,20 @@ const Submit = () => {
       setIsAuthenticated(false);
     }
     setIsCheckingAuth(false);
+  }, []);
+
+
+  useEffect(() => {
+    const hasSeenPopup = sessionStorage.getItem("guidelinePopupShown");
+
+    if (!hasSeenPopup) {
+      const timer = setTimeout(() => {
+        setShowGuidelinePopup(true);
+        sessionStorage.setItem("guidelinePopupShown", "true");
+      }, 800);
+
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   const handleInputChange = (e) => {
@@ -193,6 +209,102 @@ const Submit = () => {
 
   return (
     <div className="bg-[#FFFBEB]/40 min-h-screen py-12 px-4 md:px-8 font-sans scroll-mt-24" id="submit">
+
+      {/* Premium Guideline Popup */}
+      {showGuidelinePopup && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-md px-4">
+
+          {/* Modal */}
+          <div className="relative w-full max-w-xl overflow-hidden rounded-[2rem] border border-emerald-100 bg-white shadow-[0_20px_80px_rgba(16,185,129,0.20)]">
+
+            {/* Glow Effects */}
+            <div className="absolute -top-20 -right-20 w-52 h-52 bg-emerald-200 rounded-full blur-3xl opacity-20"></div>
+            <div className="absolute -bottom-20 -left-20 w-52 h-52 bg-yellow-200 rounded-full blur-3xl opacity-20"></div>
+
+            {/* Close Button */}
+            <button
+              onClick={() => setShowGuidelinePopup(false)}
+              className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-white border border-emerald-100 flex items-center justify-center text-gray-500 hover:bg-red-50 hover:text-red-500 transition-all"
+            >
+              <X size={16} />
+            </button>
+
+            {/* Content */}
+            <div className="relative z-10 p-6 md:p-8 text-center">
+
+              {/* Icon */}
+              <div className="mx-auto mb-5 w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center shadow-xl shadow-emerald-300/30">
+                <BookOpen size={30} className="text-white" />
+              </div>
+
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 px-4 py-1.5 rounded-full text-[11px] font-bold tracking-[0.2em] uppercase mb-5">
+                Important Submission Notice
+              </div>
+
+              {/* Heading */}
+              <h2 className="text-2xl md:text-4xl font-extrabold text-[#713F12] leading-tight mb-4">
+                Please Read the
+                <span className="block text-[#10B981] mt-1">
+                  Submission Guidelines
+                </span>
+              </h2>
+
+              {/* Description */}
+              <p className="text-[#854D0E]/80 text-sm md:text-base leading-relaxed max-w-lg mx-auto mb-6">
+                Before submitting your manuscript, authors are strongly advised to
+                download the official manuscript template and carefully review all
+                submission guidelines to ensure successful peer-review processing.
+              </p>
+
+              {/* Feature Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-7">
+
+                <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-3">
+                  <p className="font-bold text-[#713F12] text-xs">
+                    Download Template
+                  </p>
+                </div>
+
+                <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-3">
+                  <p className="font-bold text-[#713F12] text-xs">
+                    Read Guidelines
+                  </p>
+                </div>
+
+                <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-3">
+                  <p className="font-bold text-[#713F12] text-xs">
+                    Avoid Rejection
+                  </p>
+                </div>
+
+              </div>
+
+              {/* Buttons */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+
+                <button
+                  onClick={() => {
+                    setShowGuidelinePopup(false);
+                    router.push("/guidelines");
+                  }}
+                  className="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#10B981] text-white font-bold text-base hover:bg-[#059669] transition-all shadow-xl shadow-emerald-200"
+                >
+                  Read Guidelines
+                </button>
+
+                <button
+                  onClick={() => setShowGuidelinePopup(false)}
+                  className="w-full sm:w-auto px-6 py-3 rounded-xl border border-emerald-200 text-[#713F12] font-semibold hover:bg-emerald-50 transition-all"
+                >
+                  Continue Submission
+                </button>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <Toaster position="top-center" reverseOrder={false} />
 
       <div className="max-w-7xl mx-auto">
@@ -200,7 +312,7 @@ const Submit = () => {
           <h1 className="text-4xl md:text-6xl font-extrabold text-[#713F12] mb-6 tracking-tight">
             Submit Your <span className="text-[#10B981]">Manuscript</span>
           </h1>
-          <p className="text-[#854D0E] text-lg max-w-2xl mx-auto leading-relaxed opacity-90">
+          <p className="text-[#854D0E] text-lg max-w-xl mx-auto leading-relaxed opacity-90">
             Join thousands of researchers publishing their work with MPA Research.
           </p>
         </div>
