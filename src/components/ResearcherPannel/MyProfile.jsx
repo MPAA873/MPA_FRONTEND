@@ -28,6 +28,8 @@ const MyProfile = () => {
   // 3. Fetch Data
   const { data: userData, isLoading: isUserLoading, error: userError } = useGetMeQuery();
   const { data: subData } = useGetMySubmissionsQuery();
+  console.log("USER ERROR:", userError);
+  console.log("USER DATA:", userData);
 
   // 4. Mutation Hook
   const [updateProfile, { isLoading: isUpdating }] = useUpdateProfileMutation();

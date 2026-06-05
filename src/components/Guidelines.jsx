@@ -12,11 +12,17 @@ import {
   Info,
   Image as ImageIcon,
   MessageSquare,
-  Users
+  Users,
+  Search,
+  UserPlus,
+  Settings,
+  FileSearch,
+  Edit3,
+  CheckSquare,
+  Globe,
+  ArrowRight
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-
-
 
 // 1. Visual Card for Manuscript Anatomy
 const AnatomyBlock = ({ title, desc, color = "bg-emerald-50" }) => (
@@ -47,26 +53,56 @@ const InfoItem = ({ label, value }) => (
   </div>
 );
 
+// 4. Workflow Step Component
+const WorkflowStep = ({ number, title, icon: Icon, isLast }) => (
+  <div className="flex items-start gap-4 relative">
+    <div className="flex flex-col items-center">
+      <div className="bg-emerald-600 text-white p-2.5 rounded-full z-10 shadow-md">
+        <Icon size={18} />
+      </div>
+      {!isLast && <div className="w-0.5 h-full bg-emerald-100 absolute top-10 left-[19px]"></div>}
+    </div>
+    <div className="pb-8">
+      <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest">Step {number}</span>
+      <h4 className="font-bold text-[#78350f] text-sm leading-tight">{title}</h4>
+    </div>
+  </div>
+);
+
 /* =========================================
    Main Component
 ========================================= */
 const AuthorGuidelines = () => {
   const [activeTab, setActiveTab] = useState("structure");
-  const router = useRouter()
+  const router = useRouter();
+
   const handleDownload = () => {
     const link = document.createElement("a");
-
     link.href = "/docs/guidelines.docx";
     link.download = "Manuscript-Template.docx";
-
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
+  const workflowSteps = [
+    { title: "Manuscript Submission", icon: FileText },
+    { title: "Admin Assessment", icon: Settings },
+    { title: "Plagiarism Screening", icon: Search },
+    { title: "Editor Assignment", icon: UserPlus },
+    { title: "Suitability Check", icon: CheckCircle2 },
+    { title: "Reviewer Assignment", icon: Users },
+    { title: "Single-Anonymous Peer Review", icon: ShieldCheck },
+    { title: "Review Reports", icon: FileSearch },
+    { title: "Editorial Decision (Accept/Revise/Reject)", icon: MessageSquare },
+    { title: "Author Revision", icon: Edit3 },
+    { title: "Final Decision", icon: CheckSquare },
+    { title: "Copyediting & Production", icon: Layers },
+    { title: "Publication", icon: Globe },
+  ];
+
   return (
     <div className="bg-[#fdfcfb] min-h-screen font-sans">
-
       {/* --- HERO SECTION --- */}
       <div className=" py-20 px-6 border-b border-emerald-100">
         <div className="max-w-7xl mx-auto text-center">
@@ -108,7 +144,7 @@ const AuthorGuidelines = () => {
             <div className="bg-emerald-100 p-4 rounded-xl text-emerald-700"><Users size={32} /></div>
             <div>
               <p className="text-sm text-gray-500 font-bold uppercase tracking-widest">Review Type</p>
-              <p className="text-xl font-bold text-[#78350f]">Double-Blind Peer Review</p>
+              <p className="text-xl font-bold text-[#78350f]">single anonymized review process</p>
             </div>
           </div>
           <div className="bg-white p-6 rounded-2xl shadow-xl border border-emerald-50 flex items-center gap-5">
@@ -158,7 +194,7 @@ const AuthorGuidelines = () => {
 
             {/* TABS NAVIGATION */}
             <div className="flex flex-wrap gap-4 mb-10 border-b border-gray-200 pb-2">
-              {['structure', 'formatting', 'ethics', 'compliance'].map((tab) => (
+              {['structure', 'formatting', 'review process', 'ethics', 'compliance'].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
@@ -249,6 +285,51 @@ const AuthorGuidelines = () => {
                       <div className="flex-1 text-sm text-gray-600 leading-relaxed">
                         <p className="font-bold text-emerald-700 mb-2 underline decoration-emerald-200 decoration-2">Supplementary Materials:</p>
                         Data too detailed for main text should be included as Supp. Materials with an "S" prefix (e.g., Figure S1, Table S1).
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            )}
+
+            {/* TAB CONTENT: REVIEW PROCESS (NEW SECTION) */}
+            {activeTab === 'review process' && (
+              <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <section>
+                  <SectionHeader title="Editorial Workflow" subtitle="The journey from submission to publication" icon={Users} />
+                  
+                  <div className="bg-white rounded-3xl p-8 shadow-sm border border-emerald-50 mb-10">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-0">
+                      {workflowSteps.map((step, index) => (
+                        <WorkflowStep 
+                          key={index} 
+                          number={index + 1} 
+                          title={step.title} 
+                          icon={step.icon} 
+                          isLast={index === workflowSteps.length - 1} 
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="bg-emerald-50 rounded-3xl p-8 border border-emerald-100">
+                    <h4 className="text-xl font-bold text-[#78350f] mb-4 flex items-center gap-2">
+                      <ShieldCheck className="text-emerald-600" /> Peer Review Description
+                    </h4>
+                    <div className="space-y-4 text-gray-700 text-sm leading-relaxed">
+                      <p>
+                        Our journal utilizes a <strong>Single-Anonymous Peer Review</strong> model. In this system, the reviewers' identities are kept hidden from the authors, while the reviewers are aware of the authors' identities and affiliations. 
+                      </p>
+                      <p>
+                        This approach allows reviewers to provide honest, critical, and constructive feedback without the pressure of personal influence, ensuring that every published manuscript meets the highest standards of scientific rigor and academic integrity.
+                      </p>
+                      <div className="bg-white p-4 rounded-xl border border-emerald-200 flex items-center gap-4">
+                        <div className="h-10 w-10 bg-emerald-600 rounded-full flex items-center justify-center text-white shrink-0">
+                          <CheckCircle2 size={20} />
+                        </div>
+                        <p className="text-xs italic text-gray-500">
+                          "Each manuscript is typically evaluated by at least two independent subject matter experts before an editorial decision is reached."
+                        </p>
                       </div>
                     </div>
                   </div>
