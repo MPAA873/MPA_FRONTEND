@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { useGetManuscriptByIdQuery } from "../../../store/apiSlice";
+import { useGetPublishedManuscriptByIdQuery } from "../../../store/apiSlice";
 import {
   ChevronLeft, FileText, Globe, BarChart2,
   ExternalLink, Calendar, Hash,
@@ -18,7 +18,7 @@ export default function ArticleDetail() {
   const [activeTab, setActiveTab] = useState("abstract");
 
   // Fetching manuscript data
-  const { data, isLoading, error } = useGetManuscriptByIdQuery(id);
+  const { data, isLoading, error } = useGetPublishedManuscriptByIdQuery(id);
   const article = data?.manuscript;
 
   const keywords = useMemo(() => {

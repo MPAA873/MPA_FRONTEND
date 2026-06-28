@@ -61,7 +61,13 @@ const ReviseManuscript = () => {
       return;
     }
 
-    if (!files.reviewChecklist) {
+    // if (!files.reviewChecklist) {
+    //   toast.error("Review checklist file is required");
+    //   return;
+    // }
+
+    // Review checklist sirf normal revision me mandatory hoga
+    if (!isProofing && !files.reviewChecklist) {
       toast.error("Review checklist file is required");
       return;
     }
@@ -135,6 +141,9 @@ const ReviseManuscript = () => {
           </div>
 
           <form onSubmit={handleFormSubmit} className="space-y-8">
+            <p className="text-xs text-gray-500">
+              <span className="text-red-600 font-bold">*</span> Indicates required fields.
+            </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {[
                 { id: "manuscriptFile", label: "Manuscript", sub: "PDF, DOCX", exist: manuscript?.files?.manuscriptFile },
@@ -155,7 +164,18 @@ const ReviseManuscript = () => {
                     <>
                       <input type="file" className="absolute inset-0 opacity-0 cursor-pointer z-10" onChange={(e) => handleFileChange(e, item.id)} />
                       <div className="bg-white p-3 rounded-full shadow-sm mb-3"><Upload size={20} className="text-[#10B981]" /></div>
-                      <p className="text-[#713F12] text-sm font-semibold">Upload {isProofing ? "Final" : "New"} {item.label}</p>
+                      <p className="text-[#713F12] text-sm font-semibold">
+                        Upload {isProofing ? "Final" : "New"} {item.label}
+
+                        {(
+                          item.id === "manuscriptFile" ||
+                          (!isProofing && item.id === "reviewChecklist")
+                        ) && (
+                            <span className="text-red-600 ml-1">*</span>
+                          )}
+                      </p>
+
+
                       {item.exist && <span className="text-[10px] text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full mt-2">File already exists</span>}
                     </>
                   ) : (

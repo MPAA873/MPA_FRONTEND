@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { useGetManuscriptByIdQuery } from '@/store/apiSlice';
+import { useGetPublishedManuscriptByIdQuery } from '@/store/apiSlice';
 import {
   FileText, Download, Calendar, Users,
   ChevronLeft, BookOpen, Printer, Link as LinkIcon, Check,
@@ -18,7 +18,7 @@ const XLogo = () => (
 const ArticleDetails = () => {
   const { id } = useParams();
   const router = useRouter();
-  const { data, isLoading, error } = useGetManuscriptByIdQuery(id);
+  const { data, isLoading, error } = useGetPublishedManuscriptByIdQuery(id);
 
 
   const [copied, setCopied] = useState(false);

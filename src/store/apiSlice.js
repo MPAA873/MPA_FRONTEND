@@ -78,27 +78,13 @@ export const apiSlice = createApi({
       transformResponse: (response) => response.articles?.[0] || null,
     }),
 
-    // getPublishedArticles: builder.query({
-    //   query: ({ year, page = 1, limit = 6 } = {}) => {
-    //     const params = new URLSearchParams({
-    //       ...(year && year !== "undefined" && { year }),
-    //       page,
-    //       limit,
-    //     }).toString();
-    //     return `/manuscripts/published?${params}`;
-    //   },
-    //   providesTags: ["Manuscript"],
-    // }),
-
-
-
     getPublishedArticles: builder.query({
 
       query: (params = {}) => {
-        const { year, page = 1, limit = 10, type } = params; 
+        const { year, page = 1, limit = 10, type } = params;
         const queryParams = new URLSearchParams({
           ...(year && { year }),
-          ...(type && { type }), 
+          ...(type && { type }),
           page,
           limit,
         }).toString();
@@ -109,6 +95,10 @@ export const apiSlice = createApi({
 
     getPublishedYears: builder.query({
       query: () => "/manuscripts/year",
+    }),
+
+    getPublishedManuscriptById: builder.query({
+      query: (id) => `/manuscripts/published/${id}`,
     }),
 
     getManuscriptById: builder.query({
@@ -165,6 +155,7 @@ export const {
   useGetMeQuery,
   useUpdateProfileMutation,
   useGetMySubmissionsQuery,
+  useGetPublishedManuscriptByIdQuery,
   useGetPublishedArticlesQuery,
   useGetManuscriptByIdQuery,
   useSubmitRevisionMutation,
