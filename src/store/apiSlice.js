@@ -78,14 +78,31 @@ export const apiSlice = createApi({
       transformResponse: (response) => response.articles?.[0] || null,
     }),
 
+    // getPublishedArticles: builder.query({
+    //   query: ({ year, page = 1, limit = 6 } = {}) => {
+    //     const params = new URLSearchParams({
+    //       ...(year && year !== "undefined" && { year }),
+    //       page,
+    //       limit,
+    //     }).toString();
+    //     return `/manuscripts/published?${params}`;
+    //   },
+    //   providesTags: ["Manuscript"],
+    // }),
+
+
+
     getPublishedArticles: builder.query({
-      query: ({ year, page = 1, limit = 6 } = {}) => {
-        const params = new URLSearchParams({
-          ...(year && year !== "undefined" && { year }),
+
+      query: (params = {}) => {
+        const { year, page = 1, limit = 10, type } = params; 
+        const queryParams = new URLSearchParams({
+          ...(year && { year }),
+          ...(type && { type }), 
           page,
           limit,
         }).toString();
-        return `/manuscripts/published?${params}`;
+        return `/manuscripts/published?${queryParams}`;
       },
       providesTags: ["Manuscript"],
     }),

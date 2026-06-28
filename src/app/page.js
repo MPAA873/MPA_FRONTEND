@@ -9,7 +9,6 @@ export default function Page() {
       <AnnouncementBanner />
       <Hero />
       <Articles/>
-      <AuthorGuidelines/>
     </div>
   );
 }
