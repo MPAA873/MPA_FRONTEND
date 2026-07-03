@@ -1,5 +1,5 @@
 "use client"
-import { User, LogOut, LayoutDashboard, ChevronDown, Menu, X, Search, Mail } from "lucide-react";
+import { User, LogOut, LayoutDashboard, ChevronDown, Menu, X, Search, Mail, HelpCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
@@ -62,27 +62,31 @@ const Header = () => {
   return (
     <div className="w-full relative z-[100]">
 
-      {/* 1. TOP UTILITY BAR - Optimized for small screens */}
-      <div className="w-full bg-[#854D0E] text-white">
-        <div className="max-w-7xl mx-auto px-4 h-9 sm:h-11 flex items-center justify-between gap-2 overflow-hidden">
+      {/* 1. TOP UTILITY BAR - Enhanced with Professional Help Text */}
+      <div className="w-full bg-[#854D0E] text-white border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 h-9 sm:h-11 flex items-center justify-between gap-4 overflow-hidden">
           
           <div className="flex items-center gap-2 flex-shrink-0">
             <Link
               href="/submit"
-              className="bg-white text-[#854D0E] text-[10px] sm:text-[12px] font-black px-3 py-1 rounded-full whitespace-nowrap"
+              className="bg-white text-[#854D0E] text-[10px] sm:text-[11px] md:text-[12px] font-black px-3 py-1 rounded-full whitespace-nowrap hover:bg-gray-100 transition-colors shadow-sm"
             >
               Submit Now
             </Link>
           </div>
 
+          {/* Professional Support Message */}
           <div className="flex items-center gap-2 min-w-0">
             <a
               href="mailto:info@mparesearch.com"
-              className="flex items-center gap-1.5 text-[10px] sm:text-[12px] font-bold text-white whitespace-nowrap"
+              className="flex items-center gap-1.5 text-[10px] sm:text-[12px] font-medium text-white/90 hover:text-white transition-all group"
             >
-              <Mail size={13} className="flex-shrink-0" />
-              <span className="hidden xs:inline">info@mparesearch.com</span>
-              <span className="xs:hidden">Contact</span>
+              <HelpCircle size={14} className="flex-shrink-0 text-white/70 group-hover:text-white hidden sm:block" />
+              <span className="hidden md:inline text-white/80">Facing any problem? Mail us:</span>
+              <span className="flex items-center gap-1 font-bold">
+                <Mail size={13} className="md:hidden" />
+                <span className="underline underline-offset-4 decoration-white/30 group-hover:decoration-white">info@mparesearch.com</span>
+              </span>
             </a>
           </div>
         </div>
@@ -92,7 +96,7 @@ const Header = () => {
       <header className="w-full bg-white border-b border-gray-100 sticky top-0 shadow-sm z-[110]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center h-16 md:h-20">
 
-          {/* Logo - Fixed width on mobile to prevent squashing */}
+          {/* Logo */}
           <Link href="/" className="relative w-28 h-7 sm:w-40 sm:h-10 md:w-56 md:h-12 flex-shrink-0">
             <Image src="/newLogo.png" alt="MPA Research Logo" fill className="object-contain" priority />
           </Link>
@@ -107,7 +111,7 @@ const Header = () => {
               ))}
             </div>
 
-            <Link href="/menuscript-search" className="p-2 text-[#854D0E] hover:bg-gray-50 rounded-full">
+            <Link href="/menuscript-search" className="p-2 text-[#854D0E] hover:bg-gray-50 rounded-full transition-colors">
               <Search size={20} />
             </Link>
 
@@ -136,13 +140,13 @@ const Header = () => {
                 )}
               </div>
             ) : (
-              <Link href="/login" className="px-6 py-2.5 rounded-full bg-[#854D0E] text-white text-sm font-bold">
+              <Link href="/login" className="px-6 py-2.5 rounded-full bg-[#854D0E] text-white text-sm font-bold hover:bg-[#6b3e0b] transition-colors">
                 Login
               </Link>
             )}
           </nav>
 
-          {/* Mobile Buttons - Fixed Spacing */}
+          {/* Mobile Buttons */}
           <div className="lg:hidden flex items-center gap-1 sm:gap-2">
             <Link href="/menuscript-search" className="p-2 text-[#854D0E] hover:bg-gray-50 rounded-full transition-all">
               <Search size={22} />
@@ -156,7 +160,7 @@ const Header = () => {
           </div>
         </div>
 
-        {/* 3. MOBILE SIDEBAR SYSTEM - Outside header content but inside header for sticky context */}
+        {/* 3. MOBILE SIDEBAR SYSTEM */}
         <div 
           className={`fixed inset-0 z-[9999] lg:hidden ${isMobileMenuOpen ? "pointer-events-auto" : "pointer-events-none"}`}
         >
@@ -175,7 +179,7 @@ const Header = () => {
                <div className="relative w-28 h-7">
                  <Image src="/newLogo.png" alt="Logo" fill className="object-contain" />
                </div>
-               <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 bg-gray-50 text-gray-500 rounded-full">
+               <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 bg-gray-50 text-gray-500 rounded-full hover:bg-gray-100">
                  <X size={20} />
                </button>
             </div>
@@ -191,7 +195,7 @@ const Header = () => {
                         <User size={20} />
                       </div>
                       <div className="flex flex-col min-w-0">
-                        <span className="text-[10px] text-gray-400 font-bold uppercase">Account</span>
+                        <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Account</span>
                         <span className="text-sm font-black text-gray-800 truncate">
                           {isLoading ? "Loading..." : userData?.user?.name || userData?.name || "User"}
                         </span>
@@ -202,7 +206,7 @@ const Header = () => {
                   <Link
                     href="/login"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-[#854D0E] text-white text-sm font-bold shadow-lg shadow-yellow-100/50"
+                    className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-[#854D0E] text-white text-sm font-bold shadow-lg shadow-yellow-100/50 hover:bg-[#6b3e0b] transition-all"
                   >
                     <User size={18} /> Login to Account
                   </Link>
@@ -226,9 +230,17 @@ const Header = () => {
                   ))}
                 </div>
               </div>
+
+              {/* Mobile Help Support Link */}
+              <div className="px-6 py-4 mt-auto border-t border-gray-50">
+                <p className="text-[11px] text-gray-400 font-bold uppercase mb-2">Support</p>
+                <a href="mailto:info@mparesearch.com" className="flex items-center gap-2 text-sm font-bold text-[#854D0E]">
+                  <Mail size={16} /> info@mparesearch.com
+                </a>
+              </div>
             </div>
 
-            {/* Bottom Actions - Always visible if logged in */}
+            {/* Bottom Actions */}
             {isLoggedIn && (
               <div className="p-4 bg-gray-50 border-t border-gray-100 flex flex-col gap-2">
                 <Link
@@ -240,7 +252,7 @@ const Header = () => {
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="flex items-center justify-center gap-3 w-full py-3.5 rounded-xl bg-white text-red-600 font-bold border border-red-100 shadow-sm"
+                  className="flex items-center justify-center gap-3 w-full py-3.5 rounded-xl bg-white text-red-600 font-bold border border-red-100 shadow-sm hover:bg-red-50"
                 >
                   <LogOut size={18} /> Sign Out
                 </button>
