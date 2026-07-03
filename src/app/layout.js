@@ -4,6 +4,8 @@ import "./globals.css";
 import ReduxProvider from "@/components/Layout/ReduxProvider";
 import CookieConsent from "@/components/Layout/CookieConsent";
 import LayoutWrapper from "@/components/Layout/LayoutWrapper";
+import ScrollToTop from "@/components/Layout/ScrollToTop";
+import FloatingContact from "@/components/Layout/FloatingContact";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +37,10 @@ export default function RootLayout({ children }) {
           <LayoutWrapper>
             {children}
           </LayoutWrapper>
+
+          <FloatingContact />
+
+          <ScrollToTop />
 
           <CookieConsent />
         </ReduxProvider>
