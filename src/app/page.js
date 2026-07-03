@@ -1,5 +1,5 @@
 import Hero from "@/components/Hero";
-import EditorialLeadership from "@/components/EditorialLeadership"; // Imported New Component
+import EditorialLeadership from "@/components/EditorialLeadership"; 
 import Articles from "@/components/Articles";
 import { AnnouncementBanner } from "@/utils/AnnouncementSystem";
 
