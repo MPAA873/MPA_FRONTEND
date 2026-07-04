@@ -85,7 +85,7 @@ export default function Articles() {
   const [editorIdx, setEditorIdx] = useState(0);
   const currentIssueRef = useRef(null);
   const mostViewedRef = useRef(null);
-  
+
   // NEW: Dynamic refs for Ad-Hoc sliders
   const adHocRefs = useRef({});
 
@@ -95,7 +95,7 @@ export default function Articles() {
   const homepageData = response?.data || {};
   const editorChoices = homepageData.editorChoice || [];
   const currentIssue = homepageData.currentIssue || [];
-  const adHocIssues = homepageData.adHocIssues || []; 
+  const adHocIssues = homepageData.adHocIssues || [];
   const mostViewed = homepageData.mostViewed || [];
 
   // Navigation Logic for Editor's Choice
@@ -128,7 +128,7 @@ export default function Articles() {
 
   return (
     <section id="articles" className="scroll-mt-24 max-w-7xl mx-auto py-14 px-4 md:px-8 font-sans">
-      
+
       {/* ── PAGE HEADER ── */}
       <div className="mb-14 ">
         <div className="flex items-center gap-2 mb-3">
@@ -145,8 +145,8 @@ export default function Articles() {
           <div className="flex flex-wrap items-center justify-between mb-6 gap-4">
             <SectionHeader label="Editor's Choice" icon={Star} />
             <div className="flex items-center gap-6">
-               {/* Pagination Dots */}
-               <div className="hidden sm:flex gap-1.5">
+              {/* Pagination Dots */}
+              <div className="hidden sm:flex gap-1.5">
                 {editorChoices.map((_, i) => (
                   <button key={i} onClick={() => setEditorIdx(i)} className={`h-2 rounded-full transition-all ${i === editorIdx ? "w-7 bg-[#10B981]" : "w-2 bg-[#10B981]/20"}`} />
                 ))}
@@ -174,9 +174,9 @@ export default function Articles() {
               </div>
               <div className="w-full lg:w-[40%] min-h-[280px] relative overflow-hidden bg-[#FEF3C7]/40">
                 {editorChoices[editorIdx]?.files?.manuscriptImage ? (
-                  <img 
-                    src={editorChoices[editorIdx].files.manuscriptImage} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                  <img
+                    src={editorChoices[editorIdx].files.manuscriptImage}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     alt="Featured"
                   />
                 ) : (
@@ -190,18 +190,34 @@ export default function Articles() {
         </div>
       )}
 
+
       {/* ── SECTION 2: CURRENT ISSUE ── */}
-      <div className="mb-16">
-        <div className="flex items-center justify-between mb-6">
-          <SectionHeader label="Current Issue" icon={BookOpen} />
-          <SliderControls onLeft={() => scroll(currentIssueRef, "left")} onRight={() => scroll(currentIssueRef, "right")} />
+      {currentIssue.length > 0 && (
+        <div className="mb-16">
+          <div className="flex items-center justify-between mb-6">
+            <SectionHeader label="Current Issue" icon={BookOpen} />
+            <SliderControls
+              onLeft={() => scroll(currentIssueRef, "left")}
+              onRight={() => scroll(currentIssueRef, "right")}
+            />
+          </div>
+
+          <div
+            ref={currentIssueRef}
+            className="flex gap-4 overflow-x-auto pb-3 no-scrollbar"
+          >
+            {currentIssue.map((article) => (
+              <ArticlePill
+                key={article._id}
+                article={article}
+                onClick={() => router.push(`/articles/${article._id}`)}
+              />
+            ))}
+          </div>
         </div>
-        <div ref={currentIssueRef} className="flex gap-4 overflow-x-auto pb-3 no-scrollbar">
-          {currentIssue.map((article) => (
-            <ArticlePill key={article._id} article={article} onClick={() => router.push(`/articles/${article._id}`)} />
-          ))}
-        </div>
-      </div>
+      )}
+
+
 
       {/* ── SECTION 3: AD-HOC / SPECIAL ISSUES ── */}
       {adHocIssues.map((group) => (

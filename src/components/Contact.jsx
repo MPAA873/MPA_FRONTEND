@@ -83,7 +83,7 @@ const Contact = () => {
             </div>
             <h3 className="text-xl font-semibold text-amber-900 mb-3">Email</h3>
             <p className="text-amber-900 font-medium">
-              info@mparesearch.org
+              info@mparesearch.com
             </p>
             <p className="text-sm text-amber-600">
               General inquiries and submission support

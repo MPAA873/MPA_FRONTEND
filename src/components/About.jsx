@@ -30,8 +30,8 @@ const About = () => {
   ];
 
   const stats = [
-    { label: "Disciplines", value: "25+" },
-    { label: "Avg. Review Time", value: "21 days" },
+    { label: "Disciplines", value: "Cross - Disciplinary Journals" },
+    { label: "Avg. Review Time", value: "14-21 days" },
   ];
 
   return (

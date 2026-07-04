@@ -200,7 +200,7 @@ const Submit = () => {
   const steps = [
     { icon: <Upload size={24} />, title: "Submit Manuscript", desc: "Upload your research paper in PDF or Word format." },
     { icon: <FileText size={24} />, title: "Initial Review", desc: "Our editorial team checks for scope and format compliance." },
-    { icon: <Clock size={24} />, title: "Peer Review", desc: "Your paper is sent to expert reviewers (typically 21 days)." },
+    { icon: <Clock size={24} />, title: "Peer Review", desc: "Your paper is sent to expert reviewers (typically 14-21 days)." },
     { icon: <CheckCircle size={24} />, title: "Decision", desc: "Receive acceptance, minor revision, or rejection decision." },
   ];
 
