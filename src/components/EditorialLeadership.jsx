@@ -11,8 +11,9 @@ const leadEditors = [
     title: "Chief Editor",
     specialty: "PhD in Bioengineering",
     org: "Chandigarh University, Mohali, India",
-    image: "/images/PratibhaPanday.png", 
+    image: "/images/PratibhaPanday.png",
     desc: "An ardent learner with PhD in Bioengineering (Biotechnology), M- Tech (Silver Medalist) Biotechnology), MBA (HR) and B-Tech (Biotechnology) actively involved in research and development in the field of Biotechnology and Bioengineering.",
+    orcid: "https://orcid.org/0000-0001-7029-8517",
   },
   {
     id: "chief-2",
@@ -22,8 +23,30 @@ const leadEditors = [
     org: "Saveetha Institute of Medical and Technical Sciences, India",
     image: "/images/fahad-khan.png",
     desc: "Working in the Department of Community Medicine at the Saveetha Institute of Medical and Technical Sciences, India. Fahad’s research investigates the effects of natural compounds against different types of cancers.",
+    orcid: "https://orcid.org/0000-0003-3449-7978",
   },
 ];
+
+// Official ORCID "iD" mark — inline SVG so it renders crisply at any
+// size without an extra network request, using ORCID's brand green.
+function OrcidIcon({ size = 16 }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 256 256"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <circle cx="128" cy="128" r="128" fill="#A6CE39" />
+      <path
+        fill="#FFFFFF"
+        d="M86.3 186.2H70.9V79.1h15.4v107.1zM110.8 79.1h41.6c39.6 0 57 28.3 57 53.6 0 27.5-21.5 53.6-56.8 53.6h-41.8V79.1zm15.4 93.3h24.5c34.9 0 42.9-26.5 42.9-39.7 0-21.5-13.7-39.7-43.7-39.7h-23.7v79.4zM78.6 56.8c0 5.5-4.5 10.1-10.1 10.1-5.6 0-10.1-4.6-10.1-10.1 0-5.6 4.5-10.1 10.1-10.1 5.6 0 10.1 4.5 10.1 10.1z"
+      />
+    </svg>
+  );
+}
 
 const EditorialLeadership = () => {
   const router = useRouter();
@@ -38,7 +61,7 @@ const EditorialLeadership = () => {
   return (
     <section className="relative w-full bg-[#FDF6ED] py-16 px-4 border-t border-green-50">
       <div className="max-w-6xl mx-auto">
-        
+
         {/* Header Section */}
         <div className="flex flex-col items-center mb-12 text-center">
           <div className="flex items-center gap-2 text-[#22C55E] bg-white px-4 py-1 rounded-full shadow-sm border border-green-100 mb-4">
@@ -68,9 +91,9 @@ const EditorialLeadership = () => {
                 {/* Image Section */}
                 <div className="relative shrink-0">
                   <div className="w-28 h-28 rounded-2xl overflow-hidden ring-4 ring-[#FDF6ED] group-hover:ring-green-100 transition-all duration-500">
-                    <img 
-                      src={editor.image} 
-                      alt={editor.name} 
+                    <img
+                      src={editor.image}
+                      alt={editor.name}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                   </div>
@@ -90,13 +113,28 @@ const EditorialLeadership = () => {
                   <p className="text-gray-500 text-sm leading-relaxed line-clamp-3 mb-4 italic">
                     "{editor.desc}"
                   </p>
-                  
-                  <button 
-                    onClick={() => router.push('/editorial-board')}
-                    className="inline-flex items-center gap-2 text-[#22C55E] text-xs font-bold hover:translate-x-2 transition-transform"
-                  >
-                    FULL RESEARCH BIO <ArrowRight size={14} />
-                  </button>
+
+                  <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                    <button
+                      onClick={() => router.push('/editorial-board')}
+                      className="inline-flex items-center gap-2 text-[#22C55E] text-xs font-bold hover:translate-x-2 transition-transform"
+                    >
+                      FULL RESEARCH BIO <ArrowRight size={14} />
+                    </button>
+
+                    {editor.orcid && (
+                      <a
+                        href={editor.orcid}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#713F12] bg-[#FDF6ED] border border-[#EFE1C6] rounded-full px-3 py-1.5 hover:border-[#A6CE39] hover:bg-[#A6CE39]/10 hover:text-[#5C7A1E] transition-colors"
+                      >
+                        <OrcidIcon size={14} />
+                        ORCID Profile
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -108,7 +146,7 @@ const EditorialLeadership = () => {
       </div>
 
       {/* Smooth Scroll Indicator (CSS Animation) */}
-      <div 
+      <div
         className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center cursor-pointer group"
         onClick={scrollToNext}
       >
