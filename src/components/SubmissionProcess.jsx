@@ -66,14 +66,7 @@ const workflowSteps = [
         time: "48 Hours",
         color: "from-emerald-500 to-teal-700",
     },
-    {
-        id: 7,
-        title: "Journal Dispatch",
-        desc: "Hard copies and certificates shipped to the corresponding author.",
-        icon: Send,
-        time: "3-5 Days",
-        color: "from-rose-400 to-rose-600",
-    },
+
 ];
 
 const AUTOPLAY_MS = 2000; 

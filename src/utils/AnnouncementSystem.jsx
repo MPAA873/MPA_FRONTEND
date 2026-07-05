@@ -1,60 +1,79 @@
 "use client";
+
 import React from "react";
 import { Sparkles, Zap, Info } from "lucide-react";
 
 export const AnnouncementBanner = () => {
   return (
-    <div className="w-full bg-[#FDF6ED]/80 backdrop-blur-sm py-2.5 overflow-hidden border-b border-green-100/50 relative z-40">
-      {/* Marquee Container */}
-      <div className="flex whitespace-nowrap animate-marquee items-center">
-        {[...Array(8)].map((_, i) => (
-          <div key={i} className="flex items-center gap-10 mx-5">
-            
-            {/* Status Section */}
-            <div className="flex items-center gap-2">
-              <div className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#22C55E]"></span>
-              </div>
-              <p className="text-xs md:text-sm font-semibold tracking-wide text-[#713F12]">
-                Submissions are <span className="text-[#22C55E] font-black italic">OPEN</span>
-              </p>
-            </div>
+    <div className="relative z-40 w-full border-b border-green-100 bg-[#FDF6ED]/90 backdrop-blur-sm">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-3 px-4 py-3 text-center md:gap-5 lg:gap-8">
 
-            {/* Subtle Separator Icon */}
-            <Info size={14} className="text-green-200" />
+        {/* Status */}
+        <div className="flex items-center gap-2">
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
+            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500" />
+          </span>
 
-            {/* Offer Section */}
-            <div className="flex items-center gap-2.5">
-              <Zap size={14} className="text-[#22C55E] fill-[#22C55E]/10" />
-              <p className="text-xs md:text-sm font-medium tracking-tight text-[#713F12]/80">
-                APCs are <span className="font-extrabold text-[#22C55E] border-b-2 border-green-200">FULLY WAIVED</span> 
-                <span className="mx-2 opacity-50">|</span> 
-                Valid until <span className="text-[#713F12] font-bold">31 December 2026</span>
-              </p>
-            </div>
+          <p className="text-xs font-semibold text-[#713F12] sm:text-sm">
+            Submissions are{" "}
+            <span className="font-extrabold italic text-green-600">
+              OPEN
+            </span>
+          </p>
+        </div>
 
-            {/* Brand Sparkle */}
-            <Sparkles size={14} className="text-yellow-500/50" />
-          </div>
-        ))}
+        {/* Separator */}
+        <div className="hidden md:flex">
+          <Info size={15} className="text-green-300" />
+        </div>
+
+        {/* APC */}
+        <div className="flex items-center gap-2">
+          <Zap
+            size={15}
+            className="fill-green-500/10 text-green-500"
+          />
+
+          <p className="text-xs font-medium text-[#713F12] sm:text-sm">
+            APCs are{" "}
+            <span className="font-extrabold text-green-600">
+              FULLY WAIVED
+            </span>
+          </p>
+        </div>
+
+        {/* Separator */}
+        <div className="hidden md:flex">
+          <Info size={15} className="text-green-300" />
+        </div>
+
+        {/* Date */}
+        <p className="text-xs font-medium text-[#713F12] sm:text-sm">
+          Valid until{" "}
+          <span className="font-bold">
+            31 December 2026
+          </span>
+        </p>
+
+        {/* Separator */}
+        <div className="hidden md:flex">
+          <Info size={15} className="text-green-300" />
+        </div>
+
+        {/* Extra Highlight */}
+        <div className="flex items-center gap-2">
+          <Sparkles
+            size={15}
+            className="text-yellow-500"
+          />
+
+          <p className="text-xs font-medium text-[#713F12] sm:text-sm">
+            Peer Reviewed • Open Access • Indexed Journal
+          </p>
+        </div>
+
       </div>
-
-      {/* Marquee Animation Styles */}
-      <style jsx>{`
-        .animate-marquee {
-          display: flex;
-          width: max-content;
-          animation: marquee 35s linear infinite;
-        }
-        .animate-marquee:hover {
-          animation-play-state: paused;
-        }
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-      `}</style>
     </div>
   );
 };

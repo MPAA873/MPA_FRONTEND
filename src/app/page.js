@@ -3,6 +3,7 @@ import EditorialLeadership from "@/components/EditorialLeadership";
 import Articles from "@/components/Articles";
 import { AnnouncementBanner } from "@/utils/AnnouncementSystem";
 import SubmissionProcess from "@/components/SubmissionProcess";
+import BecomeReviewer from "@/components/BecomeReviewer";
 
 export default function Page() {
   return (
@@ -17,6 +18,7 @@ export default function Page() {
       <div id="articles-section">
         <Articles />
       </div>
+      <BecomeReviewer/>
     </main>
   );
 }

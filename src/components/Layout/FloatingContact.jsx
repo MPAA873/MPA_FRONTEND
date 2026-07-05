@@ -10,14 +10,14 @@ const FloatingContact = () => {
       icon: <MessageCircle size={24} className="text-white" />,
       label: "Chat on WhatsApp",
       color: "bg-[#25D366]",
-      link: "https://wa.me/9452292537", 
+      link: "https://wa.me/8923580628", 
     },
     {
       id: "call",
       icon: <Phone size={22} className="text-white" />,
       label: "Call Now",
       color: "bg-[#007bff]", 
-      link: "tel:+8923580628", 
+      link: "tel:+91 8923580628", 
     },
     {
       id: "email",

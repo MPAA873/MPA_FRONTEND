@@ -8,21 +8,21 @@ const leadEditors = [
   {
     id: "chief-1",
     name: "Dr. Pratibha Pandey",
-    title: "Chief Editor",
+    title: "Co-Chief Editor",
     specialty: "PhD in Bioengineering",
     org: "Chandigarh University, Mohali, India",
     image: "/images/PratibhaPanday.png",
-    desc: "An ardent learner with PhD in Bioengineering (Biotechnology), M- Tech (Silver Medalist) Biotechnology), MBA (HR) and B-Tech (Biotechnology) actively involved in research and development in the field of Biotechnology and Bioengineering.",
+    desc: "Dr. Pratibha Pandey is associated with Chandigarh University, Mohali, India. Her work spans natural product-based drug discovery and phytochemical research, including plant-derived compounds for cancer therapeutics and natural coagulants for water treatment. She has co-authored studies published in journals including Water Environment Research, Cellular and Molecular Biology, and the Brazilian Journal of Pharmaceutical Sciences.",
     orcid: "https://orcid.org/0000-0001-7029-8517",
   },
   {
     id: "chief-2",
     name: "Dr. Fahad Khan",
-    title: "Editor In-Chief",
+    title: "Co-Editor In-Chief",
     specialty: "Dept. of Community Medicine",
     org: "Saveetha Institute of Medical and Technical Sciences, India",
     image: "/images/fahad-khan.png",
-    desc: "Working in the Department of Community Medicine at the Saveetha Institute of Medical and Technical Sciences, India. Fahad’s research investigates the effects of natural compounds against different types of cancers.",
+    desc: "Dr. Fahad Khan is associated with Saveetha Institute of Meidcal and Technical Sciences, India. His research focuses on natural product pharmacology and computational approaches to disease mechanisms, including anticancer compound screening and molecular studies of viral and cancer-related targets. He has co-authored work published in journals including Immuno (MDPI), Cellular and Molecular Biology, and the Brazilian Journal of Pharmaceutical Sciences.",
     orcid: "https://orcid.org/0000-0003-3449-7978",
   },
 ];
@@ -69,7 +69,7 @@ const EditorialLeadership = () => {
             <span className="text-xs font-bold uppercase tracking-wider">Board Directory</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-black text-[#713F12] tracking-tight">
-            Editorial Leadership
+            MPA Research Leadership
           </h2>
           <p className="text-[#854D0E]/70 mt-2 max-w-xl text-sm md:text-base">
             Guided by world-class researchers committed to scientific integrity and excellence in global peer-review.
@@ -110,7 +110,7 @@ const EditorialLeadership = () => {
                   <p className="text-[#713F12] text-xs font-bold mb-3 uppercase tracking-tighter opacity-80">
                     {editor.org}
                   </p>
-                  <p className="text-gray-500 text-sm leading-relaxed line-clamp-3 mb-4 italic">
+                  <p className="text-gray-500 text-sm leading-relaxed mb-4 italic">
                     "{editor.desc}"
                   </p>
 

@@ -17,6 +17,8 @@ import {
   ClipboardCheck,
   UserCheck,
   BookMarked,
+  GitBranch,
+  ArrowRight,
 } from "lucide-react";
 
 const About = () => {
@@ -69,6 +71,22 @@ const About = () => {
     { icon: <BookMarked size={22} className="text-white" />, label: "Reader" },
   ];
 
+  const publicationProcess = [
+    "Manuscript Submission",
+    "Admin Assessment",
+    "Plagiarism Screening",
+    "Editor Assignment",
+    "Suitability Check",
+    "Reviewer Assignment",
+    "Single-Anonymous Peer Review",
+    "Review Reports",
+    "Editorial Decision (Accept / Revise / Reject)",
+    "Author Revision",
+    "Final Decision",
+    "Copyediting & Production",
+    "Publication",
+  ];
+
   return (
     <>
       {/* ============================================= */}
@@ -89,6 +107,53 @@ const About = () => {
             worldwide.
           </p>
         </div>
+
+        <section className="py-12 md:py-20 px-4 sm:px-6 bg-[#FFFBEB] scroll-mt-20">
+          <div className="max-w-7xl mx-auto grid lg:grid-cols-5 gap-6 md:gap-8">
+            {/* Welcome Card */}
+            <div className="lg:col-span-3 bg-white rounded-3xl md:rounded-[2.5rem] border border-yellow-100 p-6 sm:p-10 md:p-14 shadow-sm">
+              <div className="bg-[#10B981] w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-emerald-200">
+                <BookOpen className="text-white" size={26} />
+              </div>
+              <h2 className="text-2xl md:text-4xl font-black text-[#713F12] mb-5 tracking-tight">
+                Welcome to <span className="text-[#10B981]">MPA Research</span>
+              </h2>
+              <p className="text-[#854D0E] text-sm md:text-base leading-relaxed font-medium mb-4">
+                MPA Research is an international peer-reviewed, open access
+                multidisciplinary academic journal committed to advancing scholarly
+                knowledge through the publication of high-quality, original research.
+              </p>
+              <p className="text-[#854D0E] text-sm md:text-base leading-relaxed font-medium mb-4">
+                The journal provides a global platform where researchers,
+                academicians, professionals, industry experts, and policymakers can
+                disseminate innovative research findings that contribute to
+                scientific progress, technological advancement, and societal
+                development.
+              </p>
+              <p className="text-[#854D0E] text-sm md:text-base leading-relaxed font-medium">
+                We believe that knowledge should be accessible to everyone and
+                strive to foster interdisciplinary collaboration across diverse
+                fields of study.
+              </p>
+            </div>
+
+            {/* Vision Card */}
+            <div className="lg:col-span-2 bg-[#713F12] rounded-3xl md:rounded-[2.5rem] p-6 sm:p-10 md:p-14 shadow-xl relative overflow-hidden flex flex-col justify-center">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full -mr-16 -mt-16 blur-2xl"></div>
+              <div className="bg-[#22C55E] w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center mb-6 shadow-lg relative z-10">
+                <Eye className="text-white" size={26} />
+              </div>
+              <h3 className="text-2xl md:text-3xl font-black text-white mb-4 tracking-tight relative z-10">
+                Our Vision
+              </h3>
+              <p className="text-white/90 text-sm md:text-base leading-relaxed font-medium relative z-10">
+                To become a globally recognized scholarly journal known for
+                excellence in research publishing, academic integrity, innovation,
+                and meaningful contributions to society.
+              </p>
+            </div>
+          </div>
+        </section>
 
         {/* Feature Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-16 md:mb-24">
@@ -160,56 +225,6 @@ const About = () => {
       </section>
 
       {/* ============================================= */}
-      {/* NEW: WELCOME + VISION SECTION */}
-      {/* ============================================= */}
-      <section className="py-12 md:py-20 px-4 sm:px-6 bg-[#FFFBEB] scroll-mt-20">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-5 gap-6 md:gap-8">
-          {/* Welcome Card */}
-          <div className="lg:col-span-3 bg-white rounded-3xl md:rounded-[2.5rem] border border-yellow-100 p-6 sm:p-10 md:p-14 shadow-sm">
-            <div className="bg-[#10B981] w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-emerald-200">
-              <BookOpen className="text-white" size={26} />
-            </div>
-            <h2 className="text-2xl md:text-4xl font-black text-[#713F12] mb-5 tracking-tight">
-              Welcome to <span className="text-[#10B981]">MPA Research</span>
-            </h2>
-            <p className="text-[#854D0E] text-sm md:text-base leading-relaxed font-medium mb-4">
-              MPA Research is an international peer-reviewed, open access
-              multidisciplinary academic journal committed to advancing scholarly
-              knowledge through the publication of high-quality, original research.
-            </p>
-            <p className="text-[#854D0E] text-sm md:text-base leading-relaxed font-medium mb-4">
-              The journal provides a global platform where researchers,
-              academicians, professionals, industry experts, and policymakers can
-              disseminate innovative research findings that contribute to
-              scientific progress, technological advancement, and societal
-              development.
-            </p>
-            <p className="text-[#854D0E] text-sm md:text-base leading-relaxed font-medium">
-              We believe that knowledge should be accessible to everyone and
-              strive to foster interdisciplinary collaboration across diverse
-              fields of study.
-            </p>
-          </div>
-
-          {/* Vision Card */}
-          <div className="lg:col-span-2 bg-[#713F12] rounded-3xl md:rounded-[2.5rem] p-6 sm:p-10 md:p-14 shadow-xl relative overflow-hidden flex flex-col justify-center">
-            <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full -mr-16 -mt-16 blur-2xl"></div>
-            <div className="bg-[#22C55E] w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center mb-6 shadow-lg relative z-10">
-              <Eye className="text-white" size={26} />
-            </div>
-            <h3 className="text-2xl md:text-3xl font-black text-white mb-4 tracking-tight relative z-10">
-              Our Vision
-            </h3>
-            <p className="text-white/90 text-sm md:text-base leading-relaxed font-medium relative z-10">
-              To become a globally recognized scholarly journal known for
-              excellence in research publishing, academic integrity, innovation,
-              and meaningful contributions to society.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ============================================= */}
       {/* NEW: OUR COMMITMENT SECTION */}
       {/* ============================================= */}
       <section className="py-12 md:py-20 px-4 sm:px-6 bg-white scroll-mt-20">
@@ -241,6 +256,98 @@ const About = () => {
           </div>
         </div>
       </section>
+
+
+
+      {/* ============================================= */}
+      {/* PUBLICATION PROCESS */}
+      {/* ============================================= */}
+
+      <section className="py-14 md:py-20 px-4 sm:px-6 bg-[#FFFBEB]">
+        <div className="max-w-7xl mx-auto">
+
+          {/* Heading */}
+
+          <div className="text-center mb-14">
+
+            <h2 className="text-3xl md:text-5xl font-black text-[#713F12] mb-5">
+              Publication <span className="text-[#10B981]">Process</span>
+            </h2>
+
+            <p className="max-w-3xl mx-auto text-[#854D0E] text-base md:text-lg leading-relaxed">
+              Every manuscript follows a transparent and rigorous editorial workflow
+              designed to ensure academic excellence, ethical publishing, and
+              high-quality peer review.
+            </p>
+          </div>
+
+          {/* Timeline */}
+
+          <div className="relative">
+
+            {/* Vertical Line */}
+
+            <div className="hidden md:block absolute left-1/2 top-0 -translate-x-1/2 w-1 h-full bg-gradient-to-b from-[#22C55E] via-[#84CC16] to-[#22C55E] rounded-full"></div>
+
+            <div className="space-y-8">
+
+              {publicationProcess.map((step, index) => (
+
+                <div
+                  key={index}
+                  className={`flex items-center ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                    } flex-col md:gap-12`}
+                >
+
+                  {/* Card */}
+
+                  <div className="w-full md:w-[45%]">
+
+                    <div className="bg-white border border-yellow-100 hover:border-[#10B981] rounded-3xl p-6 shadow-sm hover:shadow-xl transition-all duration-300">
+
+                      <div className="flex items-center gap-4">
+
+                        <div className="w-14 h-14 rounded-2xl bg-[#10B981] text-white flex items-center justify-center font-black text-lg shadow-lg">
+                          {index + 1}
+                        </div>
+
+                        <div>
+                          <p className="text-xs uppercase tracking-[0.2em] text-[#10B981] font-bold">
+                            Step {index + 1}
+                          </p>
+
+                          <h3 className="text-lg md:text-xl font-black text-[#713F12] leading-snug">
+                            {step}
+                          </h3>
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  {/* Center Circle */}
+
+                  <div className="hidden md:flex relative z-20 w-12 h-12 rounded-full bg-[#10B981] border-[6px] border-[#FFFBEB] items-center justify-center shadow-xl">
+                    <ArrowRight className="text-white" size={18} />
+                  </div>
+
+                  {/* Empty */}
+
+                  <div className="hidden md:block w-[45%]"></div>
+
+                </div>
+
+              ))}
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
 
       {/* ============================================= */}
       {/* NEW: JOIN OUR RESEARCH COMMUNITY SECTION */}
