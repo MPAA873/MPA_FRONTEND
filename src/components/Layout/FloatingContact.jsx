@@ -17,7 +17,7 @@ const FloatingContact = () => {
       icon: <Phone size={22} className="text-white" />,
       label: "Call Now",
       color: "bg-[#007bff]",
-      link: "tel:+918923580628",
+      link: "https://wa.me/918923580628?text=Hello%20MPA%20Research%20Team,%20I%20would%20like%20to%20know%20more%20about%20your%20journal,%20manuscript%20submission%20process,%20publication%20guidelines,%20and%20review%20timeline.%20Kindly%20assist%20me.%20Thank%20you."
     },
     {
       id: "email",

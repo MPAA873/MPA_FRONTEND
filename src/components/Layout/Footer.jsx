@@ -33,7 +33,7 @@ const resourceLinks = [
 ];
 
 const socialLinks = [
-    { icon: Linkedin, href: "https://www/linkedin.com/company/mpa-research-centre/", label: "LinkedIn" },
+    { icon: Linkedin, href: "https://www.linkedin.com/company/mpa-research-centre/", label: "LinkedIn" },
     { icon: Twitter, href: "https://x.com/MPAResearchPub", label: "Twitter / X" },
     { icon: Facebook, href: "https://www.facebook.com/share/1DtX1h1MiP/", label: "Facebook" },
     { icon: Instagram, href: "https://www.instagram.com/mparesearchjournal?igsh=c3E5Nzk3MHk2Y3o1", label: "Instagram" },

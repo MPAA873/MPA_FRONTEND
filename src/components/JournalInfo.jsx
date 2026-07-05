@@ -1,20 +1,28 @@
+"use client";
 import React from 'react';
-import { 
-  CheckCircle2, 
-  Globe, 
-  Zap, 
-  ShieldCheck, 
-  Layers, 
-  Users, 
-  BookOpen, 
-  BarChart3, 
-  FileText, 
+import {
+  CheckCircle2,
+  Globe,
+  Zap,
+  ShieldCheck,
+  Layers,
+  Users,
+  BookOpen,
+  BarChart3,
+  FileText,
   Microscope,
   Cpu,
   HeartPulse,
   Leaf,
-  Briefcase
+  Briefcase,
+  Stethoscope,
+  Dna,
+  FlaskConical,
+  Pill,
+  Laptop,
+  Database,
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const JournalInfo = () => {
   const whyPublish = [
@@ -27,14 +35,41 @@ const JournalInfo = () => {
   ];
 
   const disciplines = [
-    { name: "Management & Business", icon: <Briefcase size={18} /> },
-    { name: "AI & Computer Science", icon: <Cpu size={18} /> },
-    { name: "Data Science & IT", icon: <BarChart3 size={18} /> },
-    { name: "Engineering", icon: <Layers size={18} /> },
-    { name: "Healthcare", icon: <HeartPulse size={18} /> },
-    { name: "Environmental Studies", icon: <Leaf size={18} /> },
-    { name: "Public Policy", icon: <FileText size={18} /> },
+    {
+      name: "Healthcare and Medical Sciences",
+      icon: <Stethoscope size={18} />,
+    },
+    {
+      name: "Life Sciences",
+      icon: <Dna size={18} />,
+    },
+    {
+      name: "Biotechnology",
+      icon: <FlaskConical size={18} />,
+    },
+    {
+      name: "Pharmaceuticals",
+      icon: <Pill size={18} />,
+    },
+    {
+      name: "Computer Science and Artificial Intelligence",
+      icon: <Cpu size={18} />,
+    },
+    {
+      name: "Information Technology",
+      icon: <Laptop size={18} />,
+    },
+    {
+      name: "Data Science",
+      icon: <Database size={18} />,
+    },
+    {
+      name: "Management and Business",
+      icon: <Briefcase size={18} />,
+    },
   ];
+
+  const router = useRouter();
 
   return (
     <div className="bg-[#fdfaf3] font-sans text-[#4A3728]">
@@ -65,7 +100,7 @@ const JournalInfo = () => {
       {/* Section: Scope & Ethics */}
       <section className="bg-white py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          
+
           {/* Journal Scope */}
           <div>
             <h2 className="text-3xl font-bold mb-8 flex items-center gap-3 text-[#5c3a1a]">
@@ -125,17 +160,21 @@ const JournalInfo = () => {
         <div className="bg-gradient-to-br from-[#5c3a1a] to-[#3a2511] rounded-[2rem] p-10 md:p-16 text-white relative overflow-hidden">
           {/* Decorative element */}
           <div className="absolute top-[-10%] right-[-5%] w-64 h-64 bg-[#10b981] opacity-10 rounded-full blur-3xl"></div>
-          
+
           <div className="relative z-10">
             <h2 className="text-3xl md:text-5xl font-bold mb-6">Ready to publish your research?</h2>
             <p className="text-lg text-gray-300 mb-10 max-w-2xl mx-auto">
               Join our global research community and maximize the impact of your scholarly work. Submissions are accepted throughout the year.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <button className="bg-[#10b981] hover:bg-[#059669] text-white px-10 py-4 rounded-xl font-bold text-lg transition-all transform hover:scale-105">
+              <button onClick={() => {
+                router.push("/submit")
+              }} className="bg-[#10b981] hover:bg-[#059669] text-white px-10 py-4 rounded-xl font-bold text-lg transition-all transform hover:scale-105">
                 Submit Your Manuscript
               </button>
-              <button className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-10 py-4 rounded-xl font-bold text-lg transition-all">
+              <button onClick={() => {
+                router.push("/guidelines")
+              }} className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-10 py-4 rounded-xl font-bold text-lg transition-all">
                 Author Guidelines
               </button>
             </div>
