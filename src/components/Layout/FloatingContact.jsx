@@ -10,14 +10,14 @@ const FloatingContact = () => {
       icon: <MessageCircle size={24} className="text-white" />,
       label: "Chat on WhatsApp",
       color: "bg-[#25D366]",
-      link: "https://wa.me/8923580628", 
+      link: "https://wa.me/8923580628",
     },
     {
       id: "call",
       icon: <Phone size={22} className="text-white" />,
       label: "Call Now",
-      color: "bg-[#007bff]", 
-      link: "tel:+91 8923580628", 
+      color: "bg-[#007bff]",
+      link: "tel:+918923580628",
     },
     {
       id: "email",
@@ -53,7 +53,7 @@ const FloatingContact = () => {
           <span className="whitespace-nowrap px-4 font-medium text-sm tracking-wide opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             {item.label}
           </span>
-          
+
           {/* Subtle Right Arrow on Hover */}
           <ArrowRight size={14} className="mr-3 opacity-0 group-hover:opacity-70" />
         </a>

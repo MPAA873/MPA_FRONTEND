@@ -134,6 +134,11 @@ export const apiSlice = createApi({
       }),
     }),
 
+    getPublicStats: builder.query({
+      query: () => "/manuscripts/stats",
+      providesTags: ["Manuscript"],
+    }),
+
     resetPassword: builder.mutation({
       query: ({ token, password }) => ({
         url: `/users/reset-password/${token}`,
@@ -164,5 +169,6 @@ export const {
   useGetPublishedYearsQuery,
   useGetLatestPublishedQuery,
   useGetManuscriptDetailsQuery,
+  useGetPublicStatsQuery,
 
 } = apiSlice;
