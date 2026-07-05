@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import {
     BookOpen,
     Archive,
@@ -48,11 +48,6 @@ const SORT_OPTIONS = [
     { value: "most-viewed", label: "Most viewed" },
 ];
 
-const TABS = [
-    { id: "current", label: "Current Issue", icon: Clock },
-    { id: "archive", label: "Archive", icon: Archive },
-    { id: "adhoc", label: "Special Issues", icon: Star },
-];
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -156,6 +151,25 @@ export const Issue = () => {
     // Derive current-issue articles from homepage (current month's issue)
     const currentIssueArticles = homepageData?.data?.currentIssue || [];
 
+    const hasCurrentIssue = currentIssueArticles.length > 0;
+    const hasSpecialIssues = adHocIssues.length > 0;
+
+
+    const tabs = useMemo(
+        () => [
+            ...(hasCurrentIssue
+                ? [{ id: "current", label: "Current Issue", icon: Clock }]
+                : []),
+
+            { id: "archive", label: "Archive", icon: Archive },
+
+            ...(hasSpecialIssues
+                ? [{ id: "adhoc", label: "Special Issues", icon: Star }]
+                : []),
+        ],
+        [hasCurrentIssue, hasSpecialIssues]
+    );
+
     // Compute display articles — sanitize ad-hoc papers to strip the embedded
     // `issue` object that the aggregation pipeline injects onto each paper
     const baseArticles =
@@ -184,6 +198,13 @@ export const Issue = () => {
         setSelectedAdHocIssue(null);
     };
 
+
+    useEffect(() => {
+        if (!tabs.find((tab) => tab.id === activeTab)) {
+            setActiveTab("archive");
+        }
+    }, [tabs, activeTab]);
+
     if (isLoading) {
         return (
             <div className="min-h-[80vh] flex flex-col items-center justify-center bg-white">
@@ -204,7 +225,11 @@ export const Issue = () => {
             <PageHeader stats={stats} />
 
             {/* ── Tab Navigation ── */}
-            <TabBar activeTab={activeTab} onTabChange={handleTabChange} />
+            <TabBar
+                tabs={tabs}
+                activeTab={activeTab}
+                onTabChange={handleTabChange}
+            />
 
             {/* ── Toolbar: search + filters ── */}
             <Toolbar
@@ -313,11 +338,11 @@ const PageHeader = ({ stats }) => (
 
 // ─── Tab Bar ──────────────────────────────────────────────────────────────────
 
-const TabBar = ({ activeTab, onTabChange }) => (
+const TabBar = ({ tabs, activeTab, onTabChange }) => (
     <div className="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-[0_1px_0_0_#e5e7eb]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="flex gap-0">
-                {TABS.map(({ id, label, icon: Icon }) => (
+                {tabs.map(({ id, label, icon: Icon }) => (
                     <button
                         key={id}
                         onClick={() => onTabChange(id)}

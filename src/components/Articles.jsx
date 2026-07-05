@@ -1,310 +1,3 @@
-// "use client";
-// import React, { useState, useRef } from "react";
-// import { useRouter } from "next/navigation";
-// import { useGetPublishedArticlesQuery } from "../store/apiSlice";
-// import {
-//   ChevronLeft,
-//   ChevronRight,
-//   Image as ImageIcon,
-//   ArrowRight,
-//   Loader2,
-//   Eye,
-//   Calendar,
-//   BookOpen,
-//   Star,
-//   TrendingUp,
-//   Bookmark,
-// } from "lucide-react";
-
-// /* ─────────────────────────────────────────────
-//    INLINE MINI-COMPONENTS (Keep them as they are)
-// ───────────────────────────────────────────── */
-// function SectionHeader({ label, icon: Icon }) {
-//   return (
-//     <div className=" flex items-center gap-3 mb-2">
-//       {Icon && (
-//         <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#10B981]/10">
-//           <Icon size={16} className="text-[#10B981]" />
-//         </span>
-//       )}
-//       <div>
-//         <h2 className="text-xl font-bold text-[#713F12] tracking-tight">{label}</h2>
-//         <div className="mt-1 h-[3px] w-12 rounded-full bg-[#10B981]" />
-//       </div>
-//     </div>
-//   );
-// }
-
-// function SliderControls({ onLeft, onRight }) {
-//   return (
-//     <div className="flex gap-2">
-//       <button onClick={onLeft} className="w-9 h-9 flex items-center justify-center rounded-full border border-[#E5E7EB] bg-white text-[#713F12] hover:border-[#10B981] hover:text-[#10B981] transition-all"><ChevronLeft size={18} /></button>
-//       <button onClick={onRight} className="w-9 h-9 flex items-center justify-center rounded-full border border-[#E5E7EB] bg-white text-[#713F12] hover:border-[#10B981] hover:text-[#10B981] transition-all"><ChevronRight size={18} /></button>
-//     </div>
-//   );
-// }
-
-// function ArticlePill({ article, onClick }) {
-//   const typeColor = {
-//     "Review Article": "bg-purple-50 text-purple-700 border-purple-200",
-//     "Research Article": "bg-blue-50 text-blue-700 border-blue-200",
-//     "Short Communication": "bg-orange-50 text-orange-700 border-orange-200",
-//   };
-//   const pillClass = typeColor[article.articleType] || "bg-gray-50 text-gray-600 border-gray-200";
-
-//   return (
-//     <div onClick={onClick} className="group flex-shrink-0 w-[300px] md:w-[340px] bg-white rounded-2xl border border-[#F3F4F6] shadow-sm hover:shadow-md hover:border-[#10B981]/30 transition-all cursor-pointer overflow-hidden flex flex-col">
-//       <div className="relative w-full h-[180px] bg-[#F9FAFB] overflow-hidden">
-//         {article?.files?.manuscriptImage ? (
-//           <img src={article.files.manuscriptImage} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-//         ) : (
-//           <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-gray-300"><ImageIcon size={40} /><span className="text-xs">No image</span></div>
-//         )}
-//       </div>
-//       <div className="flex flex-col flex-1 p-5 gap-3">
-//         <div className="flex items-center justify-between">
-//           <span className={`text-[10px] font-bold uppercase px-2.5 py-1 rounded-full border ${pillClass}`}>{article.manuscriptType || "Article"}</span>
-//           <span className="text-[11px] text-gray-400">{article.publishedAt ? new Date(article.publishedAt).toLocaleDateString("en-IN") : "—"}</span>
-//         </div>
-//         <h3 className="text-[15px] font-semibold text-[#1F2937] line-clamp-3 group-hover:text-[#713F12]">{article.title}</h3>
-//         <p className="text-[12px] text-[#B45309] font-medium line-clamp-1">{article.authors?.map((a) => a.name).join(", ")}</p>
-//         <div className="mt-auto flex items-center justify-between pt-3 border-t border-[#F3F4F6]">
-//           <span className="text-[12px] text-gray-400 flex items-center gap-1"><Eye size={13} /> {article.views ?? 0}</span>
-//           <span className="text-[12px] font-semibold text-[#10B981] flex items-center gap-1">Read <ArrowRight size={13} /></span>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// /* ─────────────────────────────────────────────
-//    MAIN COMPONENT
-// ───────────────────────────────────────────── */
-// export default function Articles() {
-//   const router = useRouter();
-//   const [editorIdx, setEditorIdx] = useState(0);
-//   const currentIssueRef = useRef(null);
-//   const mostViewedRef = useRef(null);
-
-//   // NEW: Dynamic refs for Ad-Hoc sliders
-//   const adHocRefs = useRef({});
-
-//   // Optimized API Call
-//   const { data: response, isLoading } = useGetPublishedArticlesQuery({ type: "homepage" });
-
-//   const homepageData = response?.data || {};
-//   const editorChoices = homepageData.editorChoice || [];
-//   const currentIssue = homepageData.currentIssue || [];
-//   const adHocIssues = homepageData.adHocIssues || [];
-//   const mostViewed = homepageData.mostViewed || [];
-
-//   // Navigation Logic for Editor's Choice
-//   const nextEditorChoice = () => {
-//     setEditorIdx((prev) => (prev + 1) % editorChoices.length);
-//   };
-
-//   const prevEditorChoice = () => {
-//     setEditorIdx((prev) => (prev - 1 + editorChoices.length) % editorChoices.length);
-//   };
-
-//   const scroll = (ref, direction) => {
-//     const target = ref.current;
-//     if (target) {
-//       const cardWidth = 356;
-//       target.scrollBy({
-//         left: direction === "left" ? -cardWidth * 2 : cardWidth * 2,
-//         behavior: "smooth",
-//       });
-//     }
-//   };
-
-//   if (isLoading)
-//     return (
-//       <div className="py-24 flex flex-col justify-center items-center gap-3">
-//         <Loader2 className="animate-spin text-[#10B981]" size={40} />
-//         <p className="text-[#713F12] font-medium text-sm">Loading Articles…</p>
-//       </div>
-//     );
-
-//   return (
-//     <section id="articles" className="scroll-mt-24 max-w-7xl mx-auto py-14 px-4 md:px-8 font-sans">
-
-//       {/* ── PAGE HEADER ── */}
-//       <div className="mb-14 ">
-//         <div className="flex items-center gap-2 mb-3">
-//           <span className="text-[11px] font-bold tracking-[0.15em] uppercase text-[#10B981]">MPA Research</span>
-//           <span className="w-12 h-px bg-[#10B981]" />
-//         </div>
-//         <h1 className="text-4xl md:text-[2.75rem] font-extrabold text-[#713F12] leading-tight mb-3">Journal & Articles</h1>
-//         <p className="text-[#B45309] text-base max-w-xl">Explore peer-reviewed research, editor-selected highlights, and most-read manuscripts.</p>
-//       </div>
-
-//       {/* ── SECTION 1: EDITOR'S CHOICE ── */}
-//       {editorChoices.length > 0 && (
-//         <div className="mb-16">
-//           <div className="flex flex-wrap items-center justify-between mb-6 gap-4">
-//             <SectionHeader label="Editor's Choice" icon={Star} />
-//             <div className="flex items-center gap-6">
-//               {/* Pagination Dots */}
-//               <div className="hidden sm:flex gap-1.5">
-//                 {editorChoices.map((_, i) => (
-//                   <button key={i} onClick={() => setEditorIdx(i)} className={`h-2 rounded-full transition-all ${i === editorIdx ? "w-7 bg-[#10B981]" : "w-2 bg-[#10B981]/20"}`} />
-//                 ))}
-//               </div>
-//               {/* Slider Controls for Editor Choice */}
-//               <SliderControls onLeft={prevEditorChoice} onRight={nextEditorChoice} />
-//             </div>
-//           </div>
-
-//           <div className="relative rounded-3xl border border-[#FEF3C7] bg-gradient-to-br from-[#FFFBEB] to-[#FFF7ED] overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300" style={{ minHeight: 320 }}>
-//             <div className="flex flex-col lg:flex-row items-stretch cursor-pointer group" onClick={() => router.push(`/articles/${editorChoices[editorIdx]._id}`)}>
-//               <div className="flex-1 flex flex-col justify-center px-8 md:px-12 py-10 gap-5">
-//                 <span className="text-[10px] font-bold uppercase text-[#10B981] bg-[#10B981]/10 px-3 py-1.5 rounded-full w-fit">Featured Manuscript</span>
-//                 <h3 className="text-2xl md:text-3xl font-extrabold text-[#713F12] group-hover:text-[#10B981] transition-colors duration-300 leading-tight">
-//                   {editorChoices[editorIdx]?.title}
-//                 </h3>
-//                 <p className="text-[#78350F] text-sm md:text-base line-clamp-3 opacity-80 leading-relaxed">
-//                   {editorChoices[editorIdx]?.abstract}
-//                 </p>
-//                 <div className="flex items-center gap-4 mt-2">
-//                   <button className="bg-[#713F12] hover:bg-[#10B981] text-white text-[13px] font-semibold px-6 py-3 rounded-xl flex items-center gap-2 transition-all transform hover:translate-x-1">
-//                     Read Article <ArrowRight size={15} />
-//                   </button>
-//                 </div>
-//               </div>
-//               <div className="w-full lg:w-[40%] min-h-[280px] relative overflow-hidden bg-[#FEF3C7]/40">
-//                 {editorChoices[editorIdx]?.files?.manuscriptImage ? (
-//                   <img
-//                     src={editorChoices[editorIdx].files.manuscriptImage}
-//                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-//                     alt="Featured"
-//                   />
-//                 ) : (
-//                   <div className="w-full h-full flex items-center justify-center text-[#D97706]/30"><ImageIcon size={80} /></div>
-//                 )}
-//                 {/* Visual Overlay for smooth transition look */}
-//                 <div className="absolute inset-0 bg-gradient-to-r from-[#FFFBEB] via-transparent to-transparent lg:block hidden" />
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       )}
-
-
-//       {/* ── SECTION 2: CURRENT ISSUE ── */}
-//       {currentIssue.length > 0 && (
-//         <div className="mb-16">
-//           <div className="flex items-center justify-between mb-6">
-//             <SectionHeader label="Current Issue" icon={BookOpen} />
-//             <SliderControls
-//               onLeft={() => scroll(currentIssueRef, "left")}
-//               onRight={() => scroll(currentIssueRef, "right")}
-//             />
-//           </div>
-
-//           <div
-//             ref={currentIssueRef}
-//             className="flex gap-4 overflow-x-auto pb-3 no-scrollbar"
-//           >
-//             {currentIssue.map((article) => (
-//               <ArticlePill
-//                 key={article._id}
-//                 article={article}
-//                 onClick={() => router.push(`/articles/${article._id}`)}
-//               />
-//             ))}
-//           </div>
-//         </div>
-//       )}
-
-
-
-//       {/* ── SECTION 3: AD-HOC / SPECIAL ISSUES ── */}
-//       {adHocIssues.map((group) => (
-//         <div key={group._id} className="mb-16">
-//           <div className="flex items-center justify-between mb-6">
-//             <SectionHeader label={group.issue.label} icon={Bookmark} />
-//             <SliderControls
-//               onLeft={() => scroll({ current: adHocRefs.current[group._id] }, "left")}
-//               onRight={() => scroll({ current: adHocRefs.current[group._id] }, "right")}
-//             />
-//           </div>
-//           <div
-//             ref={(el) => (adHocRefs.current[group._id] = el)}
-//             className="flex gap-4 overflow-x-auto pb-3 no-scrollbar"
-//           >
-//             {group.papers.map((article) => (
-//               <ArticlePill key={article._id} article={article} onClick={() => router.push(`/articles/${article._id}`)} />
-//             ))}
-//           </div>
-//         </div>
-//       ))}
-
-//       {/* ── SECTION 4: MOST VIEWED ── */}
-//       <div className="mb-4">
-//         <div className="flex items-center justify-between mb-6">
-//           <SectionHeader label="Most Viewed & Popular" icon={TrendingUp} />
-//           <SliderControls onLeft={() => scroll(mostViewedRef, "left")} onRight={() => scroll(mostViewedRef, "right")} />
-//         </div>
-//         <div ref={mostViewedRef} className="flex gap-4 overflow-x-auto pb-3 no-scrollbar">
-//           {mostViewed.map((article) => (
-//             <ArticlePill key={article._id} article={article} onClick={() => router.push(`/articles/${article._id}`)} />
-//           ))}
-//         </div>
-//       </div>
-
-//       <style jsx global>{`
-//         .no-scrollbar::-webkit-scrollbar { display: none; }
-//         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-//       `}</style>
-//     </section>
-//   );
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 "use client";
 import React, { useState, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
@@ -380,7 +73,7 @@ function SliderControls({ onLeft, onRight }) {
 /* ─────────────────────────────────────────────
    ARTICLE PILL (card) — now with Download +
    View Abstract actions. `variant="grid"` makes
-   the card fluid-width for grid layouts (All Papers),
+   the card fluid-width for grid layouts,
    default keeps the original fixed-width slider card.
 ───────────────────────────────────────────── */
 function ArticlePill({ article, onClick, onDownload, onViewAbstract, isDownloading, variant = "slider" }) {
@@ -534,73 +227,6 @@ function AbstractModal({ article, onClose, onDownload, isDownloading }) {
 }
 
 /* ─────────────────────────────────────────────
-   PAGINATION — production ready with ellipsis
-───────────────────────────────────────────── */
-function Pagination({ currentPage, totalPages, onPageChange }) {
-  if (totalPages <= 1) return null;
-
-  const getPageNumbers = () => {
-    const pages = [];
-    const delta = 1;
-    const range = [];
-
-    for (let i = Math.max(2, currentPage - delta); i <= Math.min(totalPages - 1, currentPage + delta); i++) {
-      range.push(i);
-    }
-
-    pages.push(1);
-    if (range[0] > 2) pages.push("left-ellipsis");
-    pages.push(...range);
-    if (range[range.length - 1] < totalPages - 1) pages.push("right-ellipsis");
-    if (totalPages > 1) pages.push(totalPages);
-
-    return pages;
-  };
-
-  return (
-    <div className="flex items-center justify-center gap-2 mt-8 flex-wrap">
-      <button
-        onClick={() => onPageChange(Math.max(1, currentPage - 1))}
-        disabled={currentPage === 1}
-        className="flex items-center gap-1 h-10 px-3.5 rounded-xl border border-[#E5E7EB] bg-white text-[13px] font-semibold text-[#713F12] hover:border-[#10B981] hover:text-[#10B981] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-[#E5E7EB] disabled:hover:text-[#713F12] transition-all"
-      >
-        <ChevronLeft size={15} /> Prev
-      </button>
-
-      <div className="flex items-center gap-1.5">
-        {getPageNumbers().map((page, idx) =>
-          typeof page === "number" ? (
-            <button
-              key={idx}
-              onClick={() => onPageChange(page)}
-              className={`h-10 w-10 rounded-xl text-[13px] font-semibold transition-all ${
-                page === currentPage
-                  ? "bg-[#10B981] text-white shadow-sm"
-                  : "bg-white border border-[#E5E7EB] text-[#713F12] hover:border-[#10B981] hover:text-[#10B981]"
-              }`}
-            >
-              {page}
-            </button>
-          ) : (
-            <span key={idx} className="h-10 w-8 flex items-center justify-center text-gray-300 text-sm">
-              …
-            </span>
-          )
-        )}
-      </div>
-
-      <button
-        onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
-        disabled={currentPage === totalPages}
-        className="flex items-center gap-1 h-10 px-3.5 rounded-xl border border-[#E5E7EB] bg-white text-[13px] font-semibold text-[#713F12] hover:border-[#10B981] hover:text-[#10B981] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-[#E5E7EB] disabled:hover:text-[#713F12] transition-all"
-      >
-        Next <ChevronRight size={15} />
-      </button>
-    </div>
-  );
-}
-
-/* ─────────────────────────────────────────────
    MAIN COMPONENT
 ───────────────────────────────────────────── */
 export default function Articles() {
@@ -608,13 +234,10 @@ export default function Articles() {
   const [editorIdx, setEditorIdx] = useState(0);
   const currentIssueRef = useRef(null);
   const mostViewedRef = useRef(null);
+  const currentVolumeRef = useRef(null);
 
   // NEW: Dynamic refs for Ad-Hoc sliders
   const adHocRefs = useRef({});
-
-  // All Papers pagination state
-  const [allPapersPage, setAllPapersPage] = useState(1);
-  const ALL_PAPERS_LIMIT = 9;
 
   // Abstract modal + download state
   const [selectedArticle, setSelectedArticle] = useState(null);
@@ -623,21 +246,13 @@ export default function Articles() {
   // Optimized API Call — homepage sections
   const { data: response, isLoading } = useGetPublishedArticlesQuery({ type: "homepage" });
 
-  // Separate paginated call for "All Papers"
-  const { data: allPapersResponse, isFetching: isAllPapersLoading } = useGetPublishedArticlesQuery({
-    page: allPapersPage,
-    limit: ALL_PAPERS_LIMIT,
-  });
-
   const homepageData = response?.data || {};
   const editorChoices = homepageData.editorChoice || [];
   const currentIssue = homepageData.currentIssue || [];
+  const currentVolume = homepageData.currentVolume || [];
+  const currentVolumeNumber = homepageData.currentVolumeNumber;
   const adHocIssues = homepageData.adHocIssues || [];
   const mostViewed = homepageData.mostViewed || [];
-
-  const allPapers = allPapersResponse?.articles || [];
-  const totalPapers = allPapersResponse?.total || 0;
-  const totalPapersPages = allPapersResponse?.totalPages || 1;
 
   // Navigation Logic for Editor's Choice
   const nextEditorChoice = () => {
@@ -697,11 +312,6 @@ export default function Articles() {
   const handleViewAbstract = useCallback((article) => {
     setSelectedArticle(article);
   }, []);
-
-  const handlePageChange = (page) => {
-    setAllPapersPage(page);
-    document.getElementById("all-papers")?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
 
   if (isLoading)
     return (
@@ -882,55 +492,47 @@ export default function Articles() {
         </div>
       </div>
 
-      {/* ── SECTION 5: ALL PAPERS (paginated grid) ── */}
-      <div id="all-papers" className="mb-4 scroll-mt-24">
+      {/* ── SECTION 5: CURRENT VOLUME (scroller, replaces "All Papers") ── */}
+      <div id="current-volume" className="mb-4 scroll-mt-24">
         <div className="flex flex-wrap items-center justify-between mb-6 gap-3">
-          <SectionHeader label="All Papers" icon={Layers} />
-          {totalPapers > 0 && (
-            <p className="text-[13px] text-gray-400 font-medium">
-              Showing{" "}
-              <span className="text-[#713F12] font-semibold">
-                {(allPapersPage - 1) * ALL_PAPERS_LIMIT + 1}
-                {"–"}
-                {Math.min(allPapersPage * ALL_PAPERS_LIMIT, totalPapers)}
-              </span>{" "}
-              of <span className="text-[#713F12] font-semibold">{totalPapers}</span> papers
-            </p>
-          )}
+          <SectionHeader
+            label={currentVolumeNumber ? `Current Volume (Vol. ${currentVolumeNumber})` : "Current Volume"}
+            icon={Layers}
+          />
+          <div className="flex items-center gap-4">
+            {currentVolume.length > 0 && (
+              <p className="text-[13px] text-gray-400 font-medium hidden sm:block">
+                <span className="text-[#713F12] font-semibold">{currentVolume.length}</span>{" "}
+                {currentVolume.length === 1 ? "paper" : "papers"}
+              </p>
+            )}
+            {currentVolume.length > 0 && (
+              <SliderControls
+                onLeft={() => scroll(currentVolumeRef, "left")}
+                onRight={() => scroll(currentVolumeRef, "right")}
+              />
+            )}
+          </div>
         </div>
 
-        {isAllPapersLoading ? (
-          <div className="py-20 flex flex-col justify-center items-center gap-3">
-            <Loader2 className="animate-spin text-[#10B981]" size={32} />
-            <p className="text-[#713F12] font-medium text-sm">Loading papers…</p>
-          </div>
-        ) : allPapers.length === 0 ? (
+        {currentVolume.length === 0 ? (
           <div className="py-20 flex flex-col justify-center items-center gap-3 text-gray-300">
             <BookOpen size={40} />
-            <p className="text-gray-400 text-sm font-medium">No published papers found.</p>
+            <p className="text-gray-400 text-sm font-medium">No published papers found for the current volume.</p>
           </div>
         ) : (
-          <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {allPapers.map((article) => (
-                <ArticlePill
-                  key={article._id}
-                  article={article}
-                  variant="grid"
-                  onClick={() => router.push(`/articles/${article._id}`)}
-                  onDownload={handleDownload}
-                  onViewAbstract={handleViewAbstract}
-                  isDownloading={downloadingId === article._id}
-                />
-              ))}
-            </div>
-
-            <Pagination
-              currentPage={allPapersPage}
-              totalPages={totalPapersPages}
-              onPageChange={handlePageChange}
-            />
-          </>
+          <div ref={currentVolumeRef} className="flex gap-4 overflow-x-auto pb-3 no-scrollbar scroll-smooth">
+            {currentVolume.map((article) => (
+              <ArticlePill
+                key={article._id}
+                article={article}
+                onClick={() => router.push(`/articles/${article._id}`)}
+                onDownload={handleDownload}
+                onViewAbstract={handleViewAbstract}
+                isDownloading={downloadingId === article._id}
+              />
+            ))}
+          </div>
         )}
       </div>
 

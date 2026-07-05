@@ -8,6 +8,7 @@ import {
   ChevronRight,
   Loader2,
   FileText,
+  Globe,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
@@ -23,23 +24,23 @@ const Hero = () => {
   const { data, isLoading } = useGetLatestPublishedQuery();
   const latestArticle = data?.article;
 
-  // Function to format author names as a comma-separated string (Matches image style)
+  // Function to format author names
   const formatAuthors = (authors) => {
     if (!authors || authors.length === 0) return "Principal Investigator";
     return authors.map((auth) => auth.name).join(", ");
   };
 
-  // Logic to handle auto-scrolling/re-triggering the slide every 7 seconds
+  // Logic to handle auto-scrolling
   useEffect(() => {
     if (latestArticle) {
       const interval = setInterval(() => {
         setSlideKey((prev) => prev + 1);
-      }, 10000);  // 7 seconds interval
+      }, 10000); 
       return () => clearInterval(interval);
     }
   }, [latestArticle]);
 
-  // Auth check logic (Preserved from your original code)
+  // Auth check logic
   const checkAuthAndRun = (callback) => {
     const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
     if (!token) {
@@ -58,22 +59,26 @@ const Hero = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16 lg:py-24">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-          {/* --- LEFT SECTION (UI & LOGIC PRESERVED) --- */}
+          {/* --- LEFT SECTION --- */}
           <div className="flex flex-col order-2 lg:order-1 text-center lg:text-left items-center lg:items-start">
             <div className="inline-flex items-center gap-2 bg-[#DCFCE7] text-[#166534] px-4 py-1.5 rounded-full text-sm font-semibold mb-6 shadow-sm border border-[#BBF7D0]">
-              <BookOpen size={16} className="text-[#22C55E]" />
-              Open Access Research
+              <Globe size={16} className="text-[#22C55E]" />
+              Connecting Researchers Worldwide
             </div>
 
             <h1 className="text-4xl sm:text-5xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-6">
-              <span className="text-[#713F12] block">Advancing Scientific</span>
-              <span className="text-[#22C55E] block">Excellence</span>
+              <span className="text-[#713F12] block">Advancing Knowledge.</span>
+              <span className="text-[#22C55E] block">Inspiring Innovation.</span>
             </h1>
 
-            <p className="text-[#854D0E] text-lg sm:text-xl max-w-lg mb-8 leading-relaxed opacity-90">
-              A premier platform for publishing cutting-edge research. Peer-reviewed,
-              high-impact, and committed to global scientific growth.
-            </p>
+            <div className="text-[#854D0E] text-lg sm:text-xl max-w-lg mb-8 leading-relaxed opacity-90">
+              <p className="mb-4">
+                <span className="font-bold">MPA Research</span> is an international, peer-reviewed, open access multidisciplinary journal dedicated to publishing high-quality research.
+              </p>
+              <p className="text-base sm:text-lg opacity-80">
+                Join our growing international community and share impactful discoveries with a global audience.
+              </p>
+            </div>
 
             <div className="flex flex-col sm:flex-row flex-wrap gap-4 w-full sm:w-auto">
               <button
@@ -98,23 +103,17 @@ const Hero = () => {
 
           {/* --- RIGHT SECTION (ANNOUNCEMENTS SLIDER) --- */}
           <div className="relative order-1 lg:order-2 w-full max-w-[650px] mx-auto">
-
-            {/* Background Glow for visual appeal */}
+            
             <div className="absolute -inset-6 bg-green-200/20 blur-3xl rounded-full -z-10 animate-pulse"></div>
 
-            {/* Main Carousel Card (Style matched to your image) */}
             <div className="bg-white rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] border border-gray-100 overflow-hidden flex flex-col min-h-[350px]">
-
-              {/* Header: Exact style from "Editor's Choice" image */}
+              
               <div className="px-8 pt-8 pb-3">
-                <h2 className="text-2xl font-semibold text-[#713F12]   tracking-tight">Announcements</h2>
+                <h2 className="text-2xl font-semibold text-[#713F12] tracking-tight">Announcements</h2>
                 <div className="h-[1px] w-full bg-[#DCFCE7] mt-4"></div>
               </div>
 
-              {/* Slider Content Area */}
               <div className="relative flex-grow flex items-center px-4 sm:px-14 py-8">
-
-                {/* Navigation Arrows (Visual only to match your image) */}
                 <button className="absolute left-3 z-10 text-gray-300 hover:text-green-500 transition-colors hidden sm:block">
                   <ChevronLeft size={44} strokeWidth={1} />
                 </button>
@@ -129,7 +128,6 @@ const Hero = () => {
                   </div>
                 ) : latestArticle ? (
                   <AnimatePresence mode="wait">
-                    {/* The motion.div uses slideKey to re-trigger the animation loop */}
                     <motion.div
                       key={slideKey}
                       initial={{ opacity: 0, x: 50 }}
@@ -139,18 +137,15 @@ const Hero = () => {
                       className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center w-full cursor-pointer"
                       onClick={() => router.push(`/articles/${latestArticle._id}`)}
                     >
-                      {/* Left: Article Info (Text matched to image layout) */}
                       <div className="md:col-span-7 flex flex-col">
                         <h3 className="text-xl sm:text-2xl font-bold text-[#333] leading-[1.3] mb-6 line-clamp-3">
                           {latestArticle.title}
                         </h3>
-
                         <p className="text-[#666] text-sm sm:text-[15px] font-medium leading-relaxed italic">
                           {formatAuthors(latestArticle.authors)}
                         </p>
                       </div>
 
-                      {/* Right: Article Image/Figure */}
                       <div className="md:col-span-5 flex justify-center items-center">
                         <div className="relative w-full max-w-[200px] aspect-square rounded-lg flex items-center justify-center bg-[#FDF6ED]">
                           {latestArticle.files?.manuscriptImage ? (
@@ -176,7 +171,6 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* Aesthetic layered shadow card */}
             <div className="absolute -bottom-3 -right-3 w-full h-full bg-green-50 rounded-xl -z-20 border border-green-100"></div>
           </div>
 
