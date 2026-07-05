@@ -4,20 +4,23 @@ import React from "react";
 import { Phone, Mail, MessageCircle, ArrowRight } from "lucide-react";
 
 const FloatingContact = () => {
+  const message =
+    "Hello MPA Research Team, I would like to know more about your journal, manuscript submission process, publication guidelines, and review timeline. Kindly assist me. Thank you.";
+
   const contactLinks = [
     {
       id: "whatsapp",
       icon: <MessageCircle size={24} className="text-white" />,
       label: "Chat on WhatsApp",
       color: "bg-[#25D366]",
-      link: "https://wa.me/8923580628",
+      link: `https://wa.me/918923580628?text=${encodeURIComponent(message)}`,
     },
     {
       id: "call",
       icon: <Phone size={22} className="text-white" />,
       label: "Call Now",
       color: "bg-[#007bff]",
-      link: "https://wa.me/918923580628?text=Hello%20MPA%20Research%20Team,%20I%20would%20like%20to%20know%20more%20about%20your%20journal,%20manuscript%20submission%20process,%20publication%20guidelines,%20and%20review%20timeline.%20Kindly%20assist%20me.%20Thank%20you."
+      link: "tel:+918923580628",
     },
     {
       id: "email",
