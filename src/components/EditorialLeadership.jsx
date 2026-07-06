@@ -8,7 +8,7 @@ const leadEditors = [
   {
     id: "chief-1",
     name: "Dr. Pratibha Pandey",
-    title: "Co-Chief Editor",
+    title: "Co-Editor In-Chief",
     specialty: "PhD in Bioengineering",
     org: "Chandigarh University, Mohali, India",
     image: "/images/PratibhaPanday.png",
@@ -22,7 +22,7 @@ const leadEditors = [
     specialty: "Dept. of Community Medicine",
     org: "Saveetha Institute of Medical and Technical Sciences, India",
     image: "/images/fahad-khan.png",
-    desc: "Dr. Fahad Khan is associated with Saveetha Institute of Meidcal and Technical Sciences, India. His research focuses on natural product pharmacology and computational approaches to disease mechanisms, including anticancer compound screening and molecular studies of viral and cancer-related targets. He has co-authored work published in journals including Immuno (MDPI), Cellular and Molecular Biology, and the Brazilian Journal of Pharmaceutical Sciences.",
+    desc: "Dr. Fahad Khan is associated with Saveetha Institute of Medical and Technical Sciences, India. His research focuses on natural product pharmacology and computational approaches to disease mechanisms, including anticancer compound screening and molecular studies of viral and cancer-related targets. He has co-authored work published in journals including Immuno (MDPI), Cellular and Molecular Biology, and the Brazilian Journal of Pharmaceutical Sciences.",
     orcid: "https://orcid.org/0000-0003-3449-7978",
   },
 ];

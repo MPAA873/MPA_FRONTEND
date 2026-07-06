@@ -19,6 +19,10 @@ import {
   BookMarked,
   GitBranch,
   ArrowRight,
+  Database,
+  Link2,
+  Lock,
+  HardDrive,
 } from "lucide-react";
 
 const About = () => {
@@ -223,6 +227,191 @@ const About = () => {
           </div>
         </div>
       </section>
+
+      {/* ============================================= */}
+      {/* OPEN ACCESS & DIGITAL PRESERVATION */}
+      {/* ============================================= */}
+
+      <section className="py-14 md:py-20 px-4 sm:px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+
+          {/* Heading */}
+
+          <div className="text-center mb-14">
+
+            <div className="inline-flex items-center gap-2 bg-[#ECFDF5] border border-emerald-200 px-4 py-2 rounded-full mb-5">
+
+              <Database size={17} className="text-[#10B981]" />
+
+              <span className="text-[#10B981] font-bold text-sm uppercase tracking-wider">
+                Open Science Infrastructure
+              </span>
+
+            </div>
+
+            <h2 className="text-3xl md:text-5xl font-black text-[#713F12] mb-5 tracking-tight">
+
+              Open Access &
+              <span className="text-[#10B981]"> Digital Preservation</span>
+
+            </h2>
+
+            <p className="max-w-3xl mx-auto text-[#854D0E] text-base md:text-lg leading-relaxed">
+              Every published manuscript is permanently preserved, globally discoverable,
+              and assigned a persistent Digital Object Identifier (DOI) through our
+              direct integration with Zenodo.
+            </p>
+
+          </div>
+
+          <div className="grid lg:grid-cols-5 gap-8 items-center">
+
+            {/* Left Content */}
+
+            <div className="lg:col-span-3">
+
+              <div className="bg-[#FFFBEB] border border-yellow-100 rounded-[2rem] p-7 md:p-10 relative overflow-hidden">
+
+                <div className="absolute -top-16 -right-16 w-52 h-52 rounded-full bg-[#10B981]/10 blur-3xl"></div>
+
+                <div className="relative z-10">
+
+                  <div className="w-16 h-16 rounded-2xl bg-[#10B981] flex items-center justify-center shadow-xl shadow-emerald-200 mb-8">
+
+                    <Database size={30} className="text-white" />
+
+                  </div>
+
+                  <h3 className="text-2xl md:text-3xl font-black text-[#713F12] mb-6">
+
+                    Digital Preservation &
+                    <span className="text-[#10B981]"> DOI via Zenodo</span>
+
+                  </h3>
+
+                  <p className="text-[#854D0E] leading-8 text-sm md:text-base mb-5">
+
+                    To guarantee long-term visibility, permanent discoverability,
+                    and research integrity, MPA Research is directly integrated
+                    with <span className="font-bold text-[#10B981]">Zenodo</span>,
+                    a trusted open-science repository developed under the
+                    European Open Science Cloud initiative and operated by CERN.
+
+                  </p>
+
+                  <p className="text-[#854D0E] leading-8 text-sm md:text-base">
+
+                    Every accepted manuscript is automatically assigned a unique,
+                    persistent Digital Object Identifier (DOI), ensuring instant
+                    citation, worldwide accessibility, and secure preservation
+                    within a globally recognized digital archive for future generations.
+
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* Right Cards */}
+
+            <div className="lg:col-span-2">
+
+              <div className="grid sm:grid-cols-2 lg:grid-cols-1 gap-5">
+
+                {[
+                  {
+                    icon: <Link2 size={22} className="text-white" />,
+                    title: "Persistent DOI",
+                    desc: "Every publication receives a globally citable permanent DOI."
+                  },
+                  {
+                    icon: <HardDrive size={22} className="text-white" />,
+                    title: "Long-Term Archive",
+                    desc: "Research is securely preserved in Zenodo's trusted repository."
+                  },
+                  {
+                    icon: <Globe2 size={22} className="text-white" />,
+                    title: "Global Visibility",
+                    desc: "Accessible worldwide through open scholarly infrastructure."
+                  },
+                  {
+                    icon: <Lock size={22} className="text-white" />,
+                    title: "Permanent Access",
+                    desc: "Your work remains discoverable regardless of future technology changes."
+                  }
+                ].map((item, index) => (
+
+                  <div
+                    key={index}
+                    className="group bg-white border border-yellow-100 rounded-3xl p-6 hover:border-[#10B981] hover:shadow-xl transition-all duration-300"
+                  >
+
+                    <div className="w-12 h-12 rounded-2xl bg-[#10B981] flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+
+                      {item.icon}
+
+                    </div>
+
+                    <h4 className="text-lg font-black text-[#713F12] mb-2">
+
+                      {item.title}
+
+                    </h4>
+
+                    <p className="text-sm leading-7 text-[#854D0E]">
+
+                      {item.desc}
+
+                    </p>
+
+                  </div>
+
+                ))}
+
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* Bottom Banner */}
+
+          <div className="mt-10 rounded-[2rem] bg-[#10B981] p-6 md:p-8 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-xl">
+
+            <div className="flex items-center gap-4">
+
+              <div className="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center">
+
+                <ShieldCheck className="text-white" size={28} />
+
+              </div>
+
+              <div>
+
+                <h4 className="text-white text-xl font-black">
+
+                  Trusted Open Science Publishing
+
+                </h4>
+
+                <p className="text-white/90 text-sm md:text-base mt-1">
+
+                  DOI registration, permanent preservation, and unrestricted Open Access —
+                  ensuring your research remains visible, citable, and preserved for decades.
+
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
 
       {/* ============================================= */}
       {/* NEW: OUR COMMITMENT SECTION */}

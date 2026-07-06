@@ -12,6 +12,7 @@ import {
     Instagram,
     ArrowUpRight,
     BookOpen,
+    Archive, BadgeCheck
 } from "lucide-react";
 
 const quickLinks = [
@@ -63,7 +64,7 @@ const Footer = () => {
                                 alt="MPA Research Logo"
                                 className="h-35 w-35 object-contain rounded-lg"
                             />
-        
+
                         </div>
 
                         <p className=" text-sm leading-relaxed text-[#F5E9D9]/70 max-w-sm">
@@ -77,6 +78,16 @@ const Footer = () => {
                                 Open Access &middot; Peer Reviewed
                             </span>
                         </div>
+
+                        <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-3.5 py-1.5 transition-all duration-300 hover:border-emerald-400/40">
+                            <Archive size={13} className="text-emerald-400 shrink-0" />
+
+                            <span className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-[#F5E9D9]/80">
+                                Archived &middot; Indexed via Zenodo
+                                <BadgeCheck size={11} className="text-emerald-400" />
+                            </span>
+                        </div>
+
 
                         {/* Social Icons */}
                         <div className="flex items-center gap-3 mt-7">

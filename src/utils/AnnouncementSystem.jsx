@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Sparkles, Zap, Info } from "lucide-react";
+import { Sparkles, Zap, Info, BadgeCheck } from "lucide-react";
 
 export const AnnouncementBanner = () => {
   return (
@@ -55,6 +55,26 @@ export const AnnouncementBanner = () => {
             31 December 2026
           </span>
         </p>
+
+        {/* Separator */}
+        <div className="hidden md:flex">
+          <Info size={15} className="text-green-300" />
+        </div>
+
+        {/* Zenodo DOI */}
+        <div className="flex items-center gap-2">
+          <BadgeCheck
+            size={15}
+            className="text-blue-600"
+          />
+
+          <p className="text-xs font-medium text-[#713F12] sm:text-sm">
+            <span className="font-extrabold text-blue-700">
+              Permanent Zenodo DOIs
+            </span>{" "}
+            Included
+          </p>
+        </div>
 
         {/* Separator */}
         <div className="hidden md:flex">

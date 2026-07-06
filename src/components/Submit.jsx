@@ -71,7 +71,7 @@ const Submit = () => {
 
   useEffect(() => {
 
-    
+
     const timer = setTimeout(() => {
       setShowGuidelinePopup(true);
     }, 100);
@@ -309,8 +309,16 @@ const Submit = () => {
           <h1 className="text-4xl md:text-6xl font-extrabold text-[#713F12] mb-6 tracking-tight">
             Submit Your <span className="text-[#10B981]">Manuscript</span>
           </h1>
+
           <p className="text-[#854D0E] text-lg max-w-xl mx-auto leading-relaxed opacity-90">
             Join thousands of researchers publishing their work with MPA Research.
+          </p>
+
+          <p className="mt-4 max-w-3xl mx-auto text-[15px] md:text-base leading-7 text-[#6B7280]">
+            Every manuscript published with <span className="font-semibold text-[#10B981]">MPA Research</span> is assigned a
+            permanent <span className="font-semibold text-[#713F12]">Digital Object Identifier (DOI)</span> through our direct
+            integration with <span className="font-semibold">Zenodo (CERN)</span>, ensuring your research remains permanently
+            discoverable, globally citable, and securely preserved in a trusted open-access repository.
           </p>
         </div>
 
