@@ -47,7 +47,7 @@ export default function ArticleDetail() {
   };
 
   const citationText = article
-    ? `${formatAuthorCitation(article.authors)} (${new Date(article.publishedAt).getFullYear()}). ${article.title}. MPA Research, Volume ${article.volume}, Issue ${article.issue}, ${article.doi ? `https://doi.org/${article.doi}` : (typeof window !== "undefined" ? window.location.href : "")}`
+    ? `${formatAuthorCitation(article.authors)} (${new Date(article.publishedAt).getFullYear()}). ${article.title}. MPA Research, Volume ${article.volume}, Issue ${article.issue}, ${article.doi ? article.doi : (typeof window !== "undefined" ? window.location.href : "")}`
     : "";
 
   if (isLoading) return (
@@ -114,9 +114,14 @@ export default function ArticleDetail() {
             {article.doi && (
               <>
                 <span>|</span>
-                <span>
+                <a
+                  href={article.doi}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-white"
+                >
                   DOI: {article.doi}
-                </span>
+                </a>
               </>
             )}
 
@@ -139,7 +144,21 @@ export default function ArticleDetail() {
         <div className="max-w-7xl mx-auto px-6 h-18 py-3 flex items-center justify-between">
           <div className="hidden lg:flex items-center gap-8 text-xs font-bold uppercase tracking-wider text-gray-500">
             <div className="flex items-center gap-2"><Calendar size={16} className="text-green-600" /> Published: <span className="text-[#713F12]">{formattedDate}</span></div>
-            <div className="flex items-center gap-2"><Hash size={16} className="text-green-600" /> DOI: <span className="text-[#713F12]">{article.doi || article.paperNumber}</span></div>
+            <div className="flex items-center gap-2"><Hash size={16} className="text-green-600" /> DOI:
+              {article.doi ? (
+                <a
+                  href={article.doi}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#713F12] underline hover:text-green-600"
+                >
+                  {article.doi}
+                </a>
+              ) : (
+                <span className="text-[#713F12]">
+                  {article.paperNumber}
+                </span>
+              )}</div>
           </div>
           <div className="flex items-center gap-4">
             <a href={article.files?.manuscriptFile?.url} target="_blank" className="bg-green-600 hover:bg-green-700 text-white px-6 py-2.5 rounded-xl flex items-center gap-2 text-sm font-bold transition-all shadow-lg active:scale-95">
