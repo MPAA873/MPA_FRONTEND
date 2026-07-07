@@ -44,16 +44,20 @@ const EditorialBoard = () => {
 
   // 2. Separate Top Leaders and Regular Editors based on the type
   // Fallback: If 'type' is somehow missing but 'bio' exists, we consider them Top Leaders
-  const executiveEditors = editorials
-    .filter((item) => item.type === "topLeader" || (!item.type && item.bio))
-    .sort((a, b) => {
-      const order = {
-        "Chief Editor": 1,
-        "Editor In-Chief": 2,
-      };
+const executiveEditors = editorials
+  .filter((item) => item.type === "topLeader" || (!item.type && item.bio))
+  .sort((a, b) => {
+    const getPriority = (person) => {
+      const name = (person.name || "").toLowerCase();
 
-      return (order[a.role] || 99) - (order[b.role] || 99);
-    });
+      if (name.includes("pratibha")) return 1;
+      if (name.includes("fahad")) return 2;
+
+      return 999;
+    };
+
+    return getPriority(a) - getPriority(b);
+  });
 
   // Filter regular editors who have type === "editor"
   const editorialBoard = editorials.filter((item) => item.type === "editor");

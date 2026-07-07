@@ -16,6 +16,7 @@ export default function ArticleDetail() {
   const { id } = useParams();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("abstract");
+  const [showCiteModal, setShowCiteModal] = useState(false);
 
   // Fetching manuscript data
   const { data, isLoading, error } = useGetPublishedManuscriptByIdQuery(id);
@@ -31,6 +32,23 @@ export default function ArticleDetail() {
       return Array.isArray(article.keywords) ? article.keywords : [];
     }
   }, [article?.keywords]);
+
+  const formatAuthorCitation = (authors) => {
+    if (!authors || authors.length === 0) return "";
+    const formatted = authors.map((a) => {
+      const parts = a.name.trim().split(" ");
+      const lastName = parts[parts.length - 1];
+      const initials = parts.slice(0, -1).map((p) => p[0]?.toUpperCase() + ".").join(" ");
+      return initials ? `${lastName}, ${initials}` : lastName;
+    });
+    if (formatted.length === 1) return formatted[0];
+    if (formatted.length === 2) return `${formatted[0]}, & ${formatted[1]}`;
+    return `${formatted.slice(0, -1).join(", ")}, & ${formatted[formatted.length - 1]}`;
+  };
+
+  const citationText = article
+    ? `${formatAuthorCitation(article.authors)} (${new Date(article.publishedAt).getFullYear()}). ${article.title}. MPA Research, Volume ${article.volume}, Issue ${article.issue}, ${article.doi ? `https://doi.org/${article.doi}` : (typeof window !== "undefined" ? window.location.href : "")}`
+    : "";
 
   if (isLoading) return (
     <div className="h-screen flex flex-col items-center justify-center bg-white">
@@ -93,6 +111,15 @@ export default function ArticleDetail() {
               Paper: {article.paperNumber}
             </span>
 
+            {article.doi && (
+              <>
+                <span>|</span>
+                <span>
+                  DOI: {article.doi}
+                </span>
+              </>
+            )}
+
           </div>
           <div className="flex flex-wrap items-center gap-3 mb-6">
             <span className="bg-white/20 backdrop-blur-md text-white border border-white/30 text-[10px] font-black px-3 py-1 rounded uppercase tracking-[0.2em]">{article.manuscriptType}</span>
@@ -112,12 +139,15 @@ export default function ArticleDetail() {
         <div className="max-w-7xl mx-auto px-6 h-18 py-3 flex items-center justify-between">
           <div className="hidden lg:flex items-center gap-8 text-xs font-bold uppercase tracking-wider text-gray-500">
             <div className="flex items-center gap-2"><Calendar size={16} className="text-green-600" /> Published: <span className="text-[#713F12]">{formattedDate}</span></div>
-            <div className="flex items-center gap-2"><Hash size={16} className="text-green-600" /> DOI: <span className="text-[#713F12]">{article.paperNumber}</span></div>
+            <div className="flex items-center gap-2"><Hash size={16} className="text-green-600" /> DOI: <span className="text-[#713F12]">{article.doi || article.paperNumber}</span></div>
           </div>
           <div className="flex items-center gap-4">
             <a href={article.files?.manuscriptFile?.url} target="_blank" className="bg-green-600 hover:bg-green-700 text-white px-6 py-2.5 rounded-xl flex items-center gap-2 text-sm font-bold transition-all shadow-lg active:scale-95">
               <Download size={18} /> PDF Full Text
             </a>
+            <button onClick={() => setShowCiteModal(true)} className="bg-white border-2 border-green-600 text-green-700 hover:bg-green-50 px-6 py-2.5 rounded-xl flex items-center gap-2 text-sm font-bold transition-all active:scale-95">
+              <Quote size={18} /> Cite Article
+            </button>
             <ArticleToolsDropdown article={article} />
           </div>
         </div>
@@ -240,6 +270,41 @@ export default function ArticleDetail() {
           </div>
         </main>
       </div>
+
+      {showCiteModal && (
+        <div className="fixed inset-0 bg-slate-900/70 backdrop-blur-sm flex justify-center items-center z-[100] p-4">
+          <div className="bg-white w-full max-w-2xl rounded-[28px] shadow-2xl overflow-hidden border border-gray-100">
+            <div className="bg-green-600 px-8 py-6 flex justify-between items-center">
+              <div className="flex items-center gap-3 text-white">
+                <Quote size={22} />
+                <h3 className="text-lg font-bold">Cite This Article</h3>
+              </div>
+              <button
+                onClick={() => setShowCiteModal(false)}
+                className="text-white/80 hover:text-white hover:bg-white/10 rounded-full p-2 transition"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="p-8 space-y-6">
+              <div className="bg-green-50 border border-green-100 rounded-2xl p-6">
+                <p className="text-[11px] font-black text-green-600 uppercase tracking-widest mb-3">APA Style</p>
+                <p className="text-slate-800 text-[15px] leading-relaxed">{citationText}</p>
+              </div>
+
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(citationText);
+                }}
+                className="w-full bg-green-600 hover:bg-green-700 text-white py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all active:scale-95"
+              >
+                Copy Citation
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

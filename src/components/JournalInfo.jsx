@@ -26,7 +26,7 @@ import { useRouter } from 'next/navigation';
 
 const JournalInfo = () => {
   const whyPublish = [
-    { title: "Double-Blind Review", desc: "Rigorous and unbiased peer review process.", icon: <ShieldCheck className="w-6 h-6" /> },
+    { title: "Single-Blind Review", desc: "Rigorous and unbiased peer review process.", icon: <ShieldCheck className="w-6 h-6" /> },
     { title: "Maximum Visibility", desc: "Open access publication for global reach.", icon: <Globe className="w-6 h-6" /> },
     { title: "Rapid Processing", desc: "Fast-track review without compromising quality.", icon: <Zap className="w-6 h-6" /> },
     { title: "Professional Support", desc: "Dedicated editorial assistance at every step.", icon: <Users className="w-6 h-6" /> },

@@ -292,8 +292,8 @@ export const Issue = () => {
 const PageHeader = ({ stats }) => (
     <div className="bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
-            <div className="flex items-start justify-between flex-wrap gap-6">
-                <div>
+            <div className="flex flex-col items-center justify-center text-center">
+                <div className="flex flex-col items-center">
                     <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-50 text-green-700 rounded-full text-xs font-semibold tracking-wider uppercase mb-4">
                         <BookOpen size={13} />
                         Open Access Research
@@ -302,35 +302,11 @@ const PageHeader = ({ stats }) => (
                         Journal Archive<br />
                         <span className="text-green-600">&amp; Issues</span>
                     </h1>
-                    <p className="mt-4 text-gray-500 text-base max-w-lg leading-relaxed">
+                    <p className="mt-4 text-gray-500 text-base max-w-2xl leading-relaxed mx-auto">
                         Explore peer-reviewed research from our global community of scholars. Browse current issues, historical archives, and special collections.
                     </p>
                 </div>
-                <div className="flex gap-4 flex-wrap">
-                    {[
-                        {
-                            icon: BookMarked,
-                            label: "Volumes",
-                            value: `${stats.volumes}+`,
-                        },
-                        {
-                            icon: FileText,
-                            label: "Published",
-                            value: `${stats.published}+`,
-                        },
-                        {
-                            icon: TrendingUp,
-                            label: "Disciplines",
-                            value: `${stats.disciplines}+`,
-                        },
-                    ].map(({ icon: Icon, label, value }) => (
-                        <div key={label} className="bg-gray-50 border border-gray-100 rounded-2xl px-5 py-4 text-center min-w-[90px]">
-                            <Icon size={16} className="mx-auto text-green-600 mb-1.5" />
-                            <div className="text-xl font-black text-gray-900">{value}</div>
-                            <div className="text-[11px] text-gray-400 font-semibold uppercase tracking-wider mt-0.5">{label}</div>
-                        </div>
-                    ))}
-                </div>
+   
             </div>
         </div>
     </div>
