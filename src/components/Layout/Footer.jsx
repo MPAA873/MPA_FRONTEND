@@ -71,13 +71,16 @@ const Footer = () => {
                             A premier open-access platform for publishing cutting-edge, peer-reviewed
                             research — committed to scientific integrity and global academic growth.
                         </p>
-
                         <div className="mt-6 inline-flex items-center gap-2 bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full">
                             <BookOpen size={13} className="text-[#4ade80]" />
                             <span className="text-[11px] font-semibold uppercase tracking-wider text-[#F5E9D9]/80">
                                 Open Access &middot; Peer Reviewed
                             </span>
                         </div>
+
+                        <p className="mt-2 text-[11px] text-[#F5E9D9]/50 leading-relaxed max-w-sm">
+                            Distributed under the terms of the Creative Commons Attribution 4.0 International License (CC BY 4.0)
+                        </p>
 
                         <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-3.5 py-1.5 transition-all duration-300 hover:border-emerald-400/40">
                             <Archive size={13} className="text-emerald-400 shrink-0" />
