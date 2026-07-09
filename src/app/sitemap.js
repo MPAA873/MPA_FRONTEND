@@ -13,14 +13,13 @@ function getStaticRoutes() {
   const pages = [
     { url: "", priority: 1.0, changeFrequency: "yearly" },
     { url: "articles", priority: 0.9, changeFrequency: "daily" },
-    { url: "submit-manuscript", priority: 0.8, changeFrequency: "monthly" },
+    { url: "submit", priority: 0.8, changeFrequency: "monthly" },
     { url: "about", priority: 0.7, changeFrequency: "monthly" },
     { url: "contact", priority: 0.6, changeFrequency: "monthly" },
     { url: "editorial-board", priority: 0.6, changeFrequency: "monthly" },
-    { url: "author-guidelines", priority: 0.7, changeFrequency: "monthly" },
-    { url: "peer-review-policy", priority: 0.5, changeFrequency: "yearly" },
-    { url: "privacy-policy", priority: 0.3, changeFrequency: "yearly" },
-    { url: "terms-and-conditions", priority: 0.3, changeFrequency: "yearly" },
+    { url: "guidelines", priority: 0.7, changeFrequency: "monthly" },
+    { url: "ai-policy", priority: 0.3, changeFrequency: "yearly" },
+    { url: "issue", priority: 0.3, changeFrequency: "yearly" },
   ];
 
   return pages.map((page) => ({
