@@ -45,7 +45,7 @@ export default function ArticlesPage() {
             <button onClick={() => setEditorIdx(prev => (prev === 0 ? editorChoices.length - 1 : prev - 1))} className="absolute left-4 z-10 p-2 bg-white rounded-full shadow hover:bg-gray-50 text-[#713F12]">
               <ChevronLeft size={24} />
             </button>
-            <div className="flex flex-col md:flex-row items-center gap-8 px-12 w-full cursor-pointer group" onClick={() => router.push(`/articles/${editorChoices[editorIdx]._id}`)}>
+            <div className="flex flex-col md:flex-row items-center gap-8 px-12 w-full cursor-pointer group" onClick={() => router.push(`/articles/${editorChoices[editorIdx]?.slug}`)}>
               <div className="flex-1 space-y-4">
                 <span className="text-[#10B981] text-sm font-bold tracking-wider uppercase">Highlight</span>
                 <h3 className="text-3xl font-bold text-[#713F12] group-hover:text-[#10B981] transition-colors">{editorChoices[editorIdx]?.title}</h3>

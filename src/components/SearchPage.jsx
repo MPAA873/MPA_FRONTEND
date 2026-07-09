@@ -110,7 +110,7 @@ export default function SearchPublishedPage() {
                   </div>
                 </div>
 
-                <Link href={`/published-article/${article._id}`}>
+                <Link href={`/published-article/${article.slug}`}>
                   <h3 className="text-xl font-bold text-[#5D3A1A] mb-4 group-hover:text-emerald-600 transition-colors line-clamp-2">
                     {article.title}
                   </h3>
@@ -125,7 +125,7 @@ export default function SearchPublishedPage() {
                     {article.authors?.[0]?.name || "Unknown Author"}
                   </div>
                   <Link
-                    href={`/published-article/${article._id}`}
+                    href={`/published-article/${article.slug}`}
                     className="flex items-center gap-2 text-emerald-600 text-xs font-black uppercase tracking-tighter hover:gap-4 transition-all"
                   >
                     View Paper <ArrowRight size={14} />

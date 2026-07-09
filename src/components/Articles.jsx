@@ -36,10 +36,10 @@ const getManuscriptFileUrl = (article) => {
 const formatDate = (date) =>
   date
     ? new Date(date).toLocaleDateString("en-IN", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-      })
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    })
     : "—";
 
 /* ─────────────────────────────────────────────
@@ -123,11 +123,10 @@ function ArticlePill({ article, onClick, onDownload, onViewAbstract, isDownloadi
               onClick={() => hasFile && onDownload?.(article)}
               disabled={!hasFile || isDownloading}
               title={hasFile ? "Download Article" : "No file available"}
-              className={`flex items-center justify-center gap-1.5 text-[12px] font-semibold rounded-lg px-3 py-2 border transition-colors ${
-                hasFile
-                  ? "text-white bg-[#10B981] hover:bg-[#0e9f71] border-[#10B981] disabled:opacity-60"
-                  : "text-gray-300 bg-gray-50 border-gray-100 cursor-not-allowed"
-              }`}
+              className={`flex items-center justify-center gap-1.5 text-[12px] font-semibold rounded-lg px-3 py-2 border transition-colors ${hasFile
+                ? "text-white bg-[#10B981] hover:bg-[#0e9f71] border-[#10B981] disabled:opacity-60"
+                : "text-gray-300 bg-gray-50 border-gray-100 cursor-not-allowed"
+                }`}
             >
               {isDownloading ? <Loader2 size={13} className="animate-spin" /> : <Download size={13} />}
             </button>
@@ -205,11 +204,10 @@ function AbstractModal({ article, onClose, onDownload, isDownloading }) {
           <button
             onClick={() => onDownload?.(article)}
             disabled={!hasFile || isDownloading}
-            className={`flex-1 flex items-center justify-center gap-2 text-[13px] font-semibold px-6 py-3 rounded-xl transition-all ${
-              hasFile
-                ? "bg-[#713F12] hover:bg-[#10B981] text-white disabled:opacity-60"
-                : "bg-gray-100 text-gray-400 cursor-not-allowed"
-            }`}
+            className={`flex-1 flex items-center justify-center gap-2 text-[13px] font-semibold px-6 py-3 rounded-xl transition-all ${hasFile
+              ? "bg-[#713F12] hover:bg-[#10B981] text-white disabled:opacity-60"
+              : "bg-gray-100 text-gray-400 cursor-not-allowed"
+              }`}
           >
             {isDownloading ? <Loader2 size={15} className="animate-spin" /> : <Download size={15} />}
             {hasFile ? "Download Article" : "No File Available"}
@@ -355,7 +353,7 @@ export default function Articles() {
             <div className="flex flex-col lg:flex-row items-stretch group">
               <div
                 className="flex-1 flex flex-col justify-center px-8 md:px-12 py-10 gap-5 cursor-pointer"
-                onClick={() => router.push(`/articles/${editorChoices[editorIdx]._id}`)}
+                onClick={() => router.push(`/articles/${editorChoices[editorIdx]?.slug}`)}
               >
                 <span className="text-[10px] font-bold uppercase text-[#10B981] bg-[#10B981]/10 px-3 py-1.5 rounded-full w-fit">Featured Manuscript</span>
                 <h3 className="text-2xl md:text-3xl font-extrabold text-[#713F12] group-hover:text-[#10B981] transition-colors duration-300 leading-tight">
@@ -366,7 +364,7 @@ export default function Articles() {
                 </p>
                 <div className="flex items-center gap-3 mt-2 flex-wrap" onClick={(e) => e.stopPropagation()}>
                   <button
-                    onClick={() => router.push(`/articles/${editorChoices[editorIdx]._id}`)}
+                    onClick={() => router.push(`/articles/${editorChoices[editorIdx]?.slug}`)}
                     className="bg-[#713F12] hover:bg-[#10B981] text-white text-[13px] font-semibold px-6 py-3 rounded-xl flex items-center gap-2 transition-all transform hover:translate-x-1"
                   >
                     Read Article <ArrowRight size={15} />
@@ -393,7 +391,7 @@ export default function Articles() {
               </div>
               <div
                 className="w-full lg:w-[40%] min-h-[280px] relative overflow-hidden bg-[#FEF3C7]/40 cursor-pointer"
-                onClick={() => router.push(`/articles/${editorChoices[editorIdx]._id}`)}
+ onClick={() => router.push(`/articles/${editorChoices[editorIdx]?.slug}`)}
               >
                 {editorChoices[editorIdx]?.files?.manuscriptImage ? (
                   <img
@@ -432,7 +430,7 @@ export default function Articles() {
               <ArticlePill
                 key={article._id}
                 article={article}
-                onClick={() => router.push(`/articles/${article._id}`)}
+                onClick={() => router.push(`/articles/${article.slug}`)}
                 onDownload={handleDownload}
                 onViewAbstract={handleViewAbstract}
                 isDownloading={downloadingId === article._id}
@@ -462,7 +460,7 @@ export default function Articles() {
               <ArticlePill
                 key={article._id}
                 article={article}
-                onClick={() => router.push(`/articles/${article._id}`)}
+                onClick={() => router.push(`/articles/${article.slug}`)}
                 onDownload={handleDownload}
                 onViewAbstract={handleViewAbstract}
                 isDownloading={downloadingId === article._id}
@@ -483,7 +481,7 @@ export default function Articles() {
             <ArticlePill
               key={article._id}
               article={article}
-              onClick={() => router.push(`/articles/${article._id}`)}
+              onClick={() => router.push(`/articles/${article.slug}`)}
               onDownload={handleDownload}
               onViewAbstract={handleViewAbstract}
               isDownloading={downloadingId === article._id}
@@ -526,7 +524,7 @@ export default function Articles() {
               <ArticlePill
                 key={article._id}
                 article={article}
-                onClick={() => router.push(`/articles/${article._id}`)}
+                onClick={() => router.push(`/articles/${article.slug}`)}
                 onDownload={handleDownload}
                 onViewAbstract={handleViewAbstract}
                 isDownloading={downloadingId === article._id}

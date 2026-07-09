@@ -6,7 +6,7 @@ export default function ArticleCard({ article }) {
 
   return (
     <div
-      onClick={() => router.push(`/articles/${article._id}`)}
+      onClick={() => router.push(`/articles/${article.slug}`)}
       className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl hover:border-[#10B981] transition-all duration-300 cursor-pointer flex flex-col h-full group"
     >
       <div className="w-full h-40 bg-gray-50 flex items-center justify-center border-b border-gray-100 group-hover:bg-[#FFFBEB] relative">

@@ -109,7 +109,7 @@ export default function SearchPublishedPage() {
                   </div>
                 </div>
 
-                <Link href={`/published-article/${article._id}`}>
+                <Link href={`/published-article/${article.slug}`}>
                   <h3 className="text-xl font-bold text-[#5D3A1A] mb-4 group-hover:text-emerald-600 transition-colors line-clamp-2">
                     {article.title}
                   </h3>

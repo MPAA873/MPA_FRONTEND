@@ -135,7 +135,7 @@ const Hero = () => {
                       exit={{ opacity: 0, x: -50 }}
                       transition={{ duration: 0.8, ease: "easeInOut" }}
                       className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center w-full cursor-pointer"
-                      onClick={() => router.push(`/articles/${latestArticle._id}`)}
+                      onClick={() => router.push(`/articles/${latestArticle.slug}`)}
                     >
                       <div className="md:col-span-7 flex flex-col">
                         <h3 className="text-xl sm:text-2xl font-bold text-[#333] leading-[1.3] mb-6 line-clamp-3">

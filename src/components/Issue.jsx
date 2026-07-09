@@ -742,7 +742,7 @@ const ArticleCard = ({ article }) => {
 
     return (
         <Link
-            href={`/articles/${article._id}`}
+            href={`/articles/${article.slug}`}
             className="group bg-white rounded-2xl border border-gray-100 overflow-hidden flex flex-col h-full hover:border-green-200 hover:shadow-[0_8px_30px_-4px_rgba(34,197,94,0.15)] transition-all duration-300"
         >
             {/* Image */}
@@ -829,7 +829,7 @@ const ArticleCard = ({ article }) => {
 
 const ArticleListRow = ({ article }) => (
     <Link
-        href={`/articles/${article._id}`}
+        href={`/articles/${article.slug}`}
         className="group flex items-start gap-4 bg-white border border-gray-100 rounded-2xl p-5 hover:border-green-200 hover:shadow-[0_4px_20px_-4px_rgba(34,197,94,0.12)] transition-all duration-200"
     >
         {/* Thumbnail */}
