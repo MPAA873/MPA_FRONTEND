@@ -144,7 +144,7 @@ const AuthorGuidelines = () => {
             <div className="bg-emerald-100 p-4 rounded-xl text-emerald-700"><Users size={32} /></div>
             <div>
               <p className="text-sm text-gray-500 font-bold uppercase tracking-widest">Review Type</p>
-              <p className="text-xl font-bold text-[#78350f]">single anonymized review process</p>
+              <p className="text-xl font-bold text-[#78350f]">Single anonymized review process</p>
             </div>
           </div>
           <div className="bg-white p-6 rounded-2xl shadow-xl border border-emerald-50 flex items-center gap-5">
