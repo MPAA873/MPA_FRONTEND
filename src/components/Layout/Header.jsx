@@ -111,7 +111,7 @@ const Header = () => {
               ))}
             </div>
 
-            <Link href="/menuscript-search" className="p-2 text-[#854D0E] hover:bg-gray-50 rounded-full transition-colors">
+            <Link href="/manuscript-search" className="p-2 text-[#854D0E] hover:bg-gray-50 rounded-full transition-colors">
               <Search size={20} />
             </Link>
 
@@ -148,7 +148,7 @@ const Header = () => {
 
           {/* Mobile Buttons */}
           <div className="lg:hidden flex items-center gap-1 sm:gap-2">
-            <Link href="/menuscript-search" className="p-2 text-[#854D0E] hover:bg-gray-50 rounded-full transition-all">
+            <Link href="/manuscript-search" className="p-2 text-[#854D0E] hover:bg-gray-50 rounded-full transition-all">
               <Search size={22} />
             </Link>
             <button

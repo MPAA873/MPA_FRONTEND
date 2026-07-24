@@ -2,7 +2,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import ReduxProvider from "@/components/Layout/ReduxProvider";
-import CookieConsent from "@/components/Layout/CookieConsent";
 import LayoutWrapper from "@/components/Layout/LayoutWrapper";
 import ScrollToTop from "@/components/Layout/ScrollToTop";
 import FloatingContact from "@/components/Layout/FloatingContact";
@@ -83,7 +82,6 @@ export default function RootLayout({ children }) {
 
           <ScrollToTop />
 
-          <CookieConsent />
         </ReduxProvider>
       </body>
     </html>

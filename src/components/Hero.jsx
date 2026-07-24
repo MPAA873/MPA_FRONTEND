@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import {
   ArrowRight,
@@ -14,6 +14,59 @@ import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
 import { useGetLatestPublishedQuery } from "../store/apiSlice";
 
+// Phrases for the typing animation — tailored to a research/publishing journal
+const TYPING_PHRASES = [
+  { line1: "Advancing Knowledge.", line2: "Inspiring Innovation." },
+  { line1: "Peer-Reviewed Research.", line2: "Trusted Worldwide." },
+  { line1: "Open Access Publishing.", line2: "Global Scholarly Reach." },
+  { line1: "Empowering Researchers.", line2: "Shaping the Future." },
+  { line1: "Rigorous. Credible.", line2: "Impactful Science." },
+];
+
+// Custom hook: smooth typewriter effect across multiple two-line phrases
+const useTypewriter = (phrases, { typingSpeed = 55, deletingSpeed = 30, pauseTime = 1800 } = {}) => {
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [charCount, setCharCount] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const currentPhrase = phrases[phraseIndex];
+  const fullText = `${currentPhrase.line1}\n${currentPhrase.line2}`;
+
+  useEffect(() => {
+    if (isPaused) {
+      const pauseTimeout = setTimeout(() => {
+        setIsPaused(false);
+        setIsDeleting(true);
+      }, pauseTime);
+      return () => clearTimeout(pauseTimeout);
+    }
+
+    if (!isDeleting && charCount === fullText.length) {
+      setIsPaused(true);
+      return;
+    }
+
+    if (isDeleting && charCount === 0) {
+      setIsDeleting(false);
+      setPhraseIndex((prev) => (prev + 1) % phrases.length);
+      return;
+    }
+
+    const speed = isDeleting ? deletingSpeed : typingSpeed;
+    const timeout = setTimeout(() => {
+      setCharCount((prev) => (isDeleting ? prev - 1 : prev + 1));
+    }, speed);
+
+    return () => clearTimeout(timeout);
+  }, [charCount, isDeleting, isPaused, fullText, phrases.length, typingSpeed, deletingSpeed, pauseTime]);
+
+  const displayedText = fullText.substring(0, charCount);
+  const [displayLine1, displayLine2 = ""] = displayedText.split("\n");
+
+  return { displayLine1, displayLine2 };
+};
+
 const Hero = () => {
   const router = useRouter();
 
@@ -23,6 +76,9 @@ const Hero = () => {
   // Fetch the latest published manuscript from your API logic
   const { data, isLoading } = useGetLatestPublishedQuery();
   const latestArticle = data?.article;
+
+  // Typing animation for the hero heading
+  const { displayLine1, displayLine2 } = useTypewriter(TYPING_PHRASES);
 
   // Function to format author names
   const formatAuthors = (authors) => {
@@ -56,19 +112,24 @@ const Hero = () => {
 
   return (
     <section className="w-full bg-[#FDF6ED] overflow-hidden scroll-mt-35" id="hero">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16 lg:py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16 lg:py-15">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
           {/* --- LEFT SECTION --- */}
           <div className="flex flex-col order-2 lg:order-1 text-center lg:text-left items-center lg:items-start">
-            <div className="inline-flex items-center gap-2 bg-[#DCFCE7] text-[#166534] px-4 py-1.5 rounded-full text-sm font-semibold mb-6 shadow-sm border border-[#BBF7D0]">
-              <Globe size={16} className="text-[#22C55E]" />
-              Connecting Researchers Worldwide
-            </div>
-
-            <h1 className="text-4xl sm:text-5xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-6">
-              <span className="text-[#713F12] block">Advancing Knowledge.</span>
-              <span className="text-[#22C55E] block">Inspiring Innovation.</span>
+            <h1 className="text-4xl sm:text-5xl md:text-5xl font-extrabold tracking-tight leading-[1.1] mb-6 min-h-[2.4em] sm:min-h-[2.2em]">
+              <span className="text-[#713F12] block whitespace-pre-wrap break-words">
+                {displayLine1}
+                {displayLine2.length === 0 && (
+                  <span className="typing-cursor text-[#713F12]">|</span>
+                )}
+              </span>
+              <span className="text-[#22C55E] block whitespace-pre-wrap break-words">
+                {displayLine2}
+                {displayLine2.length > 0 && (
+                  <span className="typing-cursor text-[#22C55E]">|</span>
+                )}
+              </span>
             </h1>
 
             <div className="text-[#854D0E] text-lg sm:text-xl max-w-lg mb-8 leading-relaxed opacity-90">
@@ -93,7 +154,7 @@ const Hero = () => {
               </button>
 
               <button
-                onClick={() => router.push("/menuscript-search")}
+                onClick={() => router.push("/manuscript-search")}
                 className="bg-white text-[#713F12] px-8 py-4 rounded-2xl font-bold border border-green-100 hover:bg-green-50 transition-all shadow-sm"
               >
                 Browse Articles
@@ -176,6 +237,19 @@ const Hero = () => {
 
         </div>
       </div>
+
+      <style jsx global>{`
+        .typing-cursor {
+          display: inline-block;
+          margin-left: 2px;
+          animation: blink-cursor 0.9s step-end infinite;
+          font-weight: 400;
+        }
+        @keyframes blink-cursor {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+      `}</style>
     </section>
   );
 };

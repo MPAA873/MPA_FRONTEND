@@ -80,8 +80,8 @@ export default function SearchPublishedPage() {
                 key={tab.id}
                 onClick={() => setFilterType(tab.id)}
                 className={`flex items-center gap-2 px-6 py-2.5 rounded-full font-bold text-xs uppercase tracking-widest transition-all ${filterType === tab.id
-                    ? "bg-emerald-600 text-white shadow-lg shadow-emerald-200"
-                    : "bg-white text-gray-400 border border-gray-100 hover:bg-emerald-50"
+                  ? "bg-emerald-600 text-white shadow-lg shadow-emerald-200"
+                  : "bg-white text-gray-400 border border-gray-100 hover:bg-emerald-50"
                   }`}
               >
                 {tab.icon && <tab.icon size={14} />}
@@ -109,7 +109,7 @@ export default function SearchPublishedPage() {
                   </div>
                 </div>
 
-                <Link href={`/published-article/${article.slug}`}>
+                <Link href={`/articles/${article.slug}`}>
                   <h3 className="text-xl font-bold text-[#5D3A1A] mb-4 group-hover:text-emerald-600 transition-colors line-clamp-2">
                     {article.title}
                   </h3>
@@ -123,10 +123,7 @@ export default function SearchPublishedPage() {
                   <div className="text-[10px] text-[#C2783E] font-bold uppercase tracking-widest">
                     {article.authors?.[0]?.name || "Unknown Author"}
                   </div>
-                  <Link
-                    href={`/published-article/${article._id}`}
-                    className="flex items-center gap-2 text-emerald-600 text-xs font-black uppercase tracking-tighter hover:gap-4 transition-all"
-                  >
+                  <Link href={`/articles/${article.slug}`}>
                     View Paper <ArrowRight size={14} />
                   </Link>
                 </div>

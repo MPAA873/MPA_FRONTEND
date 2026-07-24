@@ -1,11 +1,11 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { 
-  
-  BookOpen, 
-  FileText, 
-  Image as ImageIcon, 
+import {
+
+  BookOpen,
+  FileText,
+  Image as ImageIcon,
   ArrowRight,
   Loader2
 } from 'lucide-react';
@@ -21,9 +21,9 @@ const ArticleCard = ({ article }) => {
   }, []);
 
   const authorNames = article.authors?.map(a => a.name).join(", ") || "Unknown Author";
-  
-  const formattedDate = article.publishedAt 
-    ? new Date(article.publishedAt).toISOString().split('T')[0] 
+
+  const formattedDate = article.publishedAt
+    ? new Date(article.publishedAt).toISOString().split('T')[0]
     : "Recently Published";
 
   return (
@@ -47,7 +47,7 @@ const ArticleCard = ({ article }) => {
           </span>
         </div>
 
-        <Link href={`/published-article/${article._id}`}>
+        <Link href={`/articles/${article.slug}`}>
           <h3 className="font-bold text-[#5D3A1A] text-xl leading-snug group-hover:text-emerald-600 transition-colors line-clamp-2 mb-3 cursor-pointer h-14">
             {article.title}
           </h3>
@@ -59,16 +59,13 @@ const ArticleCard = ({ article }) => {
 
         <div className="mt-auto pt-5 border-t border-gray-50 flex items-center justify-between">
           <span className="text-[#C2783E] text-[11px] font-black italic">
-            Journal of App. Bio. 
+            Journal of App. Bio.
             <span className="ml-2 font-medium not-italic text-gray-300">
-               {views > 0 ? `(${views} views)` : ''}
+              {views > 0 ? `(${views} views)` : ''}
             </span>
           </span>
-          
-          <Link 
-              href={`/published-article/${article._id}`}
-              className="flex items-center gap-1.5 text-emerald-600 text-xs font-black uppercase tracking-tighter hover:gap-2.5 transition-all"
-          >
+
+          <Link href={`/articles/${article.slug}`}>
             Read Full <ArrowRight size={14} />
           </Link>
         </div>
@@ -129,7 +126,7 @@ const PublishedArticles = () => {
   );
 
   const allArticles = data?.articles || [];
-  
+
   // Use lowercase filter to be safe
   const reviewArticles = allArticles.filter(art => art.manuscriptType?.toLowerCase() === "review");
   const responseArticles = allArticles.filter(art => art.manuscriptType?.toLowerCase() === "research");
@@ -137,18 +134,18 @@ const PublishedArticles = () => {
   return (
     <div className="min-h-screen bg-[#FDFBF7]/50 py-20">
       <div className="max-w-7xl mx-auto px-6">
-        <ArticleSlider 
-          title="Literature Reviews" 
+        <ArticleSlider
+          title="Literature Reviews"
           subtitle="Comprehensive synthesis and critical analysis of contemporary biological trends."
-          icon={BookOpen} 
-          articles={reviewArticles} 
+          icon={BookOpen}
+          articles={reviewArticles}
         />
 
-        <ArticleSlider 
-          title="Research Publications" 
+        <ArticleSlider
+          title="Research Publications"
           subtitle="Original experimental findings and innovative scientific discoveries."
-          icon={FileText} 
-          articles={responseArticles} 
+          icon={FileText}
+          articles={responseArticles}
         />
       </div>
     </div>
