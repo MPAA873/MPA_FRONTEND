@@ -21,7 +21,7 @@ const quickLinks = [
     { label: "Submit Manuscript", href: "/submit" },
     { label: "Editorial Board", href: "/editorial-board" },
     { label: "Guidelines", href: "/guidelines" },
-    { label: "AI Policy", href: "/ai-policy" },
+    { label: "journal Policies", href: "/journal-policies" },
 ];
 
 const resourceLinks = [
@@ -187,7 +187,7 @@ const Footer = () => {
                                 </span>
                             </div>
                             <p className="text-[13px] text-[#F5E9D9]/70 leading-relaxed">
-                                Mon – Fri: 9:00 AM – 6:00 PM EST
+                                Mon – Fri: 9:00 AM – 6:00 PM IST
                                 <br />
                                 Sat – Sun: Automated support only
                                 <br />

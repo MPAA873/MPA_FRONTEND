@@ -32,7 +32,7 @@ const FloatingContact = () => {
   ];
 
   return (
-    <div className="fixed right-0 top-1/2 -translate-y-1/2 z-[999] flex flex-col gap-1 items-end overflow-hidden">
+    <div className="fixed right-0 top-1/2 -translate-y-1/2 z-[99999] flex flex-col gap-1 items-end">
       {contactLinks.map((item) => (
         <a
           key={item.id}
@@ -40,12 +40,14 @@ const FloatingContact = () => {
           target="_blank"
           rel="noopener noreferrer"
           className={`
-            group flex items-center h-12 min-w-[48px] 
-            ${item.color} text-white 
-            rounded-l-lg shadow-lg 
-            transition-all duration-300 ease-in-out
-            translate-x-[calc(100%-48px)] hover:translate-x-0
-          `}
+  group flex items-center h-12 min-w-[48px]
+  ${item.color} text-white
+  rounded-l-lg shadow-lg
+  transition-all duration-300 ease-in-out
+  md:translate-x-[calc(100%-48px)]
+  md:hover:translate-x-0
+  cursor-pointer
+`}
         >
           {/* Icon Section (Always Visible) */}
           <div className="w-12 h-12 flex items-center justify-center flex-shrink-0">

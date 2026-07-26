@@ -23,7 +23,7 @@ const Header = () => {
     { name: "Submit", href: "/submit" },
     { name: "Editorial", href: "/editorial-board" },
     { name: "Guidelines", href: "/guidelines" },
-    { name: "AI Policy", href: "/ai-policy" },
+    { name: "Journal Policies", href: "/journal-policies" },
     { name: "Issue", href: "/issue" },
     { name: "Contact", href: "/contact" },
   ];

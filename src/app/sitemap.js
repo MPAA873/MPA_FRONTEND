@@ -18,7 +18,8 @@ function getStaticRoutes() {
     { url: "contact", priority: 0.6, changeFrequency: "monthly" },
     { url: "editorial-board", priority: 0.6, changeFrequency: "monthly" },
     { url: "guidelines", priority: 0.7, changeFrequency: "monthly" },
-    { url: "ai-policy", priority: 0.3, changeFrequency: "yearly" },
+
+    { url: "journal-policies", priority: 0.7, changeFrequency: "monthly" },
     { url: "issue", priority: 0.3, changeFrequency: "yearly" },
   ];
 
