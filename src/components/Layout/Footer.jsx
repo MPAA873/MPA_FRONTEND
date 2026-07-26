@@ -21,7 +21,7 @@ const quickLinks = [
     { label: "Submit Manuscript", href: "/submit" },
     { label: "Editorial Board", href: "/editorial-board" },
     { label: "Guidelines", href: "/guidelines" },
-    { label: "journal Policies", href: "/journal-policies" },
+    { label: "Journal Policies", href: "/journal-policies" },
 ];
 
 const resourceLinks = [
