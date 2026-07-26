@@ -57,6 +57,12 @@ export default function ArticleDetailClient({ article }) {
     year: 'numeric', month: 'long', day: 'numeric'
   });
 
+  const submittedDate = new Date(article.createdAt).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+
   return (
     <div className="min-h-screen bg-[#F9FAFB] font-sans text-slate-900">
 
@@ -114,6 +120,11 @@ export default function ArticleDetailClient({ article }) {
       <div className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
           <div className="hidden lg:flex items-center gap-8 text-xs font-bold uppercase tracking-wider text-gray-500">
+            <div className="flex items-center gap-2">
+              <FileCheck size={16} className="text-blue-600 flex-shrink-0" />
+              Submitted:
+              <span className="text-[#713F12]">{submittedDate}</span>
+            </div>
             <div className="flex items-center gap-2"><Calendar size={16} className="text-green-600 flex-shrink-0" /> Published: <span className="text-[#713F12]">{formattedDate}</span></div>
             <div className="flex items-center gap-2"><Hash size={16} className="text-green-600 flex-shrink-0" /> DOI:
               {article.doi ? (

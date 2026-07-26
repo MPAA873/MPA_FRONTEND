@@ -103,7 +103,7 @@ const Contact = () => {
               +91-8923580628
             </p>
             <p className="text-sm text-amber-600">
-              International calling hours: 9AM–5PM EST
+              International calling hours: 9AM–5PM IST
             </p>
           </div>
 
