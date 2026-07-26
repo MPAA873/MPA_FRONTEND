@@ -111,7 +111,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="w-full bg-[#FDF6ED] overflow-hidden scroll-mt-35" id="hero">
+    <section className="w-full  overflow-hidden scroll-mt-35" id="hero">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16 lg:py-15">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 

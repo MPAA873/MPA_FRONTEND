@@ -53,7 +53,7 @@ const workflowSteps = [
     {
         id: 5,
         title: "APC Processing",
-        desc: "Seamless payment integration for open-access processing fees.",
+        desc: "Seamless payment integration for open-access processing fees. APC waived off till 31st December 2026",
         icon: CreditCard,
         time: "Instant",
         color: "from-cyan-400 to-cyan-600",

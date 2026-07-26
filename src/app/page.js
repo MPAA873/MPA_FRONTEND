@@ -14,18 +14,19 @@ export default function Page() {
       <AnnouncementBanner />
       <Hero />
 
-      <StatsSection/>
+      <Articles />
+
+      <StatsSection />
 
       {/* Landing on 2 Main Editors */}
       <EditorialLeadership />
       <SubmissionProcess />
 
-      {/* Articles Section with ID for scrolling */}
-      <div id="articles-section">
-        <Articles />
-      </div>
-      <BecomeReviewer/>
-      <JournalInfo/>
+
+
+
+      <BecomeReviewer />
+      <JournalInfo />
     </main>
   );
 }

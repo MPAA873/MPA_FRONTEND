@@ -144,24 +144,6 @@ const EditorialLeadership = () => {
 
         </div>
       </div>
-
-      {/* Smooth Scroll Indicator (CSS Animation) */}
-      <div
-        className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center cursor-pointer group"
-        onClick={scrollToNext}
-      >
-        <span className="text-[10px] font-bold text-[#713F12]/40 tracking-[0.2em] uppercase mb-2 group-hover:text-[#22C55E] transition-colors">
-          Read Articles
-        </span>
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          className="flex flex-col items-center"
-        >
-          <ChevronDown size={20} className="text-[#22C55E] -mb-3 opacity-50" strokeWidth={3} />
-          <ChevronDown size={30} className="text-[#22C55E]" strokeWidth={2} />
-        </motion.div>
-      </div>
     </section>
   );
 };

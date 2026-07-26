@@ -86,7 +86,7 @@ const Footer = () => {
                             <Archive size={13} className="text-emerald-400 shrink-0" />
 
                             <span className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-[#F5E9D9]/80">
-                                Archived &middot; Indexed via Zenodo
+                                Archived &middot; via Zenodo
                                 <BadgeCheck size={11} className="text-emerald-400" />
                             </span>
                         </div>
