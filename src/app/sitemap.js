@@ -18,9 +18,9 @@ function getStaticRoutes() {
     { url: "contact", priority: 0.6, changeFrequency: "monthly" },
     { url: "editorial-board", priority: 0.6, changeFrequency: "monthly" },
     { url: "guidelines", priority: 0.7, changeFrequency: "monthly" },
-
     { url: "journal-policies", priority: 0.7, changeFrequency: "monthly" },
     { url: "issue", priority: 0.3, changeFrequency: "yearly" },
+    { url: "manuscript-search", priority: 0.8, changeFrequency: "weekly" },
   ];
 
   return pages.map((page) => ({
@@ -55,8 +55,8 @@ async function getArticleRoutes() {
         lastModified: article.updatedAt
           ? new Date(article.updatedAt)
           : article.publishedAt
-          ? new Date(article.publishedAt)
-          : new Date(),
+            ? new Date(article.publishedAt)
+            : new Date(),
         changeFrequency: "monthly",
         priority: article.isEditorChoice ? 0.9 : 0.7,
       }));
