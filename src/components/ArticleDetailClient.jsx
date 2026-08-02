@@ -7,14 +7,17 @@ import {
   ExternalLink, Calendar, Hash,
   User, Award, BookOpen, Quote, Download,
   Mail, Building2, Eye, Layout, Clock,
-  CheckCircle2, FileCheck, Share2, Maximize2
+  CheckCircle2, FileCheck, Share2, Maximize2,
+  X, Copy, BookMarked, Sparkles
 } from "lucide-react";
+import toast from "react-hot-toast";
 import ArticleToolsDropdown from "@/components/ArticleToolsDropdown";
 
 export default function ArticleDetailClient({ article }) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("abstract");
   const [showCiteModal, setShowCiteModal] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const keywords = useMemo(() => {
     if (!article?.keywords || article.keywords.length === 0) return [];
@@ -43,6 +46,13 @@ export default function ArticleDetailClient({ article }) {
   const citationText = article
     ? `${formatAuthorCitation(article.authors)} (${new Date(article.publishedAt).getFullYear()}). ${article.title}. MPA Research, Volume ${article.volume}, Issue ${article.issue}, ${article.doi ? article.doi : (typeof window !== "undefined" ? window.location.href : "")}`
     : "";
+
+  const handleCopyCitation = () => {
+    navigator.clipboard.writeText(citationText);
+    setCopied(true);
+
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   if (!article) return (
     <div className="min-h-screen flex flex-col items-center justify-center text-center p-6 bg-gray-50">
@@ -106,7 +116,7 @@ export default function ArticleDetailClient({ article }) {
             <span className="bg-yellow-400 text-yellow-950 text-[9px] sm:text-[10px] font-black px-2.5 sm:px-3 py-1 rounded uppercase tracking-[0.15em] sm:tracking-[0.2em] flex items-center gap-1"><Globe size={12} /> Open Access</span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6 sm:mb-10 leading-[1.2] sm:leading-[1.15] max-w-5xl">{article.title}</h1>
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-6 sm:mb-10 leading-[1.2] sm:leading-[1.15] max-w-5xl">{article.title}</h1>
 
           <div className="flex flex-wrap items-center gap-x-4 sm:gap-x-6 gap-y-2 sm:gap-y-3 text-green-50">
             {article.authors?.map((author, i) => (
@@ -144,10 +154,36 @@ export default function ArticleDetailClient({ article }) {
             </div>
           </div>
 
-          {/* Mobile: Published date row */}
-          <div className="flex lg:hidden items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-gray-500">
-            <Calendar size={14} className="text-green-600 flex-shrink-0" />
-            <span className="text-[#713F12] normal-case font-semibold">{formattedDate}</span>
+          {/* Mobile: Submitted / Published / DOI details */}
+          <div className="flex lg:hidden flex-col gap-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-500 w-full">
+            <div className="flex items-center gap-2 flex-wrap">
+              <FileCheck size={14} className="text-blue-600 flex-shrink-0" />
+              <span>Submitted:</span>
+              <span className="text-[#713F12] normal-case font-semibold">{submittedDate}</span>
+            </div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <Calendar size={14} className="text-green-600 flex-shrink-0" />
+              <span>Published:</span>
+              <span className="text-[#713F12] normal-case font-semibold">{formattedDate}</span>
+            </div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <Hash size={14} className="text-green-600 flex-shrink-0" />
+              <span>DOI:</span>
+              {article.doi ? (
+                <a
+                  href={article.doi}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#713F12] underline normal-case font-semibold truncate max-w-[200px]"
+                >
+                  {article.doi}
+                </a>
+              ) : (
+                <span className="text-[#713F12] normal-case font-semibold">
+                  {article.paperNumber}
+                </span>
+              )}
+            </div>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 md:gap-4 overflow-x-auto no-scrollbar">
@@ -292,35 +328,97 @@ export default function ArticleDetailClient({ article }) {
         </main>
       </div>
 
+      {/* --- CITE MODAL (Premium) --- */}
       {showCiteModal && (
-        <div className="fixed inset-0 bg-slate-900/70 backdrop-blur-sm flex justify-center items-center z-[100] p-4">
-          <div className="bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl sm:rounded-[28px] shadow-2xl overflow-hidden border border-gray-100">
-            <div className="bg-green-600 px-5 sm:px-8 py-5 sm:py-6 flex justify-between items-center">
-              <div className="flex items-center gap-2 sm:gap-3 text-white">
-                <Quote size={20} className="sm:w-[22px] sm:h-[22px]" />
-                <h3 className="text-base sm:text-lg font-bold">Cite This Article</h3>
+        <div
+          className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex justify-center items-center z-[100] p-4 animate-in fade-in duration-200"
+          onClick={() => setShowCiteModal(false)}
+        >
+          <div
+            className="bg-white w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl border border-gray-100 animate-in zoom-in-95 slide-in-from-bottom-4 duration-300"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="relative bg-gradient-to-br from-green-600 via-green-600 to-emerald-700 px-6 sm:px-8 py-6 sm:py-7 overflow-hidden">
+              <div className="absolute inset-0 opacity-10" style={{ backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`, backgroundSize: '24px 24px' }}></div>
+              <div className="relative flex justify-between items-start">
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="bg-white/15 border border-white/25 backdrop-blur-md p-2.5 sm:p-3 rounded-2xl flex-shrink-0">
+                    <BookMarked size={22} className="text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg sm:text-xl font-bold text-white leading-tight">Cite This Article</h3>
+                    <p className="text-green-100 text-xs sm:text-sm font-medium mt-1">Ready-to-use reference for your bibliography</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setShowCiteModal(false)}
+                  className="text-white/80 hover:text-white hover:bg-white/15 rounded-full p-2 transition-colors flex-shrink-0"
+                >
+                  <X size={20} />
+                </button>
               </div>
-              <button
-                onClick={() => setShowCiteModal(false)}
-                className="text-white/80 hover:text-white hover:bg-white/10 rounded-full p-2 transition"
-              >
-                ✕
-              </button>
             </div>
 
-            <div className="p-5 sm:p-8 space-y-5 sm:space-y-6">
-              <div className="bg-green-50 border border-green-100 rounded-xl sm:rounded-2xl p-4 sm:p-6">
-                <p className="text-[10px] sm:text-[11px] font-black text-green-600 uppercase tracking-widest mb-2 sm:mb-3">APA Style</p>
-                <p className="text-slate-800 text-sm sm:text-[15px] leading-relaxed break-words">{citationText}</p>
+            {/* Body */}
+            <div className="p-6 sm:p-8 space-y-5 sm:space-y-6">
+
+              {/* Format badge row */}
+              <div className="flex items-center justify-between">
+                <span className="inline-flex items-center gap-1.5 bg-green-50 text-green-700 border border-green-200 px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-black uppercase tracking-widest">
+                  <Sparkles size={12} /> APA Style
+                </span>
+                <span className="text-[10px] sm:text-[11px] font-bold text-gray-400 uppercase tracking-widest">7th Edition</span>
               </div>
 
+              {/* Citation card */}
+              <div className="relative bg-gradient-to-br from-gray-50 to-green-50/40 border border-gray-200 rounded-2xl p-5 sm:p-6">
+                <Quote size={28} className="absolute -top-3 -left-2 text-green-200 rotate-180" />
+                <p className="relative text-slate-800 text-sm sm:text-[15px] leading-relaxed sm:leading-loose break-words font-medium">
+                  {citationText}
+                </p>
+              </div>
+
+              {/* Quick facts */}
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                <div className="flex items-center gap-2.5 bg-gray-50 border border-gray-100 rounded-xl px-4 py-3">
+                  <div className="bg-white p-1.5 rounded-lg shadow-sm text-green-600 flex-shrink-0">
+                    <BookOpen size={15} />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Journal</p>
+                    <p className="text-xs sm:text-sm font-bold text-[#713F12] truncate">MPA Research</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2.5 bg-gray-50 border border-gray-100 rounded-xl px-4 py-3">
+                  <div className="bg-white p-1.5 rounded-lg shadow-sm text-green-600 flex-shrink-0">
+                    <Hash size={15} />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Vol / Issue</p>
+                    <p className="text-xs sm:text-sm font-bold text-[#713F12] truncate">{article.volume} / {article.issue}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Copy button */}
               <button
-                onClick={() => {
-                  navigator.clipboard.writeText(citationText);
-                }}
-                className="w-full bg-green-600 hover:bg-green-700 text-white py-3 sm:py-3.5 rounded-xl sm:rounded-2xl font-bold flex items-center justify-center gap-2 transition-all active:scale-95 text-sm sm:text-base"
+                onClick={handleCopyCitation}
+                className={`w-full py-3.5 sm:py-4 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all active:scale-95 text-sm sm:text-base shadow-lg ${
+                  copied
+                    ? "bg-emerald-600 text-white shadow-emerald-200"
+                    : "bg-green-600 hover:bg-green-700 text-white shadow-green-200"
+                }`}
               >
-                Copy Citation
+                {copied ? (
+                  <>
+                    <CheckCircle2 size={18} /> Copied to Clipboard!
+                  </>
+                ) : (
+                  <>
+                    <Copy size={18} /> Copy Citation
+                  </>
+                )}
               </button>
             </div>
           </div>

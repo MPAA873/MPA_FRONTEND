@@ -62,7 +62,7 @@ const boardMembers = [
     id: "board-2",
     name: "Dr. Fahad Khan",
     title: "Co-Founder & Editor-in-Chief",
-    org: "Saveetha Institute of Medical and Technical Sciences, India",
+    org: "MPA Research",
     image: "/images/fahad-khan.png",
     desc:
       "Dr. Fahad Khan is associated with Saveetha Institute of Medical and Technical Sciences, India. His research focuses on natural product pharmacology and computational approaches to disease mechanisms, including anticancer compound screening and molecular studies of viral and cancer-related targets. He has co-authored work published in journals including Immuno (MDPI), Cellular and Molecular Biology, and the Brazilian Journal of Pharmaceutical Sciences.",

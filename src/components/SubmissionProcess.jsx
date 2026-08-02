@@ -37,7 +37,7 @@ const workflowSteps = [
     {
         id: 3,
         title: "Expert Peer Review",
-        desc: "Rigorous single-anonymous evaluation by domain authorities.",
+        desc: "Rigorous single-blind evaluation by domain authorities.",
         icon: ShieldCheck,
         time: "14–21Days",
         color: "from-blue-400 to-blue-600",

@@ -1,5 +1,6 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 import {
   Share2, Download, Quote, Printer, Copy, ChevronLeft,
   FileText, BarChart3, ShieldCheck, Mail, Check, ExternalLink,
@@ -11,18 +12,72 @@ export default function ArticleToolsDropdown({ article }) {
   const [activeView, setActiveView] = useState("main"); // main, share, cite, metrics
   const [isOpen, setIsOpen] = useState(false);
   const [copiedText, setCopiedText] = useState("");
-  const dropdownRef = useRef(null);
+  const [coords, setCoords] = useState({ top: 0, left: 0, width: 0 });
+  const [mounted, setMounted] = useState(false);
 
-  // Close dropdown on click outside
+  const triggerRef = useRef(null); // wraps the visible button
+  const panelRef = useRef(null); // wraps the portaled dropdown panel
+
+  // Needed because createPortal requires access to `document`,
+  // which doesn't exist during SSR.
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Recalculate the dropdown panel's position relative to the trigger button.
+  const updatePosition = useCallback(() => {
+    if (!triggerRef.current) return;
+    const rect = triggerRef.current.getBoundingClientRect();
+    setCoords({
+      top: rect.bottom + 8, // small gap below the button
+      left: rect.right, // panel is right-aligned to the button
+      width: rect.width,
+    });
+  }, []);
+
+  const openDropdown = () => {
+    updatePosition();
+    setIsOpen((prev) => !prev);
+  };
+
+  // Close dropdown on click outside (checks BOTH the trigger and the
+  // portaled panel, since the panel now lives outside this component's DOM tree).
   useEffect(() => {
     const handleClick = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      const clickedTrigger = triggerRef.current && triggerRef.current.contains(e.target);
+      const clickedPanel = panelRef.current && panelRef.current.contains(e.target);
+      if (!clickedTrigger && !clickedPanel) {
         setIsOpen(false);
         setActiveView("main");
       }
     };
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  // Keep the panel glued to the button on scroll / resize / when the
+  // sticky action bar moves, instead of letting it drift or get clipped.
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleReposition = () => updatePosition();
+    window.addEventListener("scroll", handleReposition, true);
+    window.addEventListener("resize", handleReposition);
+    return () => {
+      window.removeEventListener("scroll", handleReposition, true);
+      window.removeEventListener("resize", handleReposition);
+    };
+  }, [isOpen, updatePosition]);
+
+  // Close on Escape for accessibility.
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === "Escape") {
+        setIsOpen(false);
+        setActiveView("main");
+      }
+    };
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
   }, []);
 
   // 1. Sharing Logic
@@ -41,29 +96,52 @@ export default function ArticleToolsDropdown({ article }) {
 
   // 2. Citation Logic (Production Standard)
   const getCitation = (format) => {
-    const authors = article?.authors?.map(a => a.lastName + " " + a.firstName[0] + ".").join(", ") || "Author et al.";
-    const year = new Date(article?.publishDate).getFullYear() || new Date().getFullYear();
+    // NOTE: article.authors items only have a `name` field (see
+    // ArticleDetailClient), not firstName/lastName — using those
+    // undefined fields was throwing and silently breaking the click.
+    const authors =
+      article?.authors
+        ?.map((a) => {
+          const parts = (a?.name || "").trim().split(" ");
+          const lastName = parts[parts.length - 1] || "";
+          const initials = parts
+            .slice(0, -1)
+            .map((p) => (p[0] ? p[0].toUpperCase() + "." : ""))
+            .join(" ");
+          return initials ? `${lastName}, ${initials}` : lastName;
+        })
+        .filter(Boolean)
+        .join(", ") || "Author et al.";
+
+    const rawDate = article?.publishedAt || article?.publishDate;
+    const year = rawDate ? new Date(rawDate).getFullYear() : new Date().getFullYear();
     const title = article?.title || "Untitled Article";
-    const journal = "International Journal of Science"; // Replace with your journal name
+    const journal = "MPA Research"; // Replace with your journal name
     const volume = article?.volume || "1";
     const issue = article?.issue || "1";
-    const doi = article?.doi || "10.xxxx/journal.v1i1";
+    const doi = article?.doi
+      ? article.doi.replace("https://doi.org/", "")
+      : "10.xxxx/journal.v1i1";
 
     const formats = {
       APA: `${authors} (${year}). ${title}. ${journal}, ${volume}(${issue}). https://doi.org/${doi}`,
       MLA: `${authors}. "${title}." ${journal}, vol. ${volume}, no. ${issue}, ${year}.`,
       Harvard: `${authors}, ${year}. ${title}. ${journal}, ${volume}(${issue}).`,
-      BibTeX: `@article{article_id,\n  author = {${authors}},\n  title = {${title}},\n  journal = {${journal}},\n  year = {${year}},\n  volume = {${volume}}\n}`
+      BibTeX: `@article{article_id,\n  author = {${authors}},\n  title = {${title}},\n  journal = {${journal}},\n  year = {${year}},\n  volume = {${volume}}\n}`,
     };
     return formats[format];
   };
 
   const copyCitation = (format) => {
-    const text = getCitation(format);
-    navigator.clipboard.writeText(text);
-    setCopiedText(format);
-    toast.success(`${format} Citation Copied!`);
-    setTimeout(() => setCopiedText(""), 2000);
+    try {
+      const text = getCitation(format);
+      navigator.clipboard.writeText(text);
+      setCopiedText(format);
+      toast.success(`${format} Citation Copied!`);
+      setTimeout(() => setCopiedText(""), 2000);
+    } catch (err) {
+      toast.error("Could not generate citation.");
+    }
   };
 
   const handleDownloadPDF = () => {
@@ -75,12 +153,13 @@ export default function ArticleToolsDropdown({ article }) {
   };
 
   return (
-    <div className="relative inline-block text-left" ref={dropdownRef}>
+    <div className="relative inline-block text-left">
       <Toaster position="top-right" />
 
       {/* Main Trigger Button */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        ref={triggerRef}
+        onClick={openDropdown}
         className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-md shadow-lg transition-all font-semibold text-sm border border-slate-700"
       >
         <FileText size={18} />
@@ -88,9 +167,18 @@ export default function ArticleToolsDropdown({ article }) {
         <span className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}>▼</span>
       </button>
 
-      {isOpen && (
-        <div className="absolute right-0 mt-3 w-72 bg-white rounded-xl shadow-2xl border border-gray-200 z-[100] overflow-hidden animate-in fade-in zoom-in duration-200">
-
+      {mounted && isOpen && createPortal(
+        <div
+          ref={panelRef}
+          style={{
+            position: "fixed",
+            top: coords.top,
+            left: coords.left,
+            transform: "translateX(-100%)", // right-align panel to the button
+            zIndex: 9999,
+          }}
+          className="w-72 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden animate-in fade-in zoom-in duration-200"
+        >
           {/* VIEW: MAIN MENU */}
           {activeView === "main" && (
             <div className="py-2">
@@ -195,8 +283,8 @@ export default function ArticleToolsDropdown({ article }) {
               </div>
             </div>
           )}
-
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
