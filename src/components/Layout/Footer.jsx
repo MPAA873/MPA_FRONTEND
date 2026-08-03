@@ -12,7 +12,9 @@ import {
     Instagram,
     ArrowUpRight,
     BookOpen,
-    Archive, BadgeCheck
+    Archive,
+    BadgeCheck,
+    ShieldCheck
 } from "lucide-react";
 
 const quickLinks = [
@@ -198,13 +200,26 @@ const Footer = () => {
                 </div>
 
                 {/* ── Divider ── */}
-                <div className="my-10 h-px w-full bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+                {/* ── Privacy Policy Section ── */}
+                <div className="flex flex-col items-center gap-4">
 
-                {/* ── Bottom Bar ── */}
-                <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+                    <Link
+                        href="/privacy-policy"
+                        className="group flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-5 py-2 text-sm font-medium text-[#F5E9D9]/80 hover:border-emerald-400/50 hover:bg-emerald-500/10 transition-all duration-300"
+                    >
+                        <ShieldCheck
+                            size={16}
+                            className="text-emerald-400 group-hover:scale-110 transition-transform"
+                        />
+                        Privacy Policy
+                    </Link>
+
+                    <div className="w-24 h-px bg-gradient-to-r from-transparent via-emerald-400/60 to-transparent" />
+
                     <p className="text-xs text-[#F5E9D9]/50">
                         &copy; {year} MPA Research. All rights reserved.
                     </p>
+
                 </div>
             </div>
         </footer>

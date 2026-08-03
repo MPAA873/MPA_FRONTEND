@@ -1,78 +1,92 @@
-"use client";
+import PrivacyPolicyContent from "@/components/Privacypolicycontent";
 
-import React from "react";
-import Link from "next/link";
-import { ShieldCheck, ArrowLeft, Clock, Lock, Mail } from "lucide-react";
+const SITE_URL = "https://www.mparesearch.com";
+const PAGE_PATH = "/privacy-policy";
+const EFFECTIVE_DATE = "2026-08-03";
 
-const PrivacyPolicyComingSoon = () => {
-  return (
-    <div className="min-h-screen bg-[#FCF9F1] flex flex-col items-center justify-center px-4 relative overflow-hidden">
-      
-      {/* Background Decorative Elements - Soft Green Glow */}
-      <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#10b981]/5 rounded-full blur-3xl" />
-      <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-[#4a2c1a]/5 rounded-full blur-3xl" />
-
-      <div className="max-w-2xl w-full text-center z-10 space-y-8 animate-in fade-in zoom-in duration-700">
-        
-        {/* Animated Icon Section */}
-        <div className="relative inline-block">
-          <div className="bg-white p-6 rounded-3xl shadow-xl shadow-[#4a2c1a]/5 border border-[#4a2c1a]/10">
-            <ShieldCheck className="w-16 h-16 text-[#10b981]" strokeWidth={1.5} />
-          </div>
-          <div className="absolute -top-2 -right-2 bg-[#4a2c1a] text-white p-2 rounded-full border-4 border-[#FCF9F1]">
-            <Clock className="w-4 h-4 animate-pulse" />
-          </div>
-        </div>
-
-        {/* Text Content */}
-        <div className="space-y-4">
-          <h1 className="text-4xl md:text-5xl font-bold text-[#4a2c1a] tracking-tight">
-            Privacy Policy <br />
-            <span className="text-[#10b981]">Coming Soon</span>
-          </h1>
-          <p className="text-[#4a2c1a]/70 text-lg leading-relaxed font-medium">
-            We are currently refining our legal documentation to ensure your data 
-            and research integrity are protected under the latest global standards.
-          </p>
-        </div>
-
-        {/* Feature Highlights (Clean & Minimal) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left pt-4">
-          <div className="bg-white/50 border border-[#4a2c1a]/5 p-4 rounded-2xl flex items-center gap-3">
-            <div className="bg-[#10b981]/10 p-2 rounded-lg text-[#10b981]">
-              <Lock size={20} />
-            </div>
-            <span className="text-[#4a2c1a] font-semibold text-sm">Data Security</span>
-          </div>
-          <div className="bg-white/50 border border-[#4a2c1a]/5 p-4 rounded-2xl flex items-center gap-3">
-            <div className="bg-[#10b981]/10 p-2 rounded-lg text-[#10b981]">
-              <ShieldCheck size={20} />
-            </div>
-            <span className="text-[#4a2c1a] font-semibold text-sm">GDPR Compliance</span>
-          </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
-          <Link
-            href="/"
-            className="flex items-center gap-2 px-8 py-3 bg-[#4a2c1a] text-white font-bold rounded-xl hover:bg-[#362013] transition-all shadow-lg active:scale-95 w-full sm:w-auto justify-center"
-          >
-            <ArrowLeft size={18} />
-            Back to Home
-          </Link>
-          
-          <Link
-            href="/contact"
-            className="flex items-center gap-2 px-8 py-3 bg-white text-[#4a2c1a] border-2 border-[#4a2c1a]/10 font-bold rounded-xl hover:bg-gray-50 transition-all w-full sm:w-auto justify-center"
-          >
-            <Mail size={18} />
-            Contact Support
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
+export const metadata = {
+  title: "Privacy Policy | MPA Research",
+  description:
+    "Read the MPA Research privacy policy to learn how we collect, use, store and protect the personal information of authors, reviewers, editors and website visitors.",
+  alternates: {
+    canonical: `${SITE_URL}${PAGE_PATH}`,
+  },
+  keywords: [
+    "MPA Research privacy policy",
+    "journal privacy policy",
+    "manuscript data protection",
+    "peer review confidentiality",
+    "academic publisher privacy",
+  ],
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    title: "Privacy Policy | MPA Research",
+    description:
+      "How MPA Research collects, uses, stores and protects the personal information of authors, reviewers, editors and readers.",
+    url: `${SITE_URL}${PAGE_PATH}`,
+    siteName: "MPA Research",
+    type: "article",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary",
+    title: "Privacy Policy | MPA Research",
+    description:
+      "How MPA Research collects, uses, stores and protects your personal information.",
+  },
 };
 
-export default PrivacyPolicyComingSoon;
+export default function PrivacyPolicyPage() {
+  // JSON-LD structured data helps search engines understand this as a
+  // legal/policy document tied to the MPA Research organization.
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Privacy Policy",
+    url: `${SITE_URL}${PAGE_PATH}`,
+    dateModified: EFFECTIVE_DATE,
+    inLanguage: "en",
+    isPartOf: {
+      "@type": "WebSite",
+      name: "MPA Research",
+      url: SITE_URL,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "MPA Research",
+      url: SITE_URL,
+      email: "info@mparesearch.com",
+    },
+    breadcrumb: {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: SITE_URL,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Privacy Policy",
+          item: `${SITE_URL}${PAGE_PATH}`,
+        },
+      ],
+    },
+  };
+
+  return (
+    <>
+      {/* eslint-disable-next-line react/no-danger */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <PrivacyPolicyContent effectiveDate={EFFECTIVE_DATE} />
+    </>
+  );
+}
