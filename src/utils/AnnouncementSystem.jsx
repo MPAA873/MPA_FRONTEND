@@ -89,7 +89,7 @@ export const AnnouncementBanner = () => {
           />
 
           <p className="text-xs font-medium text-[#713F12] sm:text-sm">
-            Peer Reviewed • Open Access • Indexed Journal
+            Peer Reviewed • Open Access • DOI Registered
           </p>
         </div>
 
