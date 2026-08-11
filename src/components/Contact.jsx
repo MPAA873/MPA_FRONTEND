@@ -77,16 +77,32 @@ const Contact = () => {
         <div className="grid md:grid-cols-3 gap-8 mb-16">
 
           {/* Email Card */}
+
           <div className="bg-[#F5F1E8] border border-emerald-200 hover:border-emerald-600 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300">
             <div className="w-12 h-12 flex items-center justify-center bg-emerald-600 text-white rounded-lg mb-6 shadow">
               <Mail size={22} />
             </div>
             <h3 className="text-xl font-semibold text-amber-900 mb-3">Email</h3>
+
             <p className="text-amber-900 font-medium">
               info@mparesearch.com
             </p>
-            <p className="text-sm text-amber-600">
+            <p className="text-sm text-amber-600 mb-4">
               General inquiries and submission support
+            </p>
+
+            <p className="text-amber-900 font-medium">
+              researchdirector@mparesearch.com
+            </p>
+            <p className="text-sm text-amber-600 mb-4">
+              For inquiries related to any editorial board member
+            </p>
+
+            <p className="text-amber-900 font-medium">
+              fahad.khan@mparesearch.com
+            </p>
+            <p className="text-sm text-amber-600">
+              Dr. Fahad Khan, Co-Editor-in-Chief — for escalations (unresolved or long-pending issues)
             </p>
           </div>
 
@@ -108,7 +124,7 @@ const Contact = () => {
           </div>
 
           {/* Address Card */}
-          
+
           <div className="bg-[#F5F1E8] border border-emerald-200 hover:border-emerald-600 rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-md transition-all duration-300">
             <div className="w-12 h-12 flex items-center justify-center bg-emerald-600 text-white rounded-lg mb-6 shadow">
               <MapPin size={22} />
@@ -219,8 +235,8 @@ const Contact = () => {
                 type="submit"
                 disabled={isLoading}
                 className={`w-full flex items-center justify-center gap-2 font-semibold py-3.5 rounded-lg shadow-md transition-all duration-200 ${isLoading
-                    ? "bg-emerald-500 cursor-not-allowed text-white opacity-80"
-                    : "bg-emerald-600 hover:bg-emerald-700 text-white hover:shadow-lg active:scale-[0.98]"
+                  ? "bg-emerald-500 cursor-not-allowed text-white opacity-80"
+                  : "bg-emerald-600 hover:bg-emerald-700 text-white hover:shadow-lg active:scale-[0.98]"
                   }`}
               >
                 {isLoading ? (
