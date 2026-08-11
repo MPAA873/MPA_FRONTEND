@@ -306,7 +306,7 @@ const PageHeader = ({ stats }) => (
                         Explore peer-reviewed research from our global community of scholars. Browse current issues, historical archives, and special collections.
                     </p>
                 </div>
-   
+
             </div>
         </div>
     </div>
@@ -528,57 +528,81 @@ const CurrentIssueView = ({ articles, search, typeFilter, sortBy, viewMode }) =>
 
 // ─── Archive View ─────────────────────────────────────────────────────────────
 
-const ArchiveView = ({ articles, years, selectedYear, onYearSelect, page, totalPages, onPageChange, viewMode, isFetching }) => (
-    <div className="grid lg:grid-cols-12 gap-8 pt-2">
-        {/* Sidebar */}
-        <aside className="lg:col-span-3">
-            <div className="bg-white rounded-2xl border border-gray-100 p-5 sticky top-24">
-                <h3 className="text-xs uppercase tracking-widest font-black text-gray-400 mb-4 flex items-center gap-2">
-                    <Calendar size={13} /> Browse by year
-                </h3>
-                <div className="space-y-1">
-                    {years.length === 0 && (
-                        <p className="text-sm text-gray-400 py-4 text-center">No archived years yet.</p>
-                    )}
-                    {years.map((year) => (
-                        <button
-                            key={year}
-                            onClick={() => onYearSelect(year)}
-                            className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${selectedYear === year
-                                ? "bg-green-600 text-white shadow-sm"
-                                : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                                }`}
-                        >
-                            <span>{year}</span>
-                            {selectedYear === year && <ChevronRight size={15} />}
-                        </button>
-                    ))}
-                </div>
-            </div>
-        </aside>
+const ArchiveView = ({ articles, years, selectedYear, onYearSelect, page, totalPages, onPageChange, viewMode, isFetching }) => {
+    // Currently displayed articles me se unique issues nikal lo (Apr-Jun, Jul-Sep, etc.)
+    const uniqueIssues = Array.from(
+        new Map(
+            (articles || [])
+                .filter((a) => a.issue)
+                .map((a) => [a.issue, { issue: a.issue, label: a.issueLabel }])
+        ).values()
+    ).sort((a, b) => a.issue - b.issue);
 
-        {/* Articles */}
-        <div className="lg:col-span-9">
-            <div className="flex items-center justify-between mb-6 pb-5 border-b border-gray-100">
-                <div>
-                    <h2 className="text-2xl font-black text-gray-900">Volume {selectedYear === 2026 ? 1 : selectedYear - 2025}</h2>
-                    <p className="text-sm text-gray-400 mt-1">Archive · {selectedYear}</p>
+    return (
+        <div className="grid lg:grid-cols-12 gap-8 pt-2">
+            {/* Sidebar */}
+            <aside className="lg:col-span-3">
+                <div className="bg-white rounded-2xl border border-gray-100 p-5 sticky top-24">
+                    <h3 className="text-xs uppercase tracking-widest font-black text-gray-400 mb-4 flex items-center gap-2">
+                        <Calendar size={13} /> Browse by year
+                    </h3>
+                    <div className="space-y-1">
+                        {years.length === 0 && (
+                            <p className="text-sm text-gray-400 py-4 text-center">No archived years yet.</p>
+                        )}
+                        {years.map((year) => (
+                            <button
+                                key={year}
+                                onClick={() => onYearSelect(year)}
+                                className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${selectedYear === year
+                                    ? "bg-green-600 text-white shadow-sm"
+                                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                                    }`}
+                            >
+                                <span>{year}</span>
+                                {selectedYear === year && <ChevronRight size={15} />}
+                            </button>
+                        ))}
+                    </div>
                 </div>
-            </div>
+            </aside>
 
-            {isFetching ? (
-                <ArticleGridSkeleton count={9} />
-            ) : (
-                <>
-                    <ArticleGrid articles={articles} viewMode={viewMode} emptyMsg="No articles found for this year." />
-                    {totalPages > 1 && (
-                        <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
+            {/* Articles */}
+            <div className="lg:col-span-9">
+                <div className="flex items-center justify-between mb-6 pb-5 border-b border-gray-100">
+                    <div>
+                        <h2 className="text-2xl font-black text-gray-900">Volume {selectedYear === 2026 ? 1 : selectedYear - 2025}</h2>
+                        <p className="text-sm text-gray-400 mt-1">Archive · {selectedYear}</p>
+                    </div>
+                    {uniqueIssues.length > 0 && (
+                        <div className="flex flex-wrap gap-2 justify-end">
+                            {uniqueIssues.map((iss) => (
+                                <span
+                                    key={iss.issue}
+                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-50 text-green-700 border border-green-200 rounded-full text-xs font-bold"
+                                >
+                                    <BookMarked size={12} />
+                                    Issue {iss.issue}{iss.label ? ` (${iss.label})` : ""}
+                                </span>
+                            ))}
+                        </div>
                     )}
-                </>
-            )}
+                </div>
+
+                {isFetching ? (
+                    <ArticleGridSkeleton count={9} />
+                ) : (
+                    <>
+                        <ArticleGrid articles={articles} viewMode={viewMode} emptyMsg="No articles found for this year." />
+                        {totalPages > 1 && (
+                            <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
+                        )}
+                    </>
+                )}
+            </div>
         </div>
-    </div>
-);
+    );
+};
 
 // ─── Ad-Hoc (Special Issues) View ────────────────────────────────────────────
 

@@ -61,7 +61,7 @@ const workflowSteps = [
     {
         id: 6,
         title: "Online Publication",
-        desc: "Immediate global indexing and open-access availability.",
+        desc: "Open-access availability.",
         icon: Globe,
         time: "48 Hours",
         color: "from-emerald-500 to-teal-700",

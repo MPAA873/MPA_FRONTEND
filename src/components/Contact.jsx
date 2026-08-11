@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Mail, Phone, MapPin, MessageSquare, Send, Loader2 } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 // Adjust path if your apiSlice is located elsewhere
-import { useSendEnquiryMutation } from "../store/apiSlice"; 
+import { useSendEnquiryMutation } from "../store/apiSlice";
 
 const Contact = () => {
   // 1. Setup the API mutation hook and extract the loading state
@@ -108,18 +108,25 @@ const Contact = () => {
           </div>
 
           {/* Address Card */}
-          <div className="bg-[#F5F1E8] border border-emerald-200 hover:border-emerald-600 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300">
+          
+          <div className="bg-[#F5F1E8] border border-emerald-200 hover:border-emerald-600 rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-md transition-all duration-300">
             <div className="w-12 h-12 flex items-center justify-center bg-emerald-600 text-white rounded-lg mb-6 shadow">
               <MapPin size={22} />
             </div>
+
             <h3 className="text-xl font-semibold text-amber-900 mb-3">
               Address
             </h3>
-            <p className="text-amber-800 font-medium mb-3">
-              Gaurs City, Greater Noida
-            </p>
-            <p className="text-sm text-amber-600">
-              Physical office location
+
+            <address className="not-italic text-amber-800 font-medium leading-relaxed break-words text-sm sm:text-base">
+              A-206, Pristine Avenue,<br />
+              Gaurs City - 2,<br />
+              Greater Noida - 201009,<br />
+              Uttar Pradesh, India
+            </address>
+
+            <p className="text-sm text-amber-600 mt-3">
+              Registered Office & Correspondence Address
             </p>
           </div>
         </div>
@@ -211,11 +218,10 @@ const Contact = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className={`w-full flex items-center justify-center gap-2 font-semibold py-3.5 rounded-lg shadow-md transition-all duration-200 ${
-                  isLoading
+                className={`w-full flex items-center justify-center gap-2 font-semibold py-3.5 rounded-lg shadow-md transition-all duration-200 ${isLoading
                     ? "bg-emerald-500 cursor-not-allowed text-white opacity-80"
                     : "bg-emerald-600 hover:bg-emerald-700 text-white hover:shadow-lg active:scale-[0.98]"
-                }`}
+                  }`}
               >
                 {isLoading ? (
                   <>

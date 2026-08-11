@@ -90,8 +90,6 @@ export default function ArticleDetailClient({ article }) {
             <span className="hidden sm:inline">|</span>
             <span>Issue: {article.issue}</span>
             <span className="hidden sm:inline">|</span>
-            <span>{article.issueLabel}</span>
-            <span className="hidden sm:inline">|</span>
             <span>{new Date(article.publishedAt).getFullYear()}</span>
             <span className="hidden sm:inline">|</span>
             <span>Paper: {article.paperNumber}</span>
