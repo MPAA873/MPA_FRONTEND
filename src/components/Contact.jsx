@@ -133,6 +133,11 @@ const Contact = () => {
             <h3 className="text-xl font-semibold text-amber-900 mb-3">
               Address
             </h3>
+            <div>
+              <p className="text-emerald-700 font-bold text-lg sm:text-xl tracking-wide uppercase">
+                MPA Research Consultancy
+              </p>
+            </div>
 
             <address className="not-italic text-amber-800 font-medium leading-relaxed break-words text-sm sm:text-base">
               A-206, Pristine Avenue,<br />
@@ -140,6 +145,7 @@ const Contact = () => {
               Greater Noida - 201009,<br />
               Uttar Pradesh, India
             </address>
+
 
             <p className="text-sm text-amber-600 mt-3">
               Registered Office & Correspondence Address
@@ -271,8 +277,7 @@ const Contact = () => {
                     How long does the review process take?
                   </h4>
                   <p className="text-emerald-100">
-                    The average review period is 14–21 days. The full
-                    publication process typically takes 8–12 weeks.
+                    The average review period is 14–21 days.
                   </p>
                 </div>
 
