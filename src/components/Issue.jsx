@@ -529,7 +529,10 @@ const CurrentIssueView = ({ articles, search, typeFilter, sortBy, viewMode }) =>
 // ─── Archive View ─────────────────────────────────────────────────────────────
 
 const ArchiveView = ({ articles, years, selectedYear, onYearSelect, page, totalPages, onPageChange, viewMode, isFetching }) => {
-    // Currently displayed articles me se unique issues nikal lo (Apr-Jun, Jul-Sep, etc.)
+
+    const [selectedIssue, setSelectedIssue] = useState(null);
+
+
     const uniqueIssues = Array.from(
         new Map(
             (articles || [])
@@ -537,6 +540,16 @@ const ArchiveView = ({ articles, years, selectedYear, onYearSelect, page, totalP
                 .map((a) => [a.issue, { issue: a.issue, label: a.issueLabel }])
         ).values()
     ).sort((a, b) => a.issue - b.issue);
+
+
+    useEffect(() => {
+        setSelectedIssue(null);
+    }, [selectedYear]);
+
+
+    const issueFilteredArticles = selectedIssue
+        ? articles.filter((a) => a.issue === selectedIssue)
+        : articles;
 
     return (
         <div className="grid lg:grid-cols-12 gap-8 pt-2">
@@ -569,21 +582,38 @@ const ArchiveView = ({ articles, years, selectedYear, onYearSelect, page, totalP
 
             {/* Articles */}
             <div className="lg:col-span-9">
-                <div className="flex items-center justify-between mb-6 pb-5 border-b border-gray-100">
+                <div className="flex items-start justify-between mb-5 pb-5 border-b border-gray-100 flex-wrap gap-4">
                     <div>
                         <h2 className="text-2xl font-black text-gray-900">Volume {selectedYear === 2026 ? 1 : selectedYear - 2025}</h2>
                         <p className="text-sm text-gray-400 mt-1">Archive · {selectedYear}</p>
                     </div>
+
+                    {/* Issue segmented filter — sirf tab hi dikhega agar 1+ issues detect ho */}
                     {uniqueIssues.length > 0 && (
-                        <div className="flex flex-wrap gap-2 justify-end">
+                        <div className="flex items-center gap-1 bg-gray-50 border border-gray-100 rounded-xl p-1">
+                            <button
+                                onClick={() => setSelectedIssue(null)}
+                                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-bold transition-all ${!selectedIssue
+                                    ? "bg-white text-green-700 shadow-sm border border-green-200"
+                                    : "text-gray-500 hover:text-gray-800"
+                                    }`}
+                            >
+                                <Layers size={12} />
+                                All Issues
+                            </button>
                             {uniqueIssues.map((iss) => (
-                                <span
+                                <button
                                     key={iss.issue}
-                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-50 text-green-700 border border-green-200 rounded-full text-xs font-bold"
+                                    onClick={() => setSelectedIssue(iss.issue)}
+                                    className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${selectedIssue === iss.issue
+                                        ? "bg-white text-green-700 shadow-sm border border-green-200"
+                                        : "text-gray-500 hover:text-gray-800"
+                                        }`}
                                 >
                                     <BookMarked size={12} />
-                                    Issue {iss.issue}{iss.label ? ` (${iss.label})` : ""}
-                                </span>
+                                    Issue {iss.issue}
+                                    {iss.label && <span className="text-gray-400 font-medium"></span>}
+                                </button>
                             ))}
                         </div>
                     )}
@@ -593,8 +623,12 @@ const ArchiveView = ({ articles, years, selectedYear, onYearSelect, page, totalP
                     <ArticleGridSkeleton count={9} />
                 ) : (
                     <>
-                        <ArticleGrid articles={articles} viewMode={viewMode} emptyMsg="No articles found for this year." />
-                        {totalPages > 1 && (
+                        <ArticleGrid
+                            articles={issueFilteredArticles}
+                            viewMode={viewMode}
+                            emptyMsg={selectedIssue ? "No articles found for this issue." : "No articles found for this year."}
+                        />
+                        {!selectedIssue && totalPages > 1 && (
                             <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
                         )}
                     </>
