@@ -274,8 +274,8 @@ export default function ArticleToolsDropdown({ article }) {
                   <div className="text-[10px] text-blue-600 uppercase font-bold">Views</div>
                 </div>
                 <div className="bg-emerald-50 p-3 rounded-lg text-center border border-emerald-100">
-                  <div className="text-2xl font-bold text-emerald-700">{article?.downloads || '450'}</div>
-                  <div className="text-[10px] text-emerald-600 uppercase font-bold">Downloads</div>
+                  <div className="text-2xl font-bold text-emerald-700">  {article?.authors?.length || 0}</div>
+                  <div className="text-[10px] text-emerald-600 uppercase font-bold">Authors</div>
                 </div>
               </div>
               <div className="mt-4 text-[11px] text-gray-500 italic text-center">
