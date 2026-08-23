@@ -5,6 +5,7 @@ import ReduxProvider from "@/components/Layout/ReduxProvider";
 import LayoutWrapper from "@/components/Layout/LayoutWrapper";
 import ScrollToTop from "@/components/Layout/ScrollToTop";
 import FloatingContact from "@/components/Layout/FloatingContact";
+import CallForPaper from "@/components/Callforpaper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -77,6 +78,8 @@ export default function RootLayout({ children }) {
           <LayoutWrapper>
             {children}
           </LayoutWrapper>
+
+          <CallForPaper />
 
           <FloatingContact />
 
