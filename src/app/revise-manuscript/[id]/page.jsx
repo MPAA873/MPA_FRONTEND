@@ -46,6 +46,13 @@ const ReviseManuscript = () => {
   const handleFileChange = (e, fileType) => {
     const file = e.target.files[0];
     if (!file) return;
+    const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
+    
+    if (file.size > MAX_FILE_SIZE) {
+      toast.error("File size must be 10 MB or less");
+      e.target.value = "";
+      return;
+    }
     setFiles((prev) => ({ ...prev, [fileType]: file }));
     toast.success("File attached for upload!");
   };
@@ -61,12 +68,6 @@ const ReviseManuscript = () => {
       return;
     }
 
-    // if (!files.reviewChecklist) {
-    //   toast.error("Review checklist file is required");
-    //   return;
-    // }
-
-    // Review checklist sirf normal revision me mandatory hoga
     if (!isProofing && !files.reviewChecklist) {
       toast.error("Review checklist file is required");
       return;
