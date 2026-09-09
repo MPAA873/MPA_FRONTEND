@@ -111,6 +111,21 @@ export const apiSlice = createApi({
         body: data,
       }),
     }),
+    getMyRevisions: builder.query({
+      query: () => ({
+        url: "/researcher-revision/my-revisions",
+        method: "GET",
+      }),
+      providesTags: ["Manuscript"],
+    }),
+
+    getMyRevisionCount: builder.query({
+      query: () => ({
+        url: "/researcher-revision/my-revisions/count",
+        method: "GET",
+      }),
+      providesTags: ["Manuscript"],
+    }),
     sendEnquiry: builder.mutation({
       query: (formData) => ({
         url: "/enquiry/send",
@@ -146,6 +161,7 @@ export const apiSlice = createApi({
         body: { password },
       }),
     }),
+
   }),
 });
 
@@ -170,5 +186,7 @@ export const {
   useGetLatestPublishedQuery,
   useGetManuscriptDetailsQuery,
   useGetPublicStatsQuery,
+  useGetMyRevisionsQuery,
+  useGetMyRevisionCountQuery,
 
 } = apiSlice;

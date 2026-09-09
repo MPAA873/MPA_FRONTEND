@@ -2,21 +2,26 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation'; // Added useRouter
-import { 
-  LayoutDashboard, 
-  FileText, 
-  User, 
-  Send, 
-  Menu, 
+import {
+  LayoutDashboard,
+  FileText,
+  User,
+  Send,
+  Menu,
   X,
   LogOut,
-  Home
+  Home,
+  AlertCircle
 } from 'lucide-react';
+
+import { useGetMyRevisionCountQuery } from '@/store/apiSlice';
 
 const ResearcherSidebar = () => {
   const pathname = usePathname();
   const router = useRouter(); // Initialize router
   const [isOpen, setIsOpen] = useState(false);
+  const { data: revisionData } = useGetMyRevisionCountQuery();
+  const revisionCount = revisionData?.count || 0;
 
   // Close sidebar when route changes (on mobile)
   useEffect(() => {
@@ -37,6 +42,7 @@ const ResearcherSidebar = () => {
     { name: 'Overview', icon: <LayoutDashboard size={20} />, path: '/dashboard/overview' },
     { name: 'Profile', icon: <User size={20} />, path: '/dashboard/my-profile' },
     { name: 'My Submissions', icon: <Send size={20} />, path: '/dashboard/my-submissions' },
+    { name: 'My Revisions', icon: <AlertCircle size={20} />, path: '/dashboard/my-revisions' },
   ];
 
   const handleLogout = () => {
@@ -67,7 +73,7 @@ const ResearcherSidebar = () => {
           </div>
           <span className="text-lg font-bold text-[#5D3A1A]">Researcher</span>
         </div>
-        <button 
+        <button
           onClick={() => setIsOpen(!isOpen)}
           className="p-2 text-[#5D3A1A] hover:bg-orange-50 rounded-lg transition-colors"
           aria-label="Toggle Menu"
@@ -78,7 +84,7 @@ const ResearcherSidebar = () => {
 
       {/* --- BACKDROP (Mobile Only) --- */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"
           onClick={() => setIsOpen(false)}
         />
@@ -91,7 +97,7 @@ const ResearcherSidebar = () => {
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
         flex flex-col h-screen px-5 py-8 overflow-y-auto
       `}>
-        
+
         {/* Logo Section */}
         <div className="hidden lg:flex items-center px-2 mb-10">
           <div className="w-8 h-8 bg-[#10B981] rounded-lg flex items-center justify-center text-white mr-3 shadow-sm">
@@ -112,11 +118,10 @@ const ResearcherSidebar = () => {
                 <Link
                   key={item.name}
                   href={item.path}
-                  className={`flex items-center justify-between w-full px-4 py-3 transition-all duration-300 rounded-xl group ${
-                    isActive 
-                      ? 'bg-[#10B981] text-white shadow-lg shadow-emerald-100' 
+                  className={`flex items-center justify-between w-full px-4 py-3 transition-all duration-300 rounded-xl group ${isActive
+                      ? 'bg-[#10B981] text-white shadow-lg shadow-emerald-100'
                       : 'text-[#5D3A1A] hover:bg-orange-50 hover:text-[#10B981]'
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center">
                     <span className={`${isActive ? 'text-white' : 'text-[#10B981]'} group-hover:scale-110 transition-transform`}>
@@ -124,6 +129,13 @@ const ResearcherSidebar = () => {
                     </span>
                     <span className="mx-4 font-semibold text-sm">{item.name}</span>
                   </div>
+
+                  {item.name === 'My Revisions' && revisionCount > 0 && (
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${isActive ? 'bg-white text-[#10B981]' : 'bg-red-500 text-white'
+                      }`}>
+                      {revisionCount}
+                    </span>
+                  )}
                 </Link>
               );
             })}
@@ -131,13 +143,13 @@ const ResearcherSidebar = () => {
 
           {/* Bottom Section: Logout */}
           <div className="mt-auto pt-6 border-t border-gray-100">
-             <button 
-                onClick={handleLogout}
-                className="flex items-center gap-3 w-full px-4 py-3 rounded-xl bg-red-50 text-red-600 font-bold border border-red-100 active:scale-95 transition-all hover:bg-red-100"
-              >
-                <LogOut size={20} /> 
-                <span className="text-sm font-bold uppercase tracking-wider">Logout</span>
-              </button>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-3 w-full px-4 py-3 rounded-xl bg-red-50 text-red-600 font-bold border border-red-100 active:scale-95 transition-all hover:bg-red-100"
+            >
+              <LogOut size={20} />
+              <span className="text-sm font-bold uppercase tracking-wider">Logout</span>
+            </button>
           </div>
         </div>
       </aside>
