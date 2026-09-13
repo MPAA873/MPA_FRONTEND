@@ -11,7 +11,8 @@ import {
   X,
   LogOut,
   Home,
-  AlertCircle
+  AlertCircle,
+  Activity
 } from 'lucide-react';
 
 import { useGetMyRevisionCountQuery } from '@/store/apiSlice';
@@ -43,6 +44,11 @@ const ResearcherSidebar = () => {
     { name: 'Profile', icon: <User size={20} />, path: '/dashboard/my-profile' },
     { name: 'My Submissions', icon: <Send size={20} />, path: '/dashboard/my-submissions' },
     { name: 'My Revisions', icon: <AlertCircle size={20} />, path: '/dashboard/my-revisions' },
+    {
+      name: 'Track Paper',
+      icon: <Activity size={20} />,
+      path: '/dashboard/paper-tracking'
+    },
   ];
 
   const handleLogout = () => {
@@ -119,8 +125,8 @@ const ResearcherSidebar = () => {
                   key={item.name}
                   href={item.path}
                   className={`flex items-center justify-between w-full px-4 py-3 transition-all duration-300 rounded-xl group ${isActive
-                      ? 'bg-[#10B981] text-white shadow-lg shadow-emerald-100'
-                      : 'text-[#5D3A1A] hover:bg-orange-50 hover:text-[#10B981]'
+                    ? 'bg-[#10B981] text-white shadow-lg shadow-emerald-100'
+                    : 'text-[#5D3A1A] hover:bg-orange-50 hover:text-[#10B981]'
                     }`}
                 >
                   <div className="flex items-center">
