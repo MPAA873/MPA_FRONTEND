@@ -39,7 +39,7 @@ const EDITORIALS_DATA = [
     orcid: "https://orcid.org/0000-0003-3449-7978",
   },
 
-  
+
   // Regular editorial board members
   {
     _id: "69a68d655ffccdb5305738ab",
@@ -136,7 +136,7 @@ const EDITORIALS_DATA = [
       "Professor (Dept of PSMA) and Former Dean, Faculty of Horticulture, Bidhan Chandra Krishi Viswavidyalaya (Agricultural University), Mohanpur-741252, Nadia, WB, India",
     interests: "",
     initials: "AS",
-    profileLink: "",
+    profileLink: "https://scholar.google.com/citations?user=7yC3v_MAAAAJ&hl=en",
   },
 ];
 
