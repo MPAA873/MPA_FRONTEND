@@ -39,6 +39,7 @@ const EDITORIALS_DATA = [
     orcid: "https://orcid.org/0000-0003-3449-7978",
   },
 
+  
   // Regular editorial board members
   {
     _id: "69a68d655ffccdb5305738ab",
@@ -46,7 +47,7 @@ const EDITORIALS_DATA = [
     name: "Prof. Mohd Saeed",
     role: "Editor 1",
     image: null,
-    email: "exmaple@gmail.com",
+    email: "mo.saeed@uoh.edu.sa ",
     linkedin: "#",
     isActive: true,
     bio: "",
@@ -58,44 +59,12 @@ const EDITORIALS_DATA = [
     profileLink: "https://sciprofiles.com/profile/326562",
   },
   {
-    _id: "69a68df55ffccdb5305738af",
-    type: "editor",
-    name: "Prof. Deena Elsori",
-    role: "Editor 2",
-    image: null,
-    email: "example@gmail.com",
-    linkedin: "",
-    isActive: true,
-    bio: "",
-    institution:
-      "Foundation and General Education, Rabdan Academy, Al Dhafeer Street, P.O. Box 114646, Abu Dhabi, United Arab Emirates",
-    interests: "Women health, Chronic disease, Mental health, Cancer biology, Education",
-    initials: "DE",
-    profileLink: "https://ra.ac.ae/en/dean-team/bio/dr-deena-elsori",
-  },
-  {
-    _id: "69a697465ffccdb5305738b4",
-    type: "editor",
-    name: "Dr. Daniel Ejim Uti",
-    role: "Editor 3",
-    image: null,
-    email: "example@gmail.com",
-    linkedin: "",
-    isActive: true,
-    bio: "",
-    institution:
-      "Department of Biochemistry, Faculty of Biomedical Sciences, Kampala International University, P.O. Box 20000, Ggaba Road, Kansanga, Kampala, Uganda",
-    interests: "Hematological indices, In silico drug designing, Oxidative stress, Nanotechnology",
-    initials: "DU",
-    profileLink: "https://orcid.org/0000-0002-1129-1785",
-  },
-  {
     _id: "69a699d45ffccdb5305738c4",
     type: "editor",
     name: "Dr Arif Hussain",
-    role: "Editor 4",
+    role: "Editor 2",
     image: null,
-    email: "email@gmail.com",
+    email: "dr.arifhussain@yahoo.co.in ",
     linkedin: "",
     isActive: true,
     bio: "",
@@ -109,9 +78,9 @@ const EDITORIALS_DATA = [
     _id: "69a69aa05ffccdb5305738d0",
     type: "editor",
     name: "Dr. Syed Sayeed Ahmad",
-    role: "Editor 5",
+    role: "Editor 3",
     image: null,
-    email: "",
+    email: "sayeed@yu.ac.kr",
     linkedin: "",
     isActive: true,
     bio: "",
@@ -120,6 +89,54 @@ const EDITORIALS_DATA = [
     interests: "Bioinformatics, Drug designing, Health Science, Artificial Intelligence",
     initials: "SA",
     profileLink: "https://scholar.google.co.in/citations?hl=en&user=RVmNLDYAAAAJ",
+  },
+  {
+    _id: "69a697465ffccdb5305738b4",
+    type: "editor",
+    name: "Dr. Daniel Ejim Uti",
+    role: "Editor 4",
+    image: null,
+    email: "daniel.ejimuti@kiu.ac.ug",
+    linkedin: "",
+    isActive: true,
+    bio: "",
+    institution:
+      "Department of Biochemistry, Faculty of Biomedical Sciences, Kampala International University, P.O. Box 20000, Ggaba Road, Kansanga, Kampala, Uganda",
+    interests: "Hematological indices, In silico drug designing, Oxidative stress, Nanotechnology",
+    initials: "DU",
+    profileLink: "https://orcid.org/0000-0002-1129-1785",
+  },
+  {
+    _id: "69a68df55ffccdb5305738af",
+    type: "editor",
+    name: "Prof. Deena Elsori",
+    role: "Editor 5",
+    image: null,
+    email: "Delsori@ra.ac.ae ",
+    linkedin: "",
+    isActive: true,
+    bio: "",
+    institution:
+      "Foundation and General Education, Rabdan Academy, Al Dhafeer Street, P.O. Box 114646, Abu Dhabi, United Arab Emirates",
+    interests: "Women health, Chronic disease, Mental health, Cancer biology, Education",
+    initials: "DE",
+    profileLink: "https://ra.ac.ae/en/dean-team/bio/dr-deena-elsori",
+  },
+  {
+    _id: "69a6a0000ffccdb5305738e1",
+    type: "editor",
+    name: "Prof. Amit Baran Sharangi",
+    role: "Editor 6",
+    image: null,
+    email: "profabsbckv@gmail.com ",
+    linkedin: "",
+    isActive: true,
+    bio: "",
+    institution:
+      "Professor (Dept of PSMA) and Former Dean, Faculty of Horticulture, Bidhan Chandra Krishi Viswavidyalaya (Agricultural University), Mohanpur-741252, Nadia, WB, India",
+    interests: "",
+    initials: "AS",
+    profileLink: "",
   },
 ];
 
@@ -289,19 +306,37 @@ const EditorialBoard = () => {
                       <br />
                       {member.interests || "N/A"}
                     </p>
+
+                    <p className="break-words">
+                      <span className="font-semibold text-[#8B4513]">Email:</span>
+                      <br />
+                      {member.email ? (
+                        <a
+                          href={`mailto:${member.email}`}
+                          className="inline-flex items-center gap-1.5 text-[#059669] hover:text-[#047857] hover:underline font-medium break-all"
+                        >
+                          <Mail size={14} className="shrink-0" />
+                          {member.email}
+                        </a>
+                      ) : (
+                        "N/A"
+                      )}
+                    </p>
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-2.5 mt-auto">
                     {/* View Profile Link */}
-                    <a
-                      href={member.profileLink && member.profileLink !== "#" ? member.profileLink : "#"}
-                      target={member.profileLink && member.profileLink !== "#" ? "_blank" : "_self"}
-                      rel="noopener noreferrer"
-                      className="flex-1 bg-[#10B981] hover:bg-[#059669] text-white text-sm font-semibold py-2.5 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 border border-transparent"
-                    >
-                      <ExternalLink size={16} />
-                      View Profile
-                    </a>
+                    {member.profileLink && member.profileLink !== "#" && (
+                      <a
+                        href={member.profileLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 bg-[#10B981] hover:bg-[#059669] text-white text-sm font-semibold py-2.5 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 border border-transparent"
+                      >
+                        <ExternalLink size={16} />
+                        View Profile
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
