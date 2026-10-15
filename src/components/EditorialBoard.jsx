@@ -134,7 +134,7 @@ const EDITORIALS_DATA = [
     bio: "",
     institution:
       "Professor (Dept of PSMA) and Former Dean, Faculty of Horticulture, Bidhan Chandra Krishi Viswavidyalaya (Agricultural University), Mohanpur-741252, Nadia, WB, India",
-    interests: "",
+    interests: "Plant biology, genetic, crop improvement,  aromatic plants",
     initials: "AS",
     profileLink: "https://scholar.google.com/citations?user=7yC3v_MAAAAJ&hl=en",
   },
