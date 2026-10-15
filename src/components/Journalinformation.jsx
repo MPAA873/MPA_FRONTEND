@@ -20,7 +20,7 @@ const details = [
   { icon: Languages, label: "Language", value: "English" },
   { icon: CalendarDays, label: "Starting Year", value: "2026" },
   { icon: Monitor, label: "Publication Format", value: "Online-only" },
-  { icon: Repeat, label: "Publication Frequency", value: "Continous online publication, compiled into issue of approximately 5 articles each" },
+  { icon: Repeat, label: "Publication Frequency", value: "4 issues per year with 5 articles in each issue"},
   { icon: ShieldCheck, label: "Peer Review", value: "Peer-reviewed" },
   { icon: Unlock, label: "Access", value: "Open Access" },
 ];
@@ -131,7 +131,7 @@ export default function Journalinformation() {
               <Target size={26} />
             </div>
             <div className="min-w-0">
-              <h2 id="aims" className="mb-3 text-2xl font-extrabold text-[#8b4a0f] sm:text-3xl">Aims</h2>
+              <h2 id="aims" className="mb-3 text-2xl font-extrabold text-[#8b4a0f] sm:text-3xl">Aim</h2>
               <p className="text-[#3b3128] sm:text-lg">
                 MPA Research aims to provide an international, peer-reviewed platform for the
                 dissemination of scientifically rigorous and ethically conducted research across

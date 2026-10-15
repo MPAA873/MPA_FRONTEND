@@ -104,7 +104,7 @@ const About = () => {
       icon: <TrendingUp className="text-white" size={24} />,
       title: "Impact",
       description:
-        "High visibility and citation rates through indexing in major academic databases.",
+        "High visibility and citation rates",
     },
   ];
 
@@ -148,74 +148,12 @@ const About = () => {
 
   return (
     <>
-      {/* ============================================= */}
-      {/* ORIGINAL ABOUT SECTION — UNCHANGED */}
-      {/* ============================================= */}
       <section
         className="py-12 md:py-24 px-4 sm:px-6 bg-white max-w-7xl mx-auto scroll-mt-20 overflow-hidden"
         id="about"
       >
-        {/* Header Section */}
-        <div className="text-center mb-12 md:mb-20">
-          <h2 className="text-3xl md:text-5xl font-black text-[#713F12] flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 mb-6 tracking-tight">
-            About <span className="text-[#10B981]">MPA Research</span>
-          </h2>
-          <p className="text-[#854D0E] max-w-2xl mx-auto text-base md:text-lg leading-relaxed px-2 font-medium">
-            Committed to advancing knowledge through rigorous peer-reviewed
-            research, fostering collaboration, and promoting scientific excellence
-            worldwide.
-          </p>
-        </div>
-
-        <section className="py-12 md:py-20 px-4 sm:px-6 bg-[#FFFBEB] scroll-mt-20">
-          <div className="max-w-7xl mx-auto grid lg:grid-cols-5 gap-6 md:gap-8">
-            {/* Welcome Card */}
-            <div className="lg:col-span-3 bg-white rounded-3xl md:rounded-[2.5rem] border border-yellow-100 p-6 sm:p-10 md:p-14 shadow-sm">
-              <div className="bg-[#10B981] w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-emerald-200">
-                <BookOpen className="text-white" size={26} />
-              </div>
-              <h2 className="text-2xl md:text-4xl font-black text-[#713F12] mb-5 tracking-tight">
-                Welcome to <span className="text-[#10B981]">MPA Research</span>
-              </h2>
-              <p className="text-[#854D0E] text-sm md:text-base leading-relaxed font-medium mb-4">
-                MPA Research is an international peer-reviewed, open access
-                multidisciplinary academic journal committed to advancing scholarly
-                knowledge through the publication of high-quality, original research.
-              </p>
-              <p className="text-[#854D0E] text-sm md:text-base leading-relaxed font-medium mb-4">
-                The journal provides a global platform where researchers,
-                academicians, professionals, industry experts, and policymakers can
-                disseminate innovative research findings that contribute to
-                scientific progress, technological advancement, and societal
-                development.
-              </p>
-              <p className="text-[#854D0E] text-sm md:text-base leading-relaxed font-medium">
-                We believe that knowledge should be accessible to everyone and
-                strive to foster interdisciplinary collaboration across diverse
-                fields of study.
-              </p>
-            </div>
-
-            {/* Vision Card */}
-            <div className="lg:col-span-2 bg-[#713F12] rounded-3xl md:rounded-[2.5rem] p-6 sm:p-10 md:p-14 shadow-xl relative overflow-hidden flex flex-col justify-center">
-              <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full -mr-16 -mt-16 blur-2xl"></div>
-              <div className="bg-[#22C55E] w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center mb-6 shadow-lg relative z-10">
-                <Eye className="text-white" size={26} />
-              </div>
-              <h3 className="text-2xl md:text-3xl font-black text-white mb-4 tracking-tight relative z-10">
-                Our Vision
-              </h3>
-              <p className="text-white/90 text-sm md:text-base leading-relaxed font-medium relative z-10">
-                To become a globally recognized scholarly journal known for
-                excellence in research publishing, academic integrity, innovation,
-                and meaningful contributions to society.
-              </p>
-            </div>
-          </div>
-        </section>
-
         {/* ============================================= */}
-        {/* NEW: MPA RESEARCH BOARD OF DIRECTORS */}
+        {/* MPA RESEARCH BOARD OF DIRECTORS */}
         {/* ============================================= */}
         <section className="py-12 md:py-20 px-4 sm:px-6 -mx-4 sm:-mx-6 bg-[#FDF6ED] scroll-mt-20 border-y border-yellow-100">
           <div className="max-w-6xl mx-auto">
