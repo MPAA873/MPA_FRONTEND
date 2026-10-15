@@ -117,9 +117,9 @@ const EDITORIALS_DATA = [
     bio: "",
     institution:
       "Assistant Professor, Department of Medical Biotechnology, College of Life and Applied Sciences, Yeungnam University, 280 Daehak-ro, Gyeongsan-si, Gyeongsangbuk-do 38541, Republic of Korea",
-    interests: "",
+    interests: "Bioinformatics, Drug designing, Health Science, Artificial Intelligence",
     initials: "SA",
-    profileLink: "",
+    profileLink: "https://scholar.google.co.in/citations?hl=en&user=RVmNLDYAAAAJ",
   },
 ];
 

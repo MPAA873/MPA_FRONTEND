@@ -3,6 +3,7 @@ import {
   Repeat, ShieldCheck, Unlock, Fingerprint, FlaskConical, FileText,
   Layers, Zap, MessageSquareQuote, Mail, PenLine, ScrollText, Microscope,
   Cpu, HeartPulse, Pill, Network, Dna,
+  Target, Compass, Stethoscope, Bug, Atom, Sparkles, Database, Briefcase,
 } from "lucide-react";
 
 const details = [
@@ -43,6 +44,20 @@ const fields = [
   { icon: Cpu, name: "Technology" },
   { icon: Network, name: "Computational" },
   { icon: Microscope, name: "Interdisciplinary" },
+];
+
+const scopeAreas = [
+  { icon: Stethoscope, name: "Medical and Health Sciences" },
+  { icon: Microscope, name: "Biomedical Sciences" },
+  { icon: Dna, name: "Life Sciences" },
+  { icon: Bug, name: "Microbiology and Immunology" },
+  { icon: FlaskConical, name: "Biotechnology" },
+  { icon: Pill, name: "Pharmaceutical Sciences and Pharmacology" },
+  { icon: Atom, name: "Molecular and Cellular Biology" },
+  { icon: Sparkles, name: "Nanotechnology and Nanomedicine" },
+  { icon: Cpu, name: "Computer Science and Artificial Intelligence" },
+  { icon: Database, name: "Information Technology and Data Science" },
+  { icon: Briefcase, name: "Management and Business" },
 ];
 
 export default function Journalinformation() {
@@ -107,6 +122,65 @@ export default function Journalinformation() {
               ))}
             </ul>
           </div>
+        </section>
+
+        {/* AIMS */}
+        <section className="pt-10 sm:pt-14 lg:pt-16" aria-labelledby="aims">
+          <div className="grid gap-5 rounded-[22px] border border-[#ecd9c8] border-l-4 border-l-[#16b35a] bg-[#fdf3ec] p-5 sm:grid-cols-[auto_1fr] sm:gap-6 sm:p-8 lg:p-10">
+            <div className="grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-[#8b4a0f] to-[#5e3208] text-white">
+              <Target size={26} />
+            </div>
+            <div className="min-w-0">
+              <h2 id="aims" className="mb-3 text-2xl font-extrabold text-[#8b4a0f] sm:text-3xl">Aims</h2>
+              <p className="text-[#3b3128] sm:text-lg">
+                MPA Research aims to provide an international, peer-reviewed platform for the
+                dissemination of scientifically rigorous and ethically conducted research across
+                medical, health, life, pharmaceutical, technological, and interdisciplinary
+                sciences. The journal seeks to promote the exchange of scientific knowledge,
+                encourage interdisciplinary collaboration, and facilitate the translation of
+                emerging research findings into meaningful scientific, clinical, technological,
+                and societal applications.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* SCOPE */}
+        <section className="pt-10 sm:pt-14 lg:pt-16" aria-labelledby="scope">
+          <div className="mb-7 flex items-start gap-4">
+            <span className="grid h-12 w-12 flex-none place-items-center rounded-xl bg-[#fdf3ec] text-[#8b4a0f]">
+              <Compass size={24} />
+            </span>
+            <div className="min-w-0">
+              <h2 id="scope" className="mb-1 text-2xl font-extrabold text-[#8b4a0f] sm:text-3xl">Scope</h2>
+              <p className="max-w-[75ch] text-[#7a5a3c]">
+                MPA Research welcomes original research articles, reviews, systematic reviews,
+                short communications, and other scholarly contributions covering, but not
+                limited to:
+              </p>
+            </div>
+          </div>
+          <ul className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+            {scopeAreas.map(({ icon: Icon, name }) => (
+              <li
+                key={name}
+                className="flex items-center gap-3.5 rounded-xl border border-[#ecd9c8] bg-white px-4 py-3.5 font-semibold transition duration-200 hover:border-[#16b35a] hover:shadow-[0_12px_28px_-16px_rgba(22,179,90,0.5)] motion-reduce:transition-none"
+              >
+                <span className="grid h-10 w-10 flex-none place-items-center rounded-lg bg-[#fdf3ec] text-[#8b4a0f]">
+                  <Icon size={20} />
+                </span>
+                <span className="min-w-0 break-words">{name}</span>
+              </li>
+            ))}
+            <li className="flex items-center gap-3.5 rounded-xl border border-[#cfeedd] border-l-4 border-l-[#16b35a] bg-[#e8f8ef] px-4 py-3.5 font-semibold text-[#0b7a3b] sm:col-span-2 lg:col-span-3">
+              <span className="grid h-10 w-10 flex-none place-items-center rounded-lg bg-white text-[#0b7a3b]">
+                <Network size={20} />
+              </span>
+              <span className="min-w-0 break-words">
+                Interdisciplinary research integrating these areas.
+              </span>
+            </li>
+          </ul>
         </section>
 
         {/* DETAILS */}

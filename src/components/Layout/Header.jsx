@@ -25,9 +25,9 @@ const Header = () => {
     { name: "Guidelines", href: "/guidelines" },
     { name: "Journal Policies", href: "/journal-policies" },
     { name: "Issue", href: "/issue" },
-    { name: "Journal Information", href: "/journal-information" },
+    {name: "Publisher", href: "/publisher"},
     { name: "Contact", href: "/contact" },
-  ];
+  ];  
 
   useEffect(() => {
     const token = localStorage.getItem("token");
