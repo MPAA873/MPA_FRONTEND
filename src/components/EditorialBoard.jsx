@@ -51,7 +51,7 @@ const EDITORIALS_DATA = [
     isActive: true,
     bio: "",
     institution:
-      "Department of Chemistry, College of Sciences, University of Hail, Saudi Arabia.",
+      "Department of Chemistry, College of Science, University of Ha'il, P.O. Box 2440, Hail 81451, Kingdom of Saudi Arabia.",
     interests:
       "Cancer therapeutics, Drug discovery, Natural product research, Nanotechnology.",
     initials: "MS",
@@ -67,7 +67,8 @@ const EDITORIALS_DATA = [
     linkedin: "",
     isActive: true,
     bio: "",
-    institution: "Foundation and General Education, Rabdan Academy, Abu Dhabi, UAE",
+    institution:
+      "Foundation and General Education, Rabdan Academy, Al Dhafeer Street, P.O. Box 114646, Abu Dhabi, United Arab Emirates",
     interests: "Women health, Chronic disease, Mental health, Cancer biology, Education",
     initials: "DE",
     profileLink: "https://ra.ac.ae/en/dean-team/bio/dr-deena-elsori",
@@ -83,7 +84,7 @@ const EDITORIALS_DATA = [
     isActive: true,
     bio: "",
     institution:
-      "Dept. of Biochemistry, Faculty of Basic Medical Sciences, College of Medicine, Federal University of Health Sciences, Otukpo, Benue State Nigeria",
+      "Department of Biochemistry, Faculty of Biomedical Sciences, Kampala International University, P.O. Box 20000, Ggaba Road, Kansanga, Kampala, Uganda",
     interests: "Hematological indices, In silico drug designing, Oxidative stress, Nanotechnology",
     initials: "DU",
     profileLink: "https://orcid.org/0000-0002-1129-1785",
@@ -99,27 +100,26 @@ const EDITORIALS_DATA = [
     isActive: true,
     bio: "",
     institution:
-      "Chairperson of the School of Life Sciences, Manipal Academy of Higher Education-MAHE, Dubai",
+      "Chairperson of the School of Life Sciences, G04, Dubai International Academic City (DIAC), P.O. Box 345050, Dubai, United Arab Emirates",
     interests: "Molecular Biology, Human Genetics, Toxicology, Cancer biology, Pharmacology",
-    initials: "",
+    initials: "AH",
     profileLink: "https://scholar.google.co.in/citations?user=JXVVsZkAAAAJ&hl=en",
   },
   {
     _id: "69a69aa05ffccdb5305738d0",
     type: "editor",
-    name: "Prof (Dr) A B Sharangi",
+    name: "Dr. Syed Sayeed Ahmad",
     role: "Editor 5",
     image: null,
-    email: "example@gmail.com",
+    email: "",
     linkedin: "",
     isActive: true,
     bio: "",
     institution:
-      "Professor and Former Dean-Faculty of Horticulture, Bidhan Chandra Krishi Viswavidyalaya (Agricultural Univ)",
-    interests:
-      "Ph.D (BCKV), Post-doc (Melbourne), Fulbright Faculty (LSU, USA), Horticulture Specialist",
-    initials: "AS",
-    profileLink: "https://www.researchgate.net/profile/Amit-Sharangi",
+      "Assistant Professor, Department of Medical Biotechnology, College of Life and Applied Sciences, Yeungnam University, 280 Daehak-ro, Gyeongsan-si, Gyeongsangbuk-do 38541, Republic of Korea",
+    interests: "",
+    initials: "SA",
+    profileLink: "",
   },
 ];
 

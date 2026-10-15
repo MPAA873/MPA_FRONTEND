@@ -25,6 +25,7 @@ const Header = () => {
     { name: "Guidelines", href: "/guidelines" },
     { name: "Journal Policies", href: "/journal-policies" },
     { name: "Issue", href: "/issue" },
+    { name: "Journal Information", href: "/journal-information" },
     { name: "Contact", href: "/contact" },
   ];
 
@@ -65,7 +66,7 @@ const Header = () => {
       {/* 1. TOP UTILITY BAR - Enhanced with Professional Help Text */}
       <div className="w-full bg-[#854D0E] text-white border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 h-9 sm:h-11 flex items-center justify-between gap-4 overflow-hidden">
-          
+
           <div className="flex items-center gap-2 flex-shrink-0">
             <Link
               href="/submit"
@@ -161,7 +162,7 @@ const Header = () => {
         </div>
 
         {/* 3. MOBILE SIDEBAR SYSTEM */}
-        <div 
+        <div
           className={`fixed inset-0 z-[9999] lg:hidden ${isMobileMenuOpen ? "pointer-events-auto" : "pointer-events-none"}`}
         >
           {/* Overlay */}
@@ -171,17 +172,17 @@ const Header = () => {
           />
 
           {/* Sidebar Panel */}
-          <div 
+          <div
             className={`absolute top-0 right-0 h-full w-[85%] max-w-[300px] bg-white shadow-2xl transform transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] flex flex-col ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
           >
             {/* Header */}
             <div className="p-4 flex justify-between items-center border-b border-gray-50 flex-shrink-0">
-               <div className="relative w-28 h-7">
-                 <Image src="/newLogo.png" alt="Logo" fill className="object-contain" />
-               </div>
-               <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 bg-gray-50 text-gray-500 rounded-full hover:bg-gray-100">
-                 <X size={20} />
-               </button>
+              <div className="relative w-28 h-7">
+                <Image src="/newLogo.png" alt="Logo" fill className="object-contain" />
+              </div>
+              <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 bg-gray-50 text-gray-500 rounded-full hover:bg-gray-100">
+                <X size={20} />
+              </button>
             </div>
 
             {/* Content Area */}
