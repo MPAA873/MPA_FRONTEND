@@ -22,7 +22,7 @@ const Header = () => {
     { name: "About", href: "/about" },
     { name: "Submit", href: "/submit" },
     { name: "Editorial", href: "/editorial-board" },
-    { name: "Guidelines", href: "/guidelines" },
+    { name: "Author Guidelines", href: "/guidelines" },
     { name: "Journal Policies", href: "/journal-policies" },
     { name: "Issue", href: "/issue" },
     {name: "Publisher", href: "/publisher"},

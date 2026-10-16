@@ -64,7 +64,7 @@ const EDITORIALS_DATA = [
     name: "Dr Arif Hussain",
     role: "Editor 2",
     image: null,
-    email: "dr.arifhussain@yahoo.co.in ",
+    email: "arifhussain@manipaldubai.com",
     linkedin: "",
     isActive: true,
     bio: "",
