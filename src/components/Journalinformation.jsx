@@ -20,7 +20,7 @@ const details = [
   { icon: Languages, label: "Language", value: "English" },
   { icon: CalendarDays, label: "Starting Year", value: "2026" },
   { icon: Monitor, label: "Publication Format", value: "Online-only" },
-  { icon: Repeat, label: "Publication Frequency", value: "Continous publication with 5 articles in each issue"},
+  { icon: Repeat, label: "Publication Frequency", value: "Quarterly (4 issues per year with 5 articles in each issue)" },
   { icon: ShieldCheck, label: "Peer Review", value: "Peer-reviewed" },
   { icon: Unlock, label: "Access", value: "Open Access" },
 ];
