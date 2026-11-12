@@ -8,7 +8,7 @@ import {
 
 const details = [
   { icon: BookOpen, label: "Journal Title", value: "MPA Research" },
-  { icon: Fingerprint, label: "ISSN (Online)", value: "To be assigned" },
+  { icon: Fingerprint, label: "ISSN", value: "2839-6340" },
   { icon: Building2, label: "Publisher", value: "MPA Research Consultancy" },
   {
     icon: MapPin,

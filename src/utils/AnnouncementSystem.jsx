@@ -93,6 +93,18 @@ export const AnnouncementBanner = () => {
           </p>
         </div>
 
+        {/* ISSN Number  */}
+        <div className="flex items-center gap-2">
+          <Sparkles
+            size={15}
+            className="text-yellow-500"
+          />
+
+          <p className="text-xs font-medium text-[#713F12] sm:text-sm">
+            ISSN: 2959-4081 
+          </p>
+        </div>
+
       </div>
     </div>
   );
