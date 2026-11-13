@@ -101,7 +101,7 @@ export const AnnouncementBanner = () => {
           />
 
           <p className="text-xs font-medium text-[#713F12] sm:text-sm">
-            ISSN: 2959-4081 
+            ISSN: 2839-6340
           </p>
         </div>
 
